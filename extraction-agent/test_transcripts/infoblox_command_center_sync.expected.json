@@ -1,0 +1,36 @@
+{
+  "meeting_title": "Infoblox Command Center Sync",
+  "meeting_date": null,
+  "action_items": [
+    {
+      "description": "Submit a GitHub access request ticket to enable pushing code to a shared repository",
+      "owner": "Leland Nguyen",
+      "due_date": null,
+      "status": "completed"
+    },
+    {
+      "description": "Send Leland a sample transcript file to test importing/downloading",
+      "owner": "Ryan Kang",
+      "due_date": null,
+      "status": "in_progress"
+    },
+    {
+      "description": "Create a shared GitHub folder/repo for the extraction agent work and push initial code",
+      "owner": "Ryan Kang",
+      "due_date": null,
+      "status": "in_progress"
+    },
+    {
+      "description": "Enable Outlook integration so action-item emails can actually be sent",
+      "owner": null,
+      "due_date": null,
+      "status": "needs_follow_up"
+    },
+    {
+      "description": "Schedule a follow-up sync to continue design discussion",
+      "owner": null,
+      "due_date": null,
+      "status": "needs_follow_up"
+    }
+  ]
+}
