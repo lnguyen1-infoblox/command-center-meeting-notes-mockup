@@ -1,0 +1,1802 @@
+WEBVTT
+
+02eca936-25fd-4fda-ae33-a5cd1f9959aa/7-0
+00:00:03.261 --> 00:00:08.007
+<v Hepsi Premkumar>to there may be a folder,
+the team will create a folder name and</v>
+
+02eca936-25fd-4fda-ae33-a5cd1f9959aa/7-1
+00:00:08.007 --> 00:00:13.485
+<v Hepsi Premkumar>they put it in the folder. Okay,
+so you guys take that notes automatically</v>
+
+02eca936-25fd-4fda-ae33-a5cd1f9959aa/7-2
+00:00:13.485 --> 00:00:19.327
+<v Hepsi Premkumar>and agent take it and it will run through
+it and it will come up with a list of</v>
+
+02eca936-25fd-4fda-ae33-a5cd1f9959aa/7-3
+00:00:19.327 --> 00:00:22.541
+<v Hepsi Premkumar>action items.
+So what's the action item is?</v>
+
+02eca936-25fd-4fda-ae33-a5cd1f9959aa/9-0
+00:00:23.101 --> 00:00:28.491
+<v Hepsi Premkumar>the detail, who is the owner,
+and the date, if there's a date discussed,</v>
+
+02eca936-25fd-4fda-ae33-a5cd1f9959aa/9-1
+00:00:28.491 --> 00:00:34.251
+<v Hepsi Premkumar>otherwise we have to reach out to the
+people and get the dates and an update,</v>
+
+02eca936-25fd-4fda-ae33-a5cd1f9959aa/9-2
+00:00:34.251 --> 00:00:38.682
+<v Hepsi Premkumar>status update, right?
+It's in progress and the nodes are is</v>
+
+02eca936-25fd-4fda-ae33-a5cd1f9959aa/9-3
+00:00:38.682 --> 00:00:41.341
+<v Hepsi Premkumar>completed means it will go away. So.</v>
+
+02eca936-25fd-4fda-ae33-a5cd1f9959aa/10-0
+00:00:41.741 --> 00:00:50.120
+<v Hepsi Premkumar>That just to get that and automated and
+create that it right now you can do with</v>
+
+02eca936-25fd-4fda-ae33-a5cd1f9959aa/10-1
+00:00:50.120 --> 00:00:58.809
+<v Hepsi Premkumar>your storage table or something this item
+but later we can we can move that into my</v>
+
+02eca936-25fd-4fda-ae33-a5cd1f9959aa/10-2
+00:00:58.809 --> 00:00:59.741
+<v Hepsi Premkumar>database.</v>
+
+02eca936-25fd-4fda-ae33-a5cd1f9959aa/11-0
+00:01:01.581 --> 00:01:04.834
+<v Hepsi Premkumar>So,
+can we can you guys think got an idea</v>
+
+02eca936-25fd-4fda-ae33-a5cd1f9959aa/11-1
+00:01:04.834 --> 00:01:06.461
+<v Hepsi Premkumar>what I'm looking for?</v>
+
+02eca936-25fd-4fda-ae33-a5cd1f9959aa/13-0
+00:01:07.901 --> 00:01:13.801
+<v Ryan Kang>So is it like an agent that automatically
+kind of fetches each transcript after a</v>
+
+02eca936-25fd-4fda-ae33-a5cd1f9959aa/13-1
+00:01:13.801 --> 00:01:19.485
+<v Ryan Kang>meeting and then like sends it to like
+the emails of the people who are in the</v>
+
+02eca936-25fd-4fda-ae33-a5cd1f9959aa/13-2
+00:01:19.485 --> 00:01:20.061
+<v Ryan Kang>meeting?</v>
+
+02eca936-25fd-4fda-ae33-a5cd1f9959aa/15-0
+00:01:20.941 --> 00:01:24.945
+<v Hepsi Premkumar>No, no, it is. It creates the action.
+There are two parts.</v>
+
+02eca936-25fd-4fda-ae33-a5cd1f9959aa/14-0
+00:01:24.541 --> 00:01:24.781
+<v Ryan Kang>Huh.</v>
+
+02eca936-25fd-4fda-ae33-a5cd1f9959aa/15-1
+00:01:24.945 --> 00:01:29.901
+<v Hepsi Premkumar>The first part is it create all the
+action item and store in a database.</v>
+
+02eca936-25fd-4fda-ae33-a5cd1f9959aa/16-0
+00:01:31.101 --> 00:01:35.672
+<v Hepsi Premkumar>Okay, the second one is the one, okay,
+you got the action items.</v>
+
+02eca936-25fd-4fda-ae33-a5cd1f9959aa/16-1
+00:01:35.672 --> 00:01:39.821
+<v Hepsi Premkumar>Now there is a owner already.
+It sends e-mail to the owner</v>
+
+02eca936-25fd-4fda-ae33-a5cd1f9959aa/16-2
+00:01:39.821 --> 00:01:42.916
+<v Hepsi Premkumar>automatically. Hey,
+you got an action item.</v>
+
+02eca936-25fd-4fda-ae33-a5cd1f9959aa/16-3
+00:01:42.916 --> 00:01:46.925
+<v Hepsi Premkumar>This is your action item.
+Then it sent a follow up, hey,</v>
+
+02eca936-25fd-4fda-ae33-a5cd1f9959aa/16-4
+00:01:46.925 --> 00:01:50.301
+<v Hepsi Premkumar>have you completed based on because it's
+an AI.</v>
+
+02eca936-25fd-4fda-ae33-a5cd1f9959aa/17-0
+00:01:50.621 --> 00:01:54.085
+<v Hepsi Premkumar>right? So it has to check, hey,
+what's the status of it?</v>
+
+02eca936-25fd-4fda-ae33-a5cd1f9959aa/17-1
+00:01:54.085 --> 00:01:58.218
+<v Hepsi Premkumar>Does need a follow up or is completed or
+something for information.</v>
+
+02eca936-25fd-4fda-ae33-a5cd1f9959aa/17-2
+00:01:58.218 --> 00:02:01.743
+<v Hepsi Premkumar>So based on that,
+it will send an e-mail to him again and</v>
+
+02eca936-25fd-4fda-ae33-a5cd1f9959aa/17-3
+00:02:01.743 --> 00:02:05.269
+<v Hepsi Premkumar>or her again. Hey,
+these are the things where or where is</v>
+
+02eca936-25fd-4fda-ae33-a5cd1f9959aa/17-4
+00:02:05.269 --> 00:02:09.280
+<v Hepsi Premkumar>what's the status? Then it collect the,
+they will respond, right?</v>
+
+02eca936-25fd-4fda-ae33-a5cd1f9959aa/17-5
+00:02:09.280 --> 00:02:10.861
+<v Hepsi Premkumar>So the response come here.</v>
+
+02eca936-25fd-4fda-ae33-a5cd1f9959aa/18-0
+00:02:11.501 --> 00:02:17.195
+<v Hepsi Premkumar>into a notes addendum kind of updating
+the database. So we have an interface,</v>
+
+02eca936-25fd-4fda-ae33-a5cd1f9959aa/18-1
+00:02:17.195 --> 00:02:21.576
+<v Hepsi Premkumar>it will show, hey,
+they can select the meeting title and it</v>
+
+02eca936-25fd-4fda-ae33-a5cd1f9959aa/18-2
+00:02:21.576 --> 00:02:26.322
+<v Hepsi Premkumar>will show all the action item where they
+are, what's the status.</v>
+
+02eca936-25fd-4fda-ae33-a5cd1f9959aa/18-3
+00:02:26.322 --> 00:02:31.141
+<v Hepsi Premkumar>It will automatically update it here.
+So that's the whole module.</v>
+
+02eca936-25fd-4fda-ae33-a5cd1f9959aa/19-0
+00:02:31.581 --> 00:02:32.701
+<v Hepsi Premkumar>We wanted to work on.</v>
+
+02eca936-25fd-4fda-ae33-a5cd1f9959aa/20-0
+00:02:33.821 --> 00:02:37.151
+<v Hepsi Premkumar>So you can pick both of you. Okay,
+you work on this piece,</v>
+
+02eca936-25fd-4fda-ae33-a5cd1f9959aa/20-1
+00:02:37.151 --> 00:02:41.103
+<v Hepsi Premkumar>you work on the other piece,
+then we can integrate, fix cloud, right?</v>
+
+02eca936-25fd-4fda-ae33-a5cd1f9959aa/20-2
+00:02:41.103 --> 00:02:44.547
+<v Hepsi Premkumar>Create a project to share and work on two
+pieces separately.</v>
+
+02eca936-25fd-4fda-ae33-a5cd1f9959aa/20-3
+00:02:44.547 --> 00:02:47.878
+<v Hepsi Premkumar>That you both can decide,
+but that's what I'm looking for.</v>
+
+02eca936-25fd-4fda-ae33-a5cd1f9959aa/20-4
+00:02:47.878 --> 00:02:50.814
+<v Hepsi Premkumar>First module,
+because we have a couple of them like</v>
+
+02eca936-25fd-4fda-ae33-a5cd1f9959aa/20-5
+00:02:50.814 --> 00:02:52.621
+<v Hepsi Premkumar>this, but let's start with that.</v>
+
+02eca936-25fd-4fda-ae33-a5cd1f9959aa/23-0
+00:02:54.941 --> 00:02:58.913
+<v Hepsi Premkumar>This will help everybody's job really
+easy. It's very,</v>
+
+02eca936-25fd-4fda-ae33-a5cd1f9959aa/21-0
+00:02:58.701 --> 00:03:00.301
+<v Murthy Rayaprolu>Yeah, absolutely.</v>
+
+02eca936-25fd-4fda-ae33-a5cd1f9959aa/23-1
+00:02:58.913 --> 00:03:04.114
+<v Hepsi Premkumar>very useful thing for us to do.
+And one more thing I wanted to tell you</v>
+
+02eca936-25fd-4fda-ae33-a5cd1f9959aa/23-2
+00:03:04.114 --> 00:03:07.004
+<v Hepsi Premkumar>guys,
+this is this may not be a product</v>
+
+02eca936-25fd-4fda-ae33-a5cd1f9959aa/23-3
+00:03:07.004 --> 00:03:11.699
+<v Hepsi Premkumar>management requirement,
+but it is a product management to moving</v>
+
+02eca936-25fd-4fda-ae33-a5cd1f9959aa/23-4
+00:03:11.699 --> 00:03:14.661
+<v Hepsi Premkumar>forward future job going to be like that.</v>
+
+02eca936-25fd-4fda-ae33-a5cd1f9959aa/25-0
+00:03:15.581 --> 00:03:17.890
+<v Hepsi Premkumar>Okay,
+so you are going to write your</v>
+
+02eca936-25fd-4fda-ae33-a5cd1f9959aa/22-0
+00:03:15.821 --> 00:03:16.061
+<v Murthy Rayaprolu>Yeah.</v>
+
+02eca936-25fd-4fda-ae33-a5cd1f9959aa/25-1
+00:03:17.890 --> 00:03:21.697
+<v Hepsi Premkumar>requirement not in a PR,
+the product requirement document or</v>
+
+02eca936-25fd-4fda-ae33-a5cd1f9959aa/25-2
+00:03:21.697 --> 00:03:24.817
+<v Hepsi Premkumar>anything.
+You are going to create a prototype and</v>
+
+02eca936-25fd-4fda-ae33-a5cd1f9959aa/25-3
+00:03:24.817 --> 00:03:28.063
+<v Hepsi Premkumar>give it to them,
+give it to the engineering, right?</v>
+
+02eca936-25fd-4fda-ae33-a5cd1f9959aa/24-0
+00:03:26.861 --> 00:03:27.421
+<v Ryan Kang>Mhm.</v>
+
+02eca936-25fd-4fda-ae33-a5cd1f9959aa/25-4
+00:03:28.063 --> 00:03:33.180
+<v Hepsi Premkumar>So same thing, same thing you are doing.
+It's more like training in terms of your</v>
+
+02eca936-25fd-4fda-ae33-a5cd1f9959aa/25-5
+00:03:33.180 --> 00:03:34.741
+<v Hepsi Premkumar>product management agent.</v>
+
+02eca936-25fd-4fda-ae33-a5cd1f9959aa/26-0
+00:03:34.861 --> 00:03:39.099
+<v Hepsi Premkumar>for SDLC project management.
+And I am the engineer developer,</v>
+
+02eca936-25fd-4fda-ae33-a5cd1f9959aa/26-1
+00:03:39.099 --> 00:03:42.312
+<v Hepsi Premkumar>let's put it that way,
+you'll be working with,</v>
+
+02eca936-25fd-4fda-ae33-a5cd1f9959aa/26-2
+00:03:42.312 --> 00:03:47.029
+<v Hepsi Premkumar>but I will help you to train and get that
+aspect also as a back end.</v>
+
+02eca936-25fd-4fda-ae33-a5cd1f9959aa/26-3
+00:03:47.029 --> 00:03:51.746
+<v Hepsi Premkumar>So this will surely have great exposure
+and experience for you guys.</v>
+
+02eca936-25fd-4fda-ae33-a5cd1f9959aa/26-4
+00:03:51.746 --> 00:03:57.421
+<v Hepsi Premkumar>That's what I picked both of you. Okay,
+maybe let them do this project because we.</v>
+
+02eca936-25fd-4fda-ae33-a5cd1f9959aa/27-0
+00:03:57.581 --> 00:04:01.155
+<v Hepsi Premkumar>It's all production.
+People are all using our system already,</v>
+
+02eca936-25fd-4fda-ae33-a5cd1f9959aa/27-1
+00:04:01.155 --> 00:04:04.556
+<v Hepsi Premkumar>right? I told you.
+So that's why I picked this project for</v>
+
+02eca936-25fd-4fda-ae33-a5cd1f9959aa/27-2
+00:04:04.556 --> 00:04:05.421
+<v Hepsi Premkumar>you guys. Yeah.</v>
+
+02eca936-25fd-4fda-ae33-a5cd1f9959aa/28-0
+00:04:05.981 --> 00:04:09.312
+<v Murthy Rayaprolu>One question, Hepsi is,
+does today does cloud have integration</v>
+
+02eca936-25fd-4fda-ae33-a5cd1f9959aa/28-1
+00:04:09.312 --> 00:04:12.749
+<v Murthy Rayaprolu>with Outlook or anything?
+Because for the e-mail to be sent out,</v>
+
+02eca936-25fd-4fda-ae33-a5cd1f9959aa/28-2
+00:04:12.749 --> 00:04:15.341
+<v Murthy Rayaprolu>right,
+we need to have integration with Outlook.</v>
+
+02eca936-25fd-4fda-ae33-a5cd1f9959aa/30-0
+00:04:17.021 --> 00:04:20.518
+<v Hepsi Premkumar>It they have that,
+but they said they can enable.</v>
+
+02eca936-25fd-4fda-ae33-a5cd1f9959aa/30-1
+00:04:20.518 --> 00:04:26.533
+<v Hepsi Premkumar>Let's get those all hooked up and running,
+and then we will see. Ohh, one more thing.</v>
+
+02eca936-25fd-4fda-ae33-a5cd1f9959aa/29-0
+00:04:26.101 --> 00:04:27.261
+<v Murthy Rayaprolu>Where are the bottlenecks?</v>
+
+02eca936-25fd-4fda-ae33-a5cd1f9959aa/30-2
+00:04:26.533 --> 00:04:29.821
+<v Hepsi Premkumar>Let me let me let me give you guys a file.
+OK.</v>
+
+02eca936-25fd-4fda-ae33-a5cd1f9959aa/31-0
+00:04:32.221 --> 00:04:41.382
+<v Hepsi Premkumar>But that file is connected to database.
+Let me share. Try this file, okay?</v>
+
+02eca936-25fd-4fda-ae33-a5cd1f9959aa/31-1
+00:04:41.382 --> 00:04:43.581
+<v Hepsi Premkumar>That's a starting.</v>
+
+02eca936-25fd-4fda-ae33-a5cd1f9959aa/35-0
+00:04:55.901 --> 00:04:59.221
+<v Hepsi Premkumar>After, yeah, OK.</v>
+
+02eca936-25fd-4fda-ae33-a5cd1f9959aa/36-0
+00:05:03.861 --> 00:05:10.221
+<v Hepsi Premkumar>Yeah, so that's where my,
+so he sent a driver first,</v>
+
+02eca936-25fd-4fda-ae33-a5cd1f9959aa/36-1
+00:05:10.221 --> 00:05:16.701
+<v Hepsi Premkumar>and then we saw yesterday, so at last,
+okay, at last.</v>
+
+02eca936-25fd-4fda-ae33-a5cd1f9959aa/37-0
+00:05:19.021 --> 00:05:25.795
+<v Hepsi Premkumar>I'm not sure this will work without, okay.
+See, I added a file, HTML file.</v>
+
+02eca936-25fd-4fda-ae33-a5cd1f9959aa/37-1
+00:05:25.795 --> 00:05:30.492
+<v Hepsi Premkumar>You guys can,
+I'm not sure it will run without some</v>
+
+02eca936-25fd-4fda-ae33-a5cd1f9959aa/37-2
+00:05:30.492 --> 00:05:34.647
+<v Hepsi Premkumar>backend connection.
+Why don't you try it out?</v>
+
+02eca936-25fd-4fda-ae33-a5cd1f9959aa/37-3
+00:05:34.647 --> 00:05:38.261
+<v Hepsi Premkumar>This is the one that I am talking about.</v>
+
+02eca936-25fd-4fda-ae33-a5cd1f9959aa/38-0
+00:05:39.341 --> 00:05:43.520
+<v Hepsi Premkumar>something like, let me share also,
+let me share that.</v>
+
+02eca936-25fd-4fda-ae33-a5cd1f9959aa/38-1
+00:05:43.520 --> 00:05:46.461
+<v Hepsi Premkumar>I have a module already. Let me share.</v>
+
+02eca936-25fd-4fda-ae33-a5cd1f9959aa/39-0
+00:05:51.341 --> 00:05:55.181
+<v Hepsi Premkumar>Command center I have my you guys have
+access to command center, right?</v>
+
+02eca936-25fd-4fda-ae33-a5cd1f9959aa/40-0
+00:05:56.701 --> 00:05:57.101
+<v Leland Nguyen>Yeah.</v>
+
+02eca936-25fd-4fda-ae33-a5cd1f9959aa/41-0
+00:05:57.581 --> 00:06:01.836
+<v Ryan Kang>Yes, but for the meeting notes,
+it says we need a password to access this</v>
+
+02eca936-25fd-4fda-ae33-a5cd1f9959aa/44-0
+00:06:01.421 --> 00:06:06.082
+<v Hepsi Premkumar>Sorry, yeah, yeah, yeah, so,
+so if you go to the main,</v>
+
+02eca936-25fd-4fda-ae33-a5cd1f9959aa/41-1
+00:06:01.836 --> 00:06:02.181
+<v Ryan Kang>paper.</v>
+
+02eca936-25fd-4fda-ae33-a5cd1f9959aa/44-1
+00:06:06.082 --> 00:06:08.541
+<v Hepsi Premkumar>let me see where is commands.</v>
+
+02eca936-25fd-4fda-ae33-a5cd1f9959aa/45-0
+00:06:11.101 --> 00:06:11.981
+<v Hepsi Premkumar>You can.</v>
+
+02eca936-25fd-4fda-ae33-a5cd1f9959aa/48-0
+00:06:16.861 --> 00:06:17.581
+<v Hepsi Premkumar>Whatever.</v>
+
+02eca936-25fd-4fda-ae33-a5cd1f9959aa/58-0
+00:06:18.781 --> 00:06:27.231
+<v Hepsi Premkumar>I have it, I have,
+I wanted to go to the home, yeah, so OK,</v>
+
+02eca936-25fd-4fda-ae33-a5cd1f9959aa/53-0
+00:06:21.861 --> 00:06:24.221
+<v Murthy Rayaprolu>Which one are you like, like the access?</v>
+
+02eca936-25fd-4fda-ae33-a5cd1f9959aa/58-1
+00:06:27.231 --> 00:06:32.301
+<v Hepsi Premkumar>so this meeting notes, this is what.</v>
+
+02eca936-25fd-4fda-ae33-a5cd1f9959aa/59-0
+00:06:37.581 --> 00:06:40.541
+<v Hepsi Premkumar>Oh, it's not even asking password,
+maybe slow.</v>
+
+02eca936-25fd-4fda-ae33-a5cd1f9959aa/62-0
+00:06:42.301 --> 00:06:46.221
+<v Hepsi Premkumar>I think [redacted - portal password].</v>
+
+02eca936-25fd-4fda-ae33-a5cd1f9959aa/65-0
+00:06:47.821 --> 00:06:48.861
+<v Murthy Rayaprolu>[redacted - portal password], right?</v>
+
+02eca936-25fd-4fda-ae33-a5cd1f9959aa/67-0
+00:06:49.581 --> 00:06:55.581
+<v Hepsi Premkumar>Yeah, yeah, can you try that? It try,
+but why is it not working for me?</v>
+
+02eca936-25fd-4fda-ae33-a5cd1f9959aa/66-0
+00:06:54.341 --> 00:06:56.141
+<v Murthy Rayaprolu>No, it says wrong password.</v>
+
+02eca936-25fd-4fda-ae33-a5cd1f9959aa/69-0
+00:06:56.461 --> 00:07:00.621
+<v Hepsi Premkumar>[redacted - portal password].</v>
+
+02eca936-25fd-4fda-ae33-a5cd1f9959aa/68-0
+00:06:58.941 --> 00:06:59.421
+<v Murthy Rayaprolu>Yeah.</v>
+
+02eca936-25fd-4fda-ae33-a5cd1f9959aa/70-0
+00:07:01.101 --> 00:07:02.861
+<v Murthy Rayaprolu>Then, just [redacted - portal password].</v>
+
+02eca936-25fd-4fda-ae33-a5cd1f9959aa/71-0
+00:07:03.261 --> 00:07:03.741
+<v Hepsi Premkumar>Mhm.</v>
+
+02eca936-25fd-4fda-ae33-a5cd1f9959aa/74-0
+00:07:03.421 --> 00:07:04.141
+<v Ryan Kang>Ohh, it works.</v>
+
+02eca936-25fd-4fda-ae33-a5cd1f9959aa/76-0
+00:07:03.901 --> 00:07:06.421
+<v Murthy Rayaprolu>Yeah, [redacted - portal password]. It came out.</v>
+
+02eca936-25fd-4fda-ae33-a5cd1f9959aa/75-0
+00:07:04.861 --> 00:07:05.781
+<v Leland Nguyen>Ohh yeah, that's good.</v>
+
+02eca936-25fd-4fda-ae33-a5cd1f9959aa/84-0
+00:07:06.341 --> 00:07:13.566
+<v Hepsi Premkumar>Yeah, okay, so yeah, [redacted - portal password], right? So yeah,
+so it's working, right?</v>
+
+02eca936-25fd-4fda-ae33-a5cd1f9959aa/77-0
+00:07:07.421 --> 00:07:08.541
+<v Murthy Rayaprolu>[redacted - portal password].</v>
+
+02eca936-25fd-4fda-ae33-a5cd1f9959aa/78-0
+00:07:10.221 --> 00:07:11.181
+<v Murthy Rayaprolu>[redacted - portal password].</v>
+
+02eca936-25fd-4fda-ae33-a5cd1f9959aa/84-1
+00:07:13.566 --> 00:07:19.065
+<v Hepsi Premkumar>So the way that I did is import
+transcript, right?</v>
+
+02eca936-25fd-4fda-ae33-a5cd1f9959aa/81-0
+00:07:14.701 --> 00:07:14.901
+<v Murthy Rayaprolu>Yeah.</v>
+
+02eca936-25fd-4fda-ae33-a5cd1f9959aa/84-2
+00:07:19.065 --> 00:07:22.301
+<v Hepsi Premkumar>So they can import transcript.</v>
+
+02eca936-25fd-4fda-ae33-a5cd1f9959aa/85-0
+00:07:23.541 --> 00:07:25.421
+<v Hepsi Premkumar>But I have a transcript somewhere.</v>
+
+02eca936-25fd-4fda-ae33-a5cd1f9959aa/88-0
+00:07:31.101 --> 00:07:34.141
+<v Hepsi Premkumar>Weekly Ops review and transcript.</v>
+
+02eca936-25fd-4fda-ae33-a5cd1f9959aa/89-0
+00:07:35.261 --> 00:07:37.101
+<v Hepsi Premkumar>Meeting node C.I.</v>
+
+02eca936-25fd-4fda-ae33-a5cd1f9959aa/96-0
+00:07:40.381 --> 00:07:43.767
+<v Hepsi Premkumar>Sorry,
+I don't know if it's a transcript or</v>
+
+02eca936-25fd-4fda-ae33-a5cd1f9959aa/96-1
+00:07:43.767 --> 00:07:48.539
+<v Hepsi Premkumar>anything. OK, so it will OK, sorry,
+this one because it's OK,</v>
+
+02eca936-25fd-4fda-ae33-a5cd1f9959aa/96-2
+00:07:48.539 --> 00:07:54.080
+<v Hepsi Premkumar>you can you have to make it work. OK,
+so you can import the transcript.</v>
+
+02eca936-25fd-4fda-ae33-a5cd1f9959aa/96-3
+00:07:54.080 --> 00:07:58.621
+<v Hepsi Premkumar>What it will do is it will extract
+everything, the agenda.</v>
+
+02eca936-25fd-4fda-ae33-a5cd1f9959aa/103-0
+00:07:58.701 --> 00:08:07.212
+<v Hepsi Premkumar>The meeting notes and see here if I maybe
+I might have something here, right? OK,</v>
+
+02eca936-25fd-4fda-ae33-a5cd1f9959aa/103-1
+00:08:07.212 --> 00:08:15.515
+<v Hepsi Premkumar>see here it's in extracted everything.
+Then see here you see here it's created.</v>
+
+02eca936-25fd-4fda-ae33-a5cd1f9959aa/103-2
+00:08:15.515 --> 00:08:18.941
+<v Hepsi Premkumar>Then I also wanted to the action.</v>
+
+02eca936-25fd-4fda-ae33-a5cd1f9959aa/104-0
+00:08:20.621 --> 00:08:22.941
+<v Hepsi Premkumar>I want to send an e-mail and all.</v>
+
+02eca936-25fd-4fda-ae33-a5cd1f9959aa/105-0
+00:08:24.301 --> 00:08:28.141
+<v Hepsi Premkumar>So because it was not if I wanted to do
+it manually.</v>
+
+02eca936-25fd-4fda-ae33-a5cd1f9959aa/108-0
+00:08:29.741 --> 00:08:34.649
+<v Hepsi Premkumar>But I want in our case what I'm looking
+is if based on the assignee name,</v>
+
+02eca936-25fd-4fda-ae33-a5cd1f9959aa/108-1
+00:08:34.649 --> 00:08:39.425
+<v Hepsi Premkumar>it should automatically send it.
+Then it take the notes information and</v>
+
+02eca936-25fd-4fda-ae33-a5cd1f9959aa/108-2
+00:08:39.425 --> 00:08:40.221
+<v Hepsi Premkumar>update here.</v>
+
+02eca936-25fd-4fda-ae33-a5cd1f9959aa/109-0
+00:08:41.661 --> 00:08:46.693
+<v Hepsi Premkumar>Update the notes based on or e-mail send
+it to him or emails anything any</v>
+
+02eca936-25fd-4fda-ae33-a5cd1f9959aa/109-1
+00:08:46.693 --> 00:08:49.821
+<v Hepsi Premkumar>transaction happening should be updated
+here.</v>
+
+02eca936-25fd-4fda-ae33-a5cd1f9959aa/110-0
+00:08:51.421 --> 00:08:55.099
+<v Hepsi Premkumar>This is the one I shared,
+but you have to make the pieces working,</v>
+
+02eca936-25fd-4fda-ae33-a5cd1f9959aa/110-1
+00:08:55.099 --> 00:08:57.021
+<v Hepsi Premkumar>but this is what I'm talking about.</v>
+
+02eca936-25fd-4fda-ae33-a5cd1f9959aa/113-0
+00:09:00.781 --> 00:09:01.341
+<v Hepsi Premkumar>Okay.</v>
+
+02eca936-25fd-4fda-ae33-a5cd1f9959aa/114-0
+00:09:02.061 --> 00:09:05.661
+<v Ryan Kang>And we want all this to be like an
+automatic process, right?</v>
+
+02eca936-25fd-4fda-ae33-a5cd1f9959aa/116-0
+00:09:05.781 --> 00:09:08.541
+<v Hepsi Premkumar>Correct, correct. Yes, yes, yes.</v>
+
+02eca936-25fd-4fda-ae33-a5cd1f9959aa/115-0
+00:09:06.541 --> 00:09:07.261
+<v Ryan Kang>I see.</v>
+
+02eca936-25fd-4fda-ae33-a5cd1f9959aa/118-0
+00:09:13.821 --> 00:09:17.740
+<v Leland Nguyen>Oh, Hepsi, just a question regarding,
+like, who's sending out the emails?</v>
+
+02eca936-25fd-4fda-ae33-a5cd1f9959aa/118-1
+00:09:17.740 --> 00:09:21.501
+<v Leland Nguyen>Is it the agent sending out the emails,
+or is it on the user's behalf?</v>
+
+02eca936-25fd-4fda-ae33-a5cd1f9959aa/121-0
+00:09:20.621 --> 00:09:26.290
+<v Hepsi Premkumar>Agent, agent, agent. Oh, no,
+maybe you can do if possible,</v>
+
+02eca936-25fd-4fda-ae33-a5cd1f9959aa/119-0
+00:09:23.261 --> 00:09:23.661
+<v Leland Nguyen>Okay.</v>
+
+02eca936-25fd-4fda-ae33-a5cd1f9959aa/121-1
+00:09:26.290 --> 00:09:34.362
+<v Hepsi Premkumar>whoever the meeting person who organizing
+the meeting or the owner of that meeting,</v>
+
+02eca936-25fd-4fda-ae33-a5cd1f9959aa/120-0
+00:09:30.461 --> 00:09:32.141
+<v Murthy Rayaprolu>Organizer, organizer.</v>
+
+02eca936-25fd-4fda-ae33-a5cd1f9959aa/121-2
+00:09:34.362 --> 00:09:37.341
+<v Hepsi Premkumar>maybe we can send it from them.</v>
+
+02eca936-25fd-4fda-ae33-a5cd1f9959aa/122-0
+00:09:39.021 --> 00:09:39.421
+<v Hepsi Premkumar>Yeah.</v>
+
+02eca936-25fd-4fda-ae33-a5cd1f9959aa/123-0
+00:09:39.501 --> 00:09:40.701
+<v Murthy Rayaprolu>It will be more personal.</v>
+
+02eca936-25fd-4fda-ae33-a5cd1f9959aa/124-0
+00:09:41.341 --> 00:09:41.741
+<v Hepsi Premkumar>Yeah.</v>
+
+02eca936-25fd-4fda-ae33-a5cd1f9959aa/126-0
+00:09:41.661 --> 00:09:42.541
+<v Murthy Rayaprolu>Than the agent.</v>
+
+02eca936-25fd-4fda-ae33-a5cd1f9959aa/125-0
+00:09:41.901 --> 00:09:42.461
+<v Leland Nguyen>Okay.</v>
+
+02eca936-25fd-4fda-ae33-a5cd1f9959aa/127-0
+00:09:42.781 --> 00:09:46.002
+<v Hepsi Premkumar>Make it as a even the content and
+everything,</v>
+
+02eca936-25fd-4fda-ae33-a5cd1f9959aa/127-1
+00:09:46.002 --> 00:09:51.255
+<v Hepsi Premkumar>don't make it as a AI generator. Okay,
+so we can say action item from this</v>
+
+02eca936-25fd-4fda-ae33-a5cd1f9959aa/127-2
+00:09:51.255 --> 00:09:54.547
+<v Hepsi Premkumar>meeting. Hi,
+you have an action item assigned.</v>
+
+02eca936-25fd-4fda-ae33-a5cd1f9959aa/127-3
+00:09:54.547 --> 00:09:57.978
+<v Hepsi Premkumar>Can you plus check and all like that,
+blah blah.</v>
+
+02eca936-25fd-4fda-ae33-a5cd1f9959aa/127-4
+00:09:57.978 --> 00:10:01.901
+<v Hepsi Premkumar>Like a regular normally when you go and
+write manually.</v>
+
+02eca936-25fd-4fda-ae33-a5cd1f9959aa/128-0
+00:10:01.981 --> 00:10:03.901
+<v Hepsi Premkumar>How it is, please do that way.</v>
+
+02eca936-25fd-4fda-ae33-a5cd1f9959aa/129-0
+00:10:05.981 --> 00:10:06.461
+<v Hepsi Premkumar>Okay.</v>
+
+02eca936-25fd-4fda-ae33-a5cd1f9959aa/132-0
+00:10:06.221 --> 00:10:09.604
+<v Ryan Kang>But as of now,
+our cloud or glean can't like directly</v>
+
+02eca936-25fd-4fda-ae33-a5cd1f9959aa/132-1
+00:10:09.604 --> 00:10:13.363
+<v Ryan Kang>access the teams, right,
+to just like pull the transcripts.</v>
+
+02eca936-25fd-4fda-ae33-a5cd1f9959aa/132-2
+00:10:13.363 --> 00:10:16.621
+<v Ryan Kang>So we'd like need that to be done for,
+okay, I see.</v>
+
+02eca936-25fd-4fda-ae33-a5cd1f9959aa/130-0
+00:10:14.981 --> 00:10:15.501
+<v Hepsi Premkumar>Yes.</v>
+
+02eca936-25fd-4fda-ae33-a5cd1f9959aa/131-0
+00:10:16.861 --> 00:10:17.181
+<v Hepsi Premkumar>Yeah.</v>
+
+02eca936-25fd-4fda-ae33-a5cd1f9959aa/133-0
+00:10:19.181 --> 00:10:19.341
+<v Hepsi Premkumar>Yeah.</v>
+
+02eca936-25fd-4fda-ae33-a5cd1f9959aa/135-0
+00:10:21.421 --> 00:10:23.661
+<v Ryan Kang>And is that going to be done by now?</v>
+
+02eca936-25fd-4fda-ae33-a5cd1f9959aa/137-0
+00:10:21.701 --> 00:10:25.421
+<v Hepsi Premkumar>How do you talk? I talk, yeah,
+or so sorry.</v>
+
+02eca936-25fd-4fda-ae33-a5cd1f9959aa/139-0
+00:10:25.661 --> 00:10:31.104
+<v Ryan Kang>So would that process be done by
+engineering or IPT before we kind of kick</v>
+
+02eca936-25fd-4fda-ae33-a5cd1f9959aa/138-0
+00:10:30.541 --> 00:10:30.581
+<v Leland Nguyen>I...</v>
+
+02eca936-25fd-4fda-ae33-a5cd1f9959aa/139-1
+00:10:31.104 --> 00:10:32.701
+<v Ryan Kang>start this project or?</v>
+
+02eca936-25fd-4fda-ae33-a5cd1f9959aa/140-0
+00:10:32.941 --> 00:10:37.284
+<v Hepsi Premkumar>Ohh, you write, you write it up,
+get the module with the Mokka working,</v>
+
+02eca936-25fd-4fda-ae33-a5cd1f9959aa/140-1
+00:10:37.284 --> 00:10:40.301
+<v Hepsi Premkumar>then what to integrate and all we can
+work on it.</v>
+
+02eca936-25fd-4fda-ae33-a5cd1f9959aa/141-0
+00:10:40.541 --> 00:10:41.341
+<v Ryan Kang>Okay.</v>
+
+02eca936-25fd-4fda-ae33-a5cd1f9959aa/142-0
+00:10:41.821 --> 00:10:42.061
+<v Hepsi Premkumar>Yeah.</v>
+
+02eca936-25fd-4fda-ae33-a5cd1f9959aa/144-0
+00:10:45.021 --> 00:10:49.925
+<v Murthy Rayaprolu>So when I try to import a transcript to
+that particular portal Hepsi,</v>
+
+02eca936-25fd-4fda-ae33-a5cd1f9959aa/143-0
+00:10:45.381 --> 00:10:45.781
+<v Hepsi Premkumar>So he did.</v>
+
+02eca936-25fd-4fda-ae33-a5cd1f9959aa/144-1
+00:10:49.925 --> 00:10:55.181
+<v Murthy Rayaprolu>I'm getting an error saying that
+anthropic key, API key is not configured.</v>
+
+02eca936-25fd-4fda-ae33-a5cd1f9959aa/146-0
+00:10:52.541 --> 00:10:58.028
+<v Hepsi Premkumar>The key, right? Yeah, because,
+because the reason is that I had added</v>
+
+02eca936-25fd-4fda-ae33-a5cd1f9959aa/146-1
+00:10:58.028 --> 00:11:03.123
+<v Hepsi Premkumar>the I was working on it developing,
+I added the sent e-mail one,</v>
+
+02eca936-25fd-4fda-ae33-a5cd1f9959aa/146-2
+00:11:03.123 --> 00:11:09.394
+<v Hepsi Premkumar>then I put the and the key option there,
+so that's the reason it's stuck there.</v>
+
+02eca936-25fd-4fda-ae33-a5cd1f9959aa/146-3
+00:11:09.394 --> 00:11:11.981
+<v Hepsi Premkumar>I then after that I didn't touch.</v>
+
+02eca936-25fd-4fda-ae33-a5cd1f9959aa/145-0
+00:11:10.861 --> 00:11:11.261
+<v Murthy Rayaprolu>Yeah.</v>
+
+02eca936-25fd-4fda-ae33-a5cd1f9959aa/149-0
+00:11:12.301 --> 00:11:18.528
+<v Hepsi Premkumar>So that's why they can take it off for
+now and they can do the just a standard</v>
+
+02eca936-25fd-4fda-ae33-a5cd1f9959aa/147-0
+00:11:15.821 --> 00:11:16.141
+<v Murthy Rayaprolu>Okay.</v>
+
+02eca936-25fd-4fda-ae33-a5cd1f9959aa/149-1
+00:11:18.528 --> 00:11:24.045
+<v Hepsi Premkumar>way of sending or something.
+Get this to working model then one thing</v>
+
+02eca936-25fd-4fda-ae33-a5cd1f9959aa/148-0
+00:11:23.901 --> 00:11:24.221
+<v Murthy Rayaprolu>K.</v>
+
+02eca936-25fd-4fda-ae33-a5cd1f9959aa/149-2
+00:11:24.045 --> 00:11:30.666
+<v Hepsi Premkumar>you are you guys have to do really do use
+agent to create this meeting notes if you</v>
+
+02eca936-25fd-4fda-ae33-a5cd1f9959aa/149-3
+00:11:30.666 --> 00:11:31.061
+<v Hepsi Premkumar>just.</v>
+
+02eca936-25fd-4fda-ae33-a5cd1f9959aa/150-0
+00:11:31.181 --> 00:11:37.287
+<v Hepsi Premkumar>To get the way that I have a cloud to
+create, it won't create properly. OK,</v>
+
+02eca936-25fd-4fda-ae33-a5cd1f9959aa/150-1
+00:11:37.287 --> 00:11:43.232
+<v Hepsi Premkumar>so you have to have a backend agent
+running and creating and putting into</v>
+
+02eca936-25fd-4fda-ae33-a5cd1f9959aa/150-2
+00:11:43.232 --> 00:11:46.928
+<v Hepsi Premkumar>here.
+If you adjust to my the way that I have</v>
+
+02eca936-25fd-4fda-ae33-a5cd1f9959aa/150-3
+00:11:46.928 --> 00:11:49.821
+<v Hepsi Premkumar>it, it won't the meeting if you run.</v>
+
+02eca936-25fd-4fda-ae33-a5cd1f9959aa/151-0
+00:11:49.981 --> 00:11:55.655
+<v Hepsi Premkumar>Claude give the transcript go cloud
+desktop and hey Claude can you write</v>
+
+02eca936-25fd-4fda-ae33-a5cd1f9959aa/151-1
+00:11:55.655 --> 00:12:01.796
+<v Hepsi Premkumar>create this and give me that output is
+completely different than when I create</v>
+
+02eca936-25fd-4fda-ae33-a5cd1f9959aa/151-2
+00:12:01.796 --> 00:12:07.159
+<v Hepsi Premkumar>this dashboard using Claude and that
+extraction is some basic thing.</v>
+
+02eca936-25fd-4fda-ae33-a5cd1f9959aa/151-3
+00:12:07.159 --> 00:12:09.181
+<v Hepsi Premkumar>So these two are not same.</v>
+
+02eca936-25fd-4fda-ae33-a5cd1f9959aa/152-0
+00:12:09.501 --> 00:12:14.664
+<v Hepsi Premkumar>That's why in order to get the same
+output, I need to get the key.</v>
+
+02eca936-25fd-4fda-ae33-a5cd1f9959aa/152-1
+00:12:14.664 --> 00:12:19.212
+<v Hepsi Premkumar>But then only we talked about agent.
+So the agent can run,</v>
+
+02eca936-25fd-4fda-ae33-a5cd1f9959aa/152-2
+00:12:19.212 --> 00:12:24.838
+<v Hepsi Premkumar>cloud agent can run and extract,
+but and it will bring the output to the</v>
+
+02eca936-25fd-4fda-ae33-a5cd1f9959aa/152-3
+00:12:24.838 --> 00:12:28.461
+<v Hepsi Premkumar>dashboard. You guys have to do that way.
+Okay.</v>
+
+02eca936-25fd-4fda-ae33-a5cd1f9959aa/153-0
+00:12:32.861 --> 00:12:37.277
+<v Hepsi Premkumar>Think about it,
+we can meet another couple of days after,</v>
+
+02eca936-25fd-4fda-ae33-a5cd1f9959aa/153-1
+00:12:37.277 --> 00:12:42.683
+<v Hepsi Premkumar>maybe Wednesday or Thursday,
+we can meet again and where you are and I</v>
+
+02eca936-25fd-4fda-ae33-a5cd1f9959aa/153-2
+00:12:42.683 --> 00:12:45.501
+<v Hepsi Premkumar>can help and we can discuss the next.</v>
+
+02eca936-25fd-4fda-ae33-a5cd1f9959aa/154-0
+00:12:46.541 --> 00:12:47.981
+<v Hepsi Premkumar>Anything you need more.</v>
+
+02eca936-25fd-4fda-ae33-a5cd1f9959aa/155-0
+00:12:49.741 --> 00:12:53.176
+<v Murthy Rayaprolu>So they have the,
+they both have the permissions to fix the</v>
+
+02eca936-25fd-4fda-ae33-a5cd1f9959aa/155-1
+00:12:53.176 --> 00:12:55.181
+<v Murthy Rayaprolu>anthropic key issue, API key issue.</v>
+
+02eca936-25fd-4fda-ae33-a5cd1f9959aa/157-0
+00:12:55.741 --> 00:12:59.716
+<v Hepsi Premkumar>No, no, we cannot do that.
+That's what I'm asking them to do.</v>
+
+02eca936-25fd-4fda-ae33-a5cd1f9959aa/157-1
+00:12:59.716 --> 00:13:03.821
+<v Hepsi Premkumar>The agent, Claudia agent,
+create the agents to run that behind.</v>
+
+02eca936-25fd-4fda-ae33-a5cd1f9959aa/156-0
+00:13:04.221 --> 00:13:04.701
+<v Murthy Rayaprolu>Okay.</v>
+
+02eca936-25fd-4fda-ae33-a5cd1f9959aa/158-0
+00:13:04.741 --> 00:13:04.941
+<v Ryan Kang>And.</v>
+
+02eca936-25fd-4fda-ae33-a5cd1f9959aa/159-0
+00:13:09.341 --> 00:13:09.741
+<v Hepsi Premkumar>OK.</v>
+
+02eca936-25fd-4fda-ae33-a5cd1f9959aa/160-0
+00:13:09.701 --> 00:13:13.888
+<v Ryan Kang>So just like as of now,
+like the connection from our club to</v>
+
+02eca936-25fd-4fda-ae33-a5cd1f9959aa/160-1
+00:13:13.888 --> 00:13:17.251
+<v Ryan Kang>teams,
+this will be done by like under our team.</v>
+
+02eca936-25fd-4fda-ae33-a5cd1f9959aa/160-2
+00:13:17.251 --> 00:13:22.811
+<v Ryan Kang>So like we're just gonna work on like the
+outline and like the mechanisms of the</v>
+
+02eca936-25fd-4fda-ae33-a5cd1f9959aa/160-3
+00:13:22.811 --> 00:13:26.861
+<v Ryan Kang>agent, not like the connecting part,
+correct? Okay, let's.</v>
+
+02eca936-25fd-4fda-ae33-a5cd1f9959aa/161-0
+00:13:25.501 --> 00:13:28.800
+<v Hepsi Premkumar>Correct, correct, correct, correct,
+correct. Yeah,</v>
+
+02eca936-25fd-4fda-ae33-a5cd1f9959aa/161-1
+00:13:28.800 --> 00:13:33.199
+<v Hepsi Premkumar>then we have to figure it out.
+How maybe we can put it in a folder,</v>
+
+02eca936-25fd-4fda-ae33-a5cd1f9959aa/161-2
+00:13:33.199 --> 00:13:38.181
+<v Hepsi Premkumar>the if you can't directly connect,
+we can have them to put it in the folder.</v>
+
+02eca936-25fd-4fda-ae33-a5cd1f9959aa/161-3
+00:13:38.181 --> 00:13:43.486
+<v Hepsi Premkumar>So then you are more like going to the
+folder and take it and do run the program.</v>
+
+02eca936-25fd-4fda-ae33-a5cd1f9959aa/161-4
+00:13:43.486 --> 00:13:45.621
+<v Hepsi Premkumar>Something like that we can do it.</v>
+
+02eca936-25fd-4fda-ae33-a5cd1f9959aa/162-0
+00:13:48.661 --> 00:13:53.230
+<v Leland Nguyen>Alright, sounds good. Hepsi,
+I'll need to request access for GitHub</v>
+
+02eca936-25fd-4fda-ae33-a5cd1f9959aa/162-1
+00:13:53.230 --> 00:13:57.061
+<v Leland Nguyen>just to, like, for I guess for the future,
+if that's OK.</v>
+
+02eca936-25fd-4fda-ae33-a5cd1f9959aa/163-0
+00:13:56.701 --> 00:14:01.947
+<v Hepsi Premkumar>Yeah, open a case, open a case.
+I will approve if it comes to,</v>
+
+02eca936-25fd-4fda-ae33-a5cd1f9959aa/163-1
+00:14:01.947 --> 00:14:06.860
+<v Hepsi Premkumar>I think it will come to me.
+I will approve for that. Okay.</v>
+
+02eca936-25fd-4fda-ae33-a5cd1f9959aa/163-2
+00:14:06.860 --> 00:14:10.941
+<v Hepsi Premkumar>You have a helper next to you.
+I can see Leland.</v>
+
+02eca936-25fd-4fda-ae33-a5cd1f9959aa/164-0
+00:14:11.901 --> 00:14:14.501
+<v Leland Nguyen>Ohh yeah, I see, yeah.</v>
+
+02eca936-25fd-4fda-ae33-a5cd1f9959aa/165-0
+00:14:15.261 --> 00:14:20.608
+<v Hepsi Premkumar>Okay, okay, okay, so sounds good.
+So we'll do it and we can connect again</v>
+
+02eca936-25fd-4fda-ae33-a5cd1f9959aa/165-1
+00:14:20.608 --> 00:14:26.461
+<v Hepsi Premkumar>Thursday or Wednesday whenever you guys
+wanted to have discussion to more, okay?</v>
+
+02eca936-25fd-4fda-ae33-a5cd1f9959aa/172-0
+00:14:27.821 --> 00:14:32.941
+<v Hepsi Premkumar>Okay. Thank you. Thank you. Thank you.
+Bye bye. Bye. Bye.</v>
+
+02eca936-25fd-4fda-ae33-a5cd1f9959aa/166-0
+00:14:28.141 --> 00:14:29.021
+<v Leland Nguyen>Have a good Hepsi.</v>
+
+02eca936-25fd-4fda-ae33-a5cd1f9959aa/169-0
+00:14:29.181 --> 00:14:31.901
+<v Ryan Kang>It sounds good. Thank you so much.</v>
+
+02eca936-25fd-4fda-ae33-a5cd1f9959aa/167-0
+00:14:30.141 --> 00:14:31.661
+<v Murthy Rayaprolu>Thank you, guys. Thank you.</v>
+
+02eca936-25fd-4fda-ae33-a5cd1f9959aa/171-0
+00:14:30.141 --> 00:14:32.941
+<v Leland Nguyen>All right. Thank you. Bye.</v>
+
+02eca936-25fd-4fda-ae33-a5cd1f9959aa/173-0
+00:14:36.501 --> 00:14:37.581
+<v Leland Nguyen>Yeah, it was good.</v>
+
+02eca936-25fd-4fda-ae33-a5cd1f9959aa/174-0
+00:14:38.341 --> 00:14:41.473
+<v Ryan Kang>Nice, uh,
+should we like divide up like some,</v>
+
+02eca936-25fd-4fda-ae33-a5cd1f9959aa/174-1
+00:14:41.473 --> 00:14:46.989
+<v Ryan Kang>is it possible to kind of like work on
+one, like to work on like a shared agent,</v>
+
+02eca936-25fd-4fda-ae33-a5cd1f9959aa/174-2
+00:14:46.989 --> 00:14:49.101
+<v Ryan Kang>like in a shared cloud setting?</v>
+
+02eca936-25fd-4fda-ae33-a5cd1f9959aa/177-0
+00:14:50.461 --> 00:14:57.251
+<v Leland Nguyen>The issue with the issue is with creating
+an agent is an agent has to run on a</v>
+
+02eca936-25fd-4fda-ae33-a5cd1f9959aa/175-0
+00:14:53.981 --> 00:14:54.461
+<v Ryan Kang>Mhm.</v>
+
+02eca936-25fd-4fda-ae33-a5cd1f9959aa/177-1
+00:14:57.251 --> 00:14:58.541
+<v Leland Nguyen>certain folder.</v>
+
+02eca936-25fd-4fda-ae33-a5cd1f9959aa/176-0
+00:14:58.701 --> 00:14:59.221
+<v Ryan Kang>Reddy.</v>
+
+02eca936-25fd-4fda-ae33-a5cd1f9959aa/178-0
+00:14:59.701 --> 00:15:01.821
+<v Leland Nguyen>And right now we can only do it locally.</v>
+
+02eca936-25fd-4fda-ae33-a5cd1f9959aa/181-0
+00:15:02.861 --> 00:15:05.341
+<v Leland Nguyen>We can, we can maybe share a same GitHub.</v>
+
+02eca936-25fd-4fda-ae33-a5cd1f9959aa/179-0
+00:15:02.941 --> 00:15:03.021
+<v Ryan Kang>Uh.</v>
+
+02eca936-25fd-4fda-ae33-a5cd1f9959aa/182-0
+00:15:05.861 --> 00:15:06.341
+<v Ryan Kang>Mhm.</v>
+
+02eca936-25fd-4fda-ae33-a5cd1f9959aa/183-0
+00:15:06.461 --> 00:15:09.566
+<v Leland Nguyen>and just push the same folders,
+but we'll need to update it manually</v>
+
+02eca936-25fd-4fda-ae33-a5cd1f9959aa/183-1
+00:15:09.566 --> 00:15:10.061
+<v Leland Nguyen>every time.</v>
+
+02eca936-25fd-4fda-ae33-a5cd1f9959aa/184-0
+00:15:10.701 --> 00:15:12.828
+<v Ryan Kang>Okay,
+I mean that part like we can do like if</v>
+
+02eca936-25fd-4fda-ae33-a5cd1f9959aa/184-1
+00:15:12.828 --> 00:15:13.661
+<v Ryan Kang>we do have GitHub.</v>
+
+02eca936-25fd-4fda-ae33-a5cd1f9959aa/185-0
+00:15:14.541 --> 00:15:17.852
+<v Leland Nguyen>Yeah, I Luckey,
+I need a I need a access GitHub though,</v>
+
+02eca936-25fd-4fda-ae33-a5cd1f9959aa/185-1
+00:15:17.852 --> 00:15:19.981
+<v Leland Nguyen>or request access do that right now.</v>
+
+02eca936-25fd-4fda-ae33-a5cd1f9959aa/186-0
+00:15:19.181 --> 00:15:24.230
+<v Ryan Kang>Okay, I already have GitHub access,
+so I'll try like creating our shared</v>
+
+02eca936-25fd-4fda-ae33-a5cd1f9959aa/186-1
+00:15:24.230 --> 00:15:28.035
+<v Ryan Kang>folder and I'll, like for now,
+like today or tomorrow,</v>
+
+02eca936-25fd-4fda-ae33-a5cd1f9959aa/186-2
+00:15:28.035 --> 00:15:30.941
+<v Ryan Kang>I'll just like put in like whatever I can.</v>
+
+02eca936-25fd-4fda-ae33-a5cd1f9959aa/188-0
+00:15:31.581 --> 00:15:34.733
+<v Leland Nguyen>All right, wait,
+do you know which GitHub you requested to</v>
+
+02eca936-25fd-4fda-ae33-a5cd1f9959aa/188-1
+00:15:34.733 --> 00:15:38.261
+<v Leland Nguyen>access from? There's like a lot of,
+is it just GitHub automation?</v>
+
+02eca936-25fd-4fda-ae33-a5cd1f9959aa/187-0
+00:15:35.981 --> 00:15:36.461
+<v Ryan Kang>Yeah.</v>
+
+02eca936-25fd-4fda-ae33-a5cd1f9959aa/189-0
+00:15:40.181 --> 00:15:41.101
+<v Ryan Kang>So...</v>
+
+02eca936-25fd-4fda-ae33-a5cd1f9959aa/190-0
+00:15:41.581 --> 00:15:43.101
+<v Leland Nguyen>Yeah, which tile do you have?</v>
+
+02eca936-25fd-4fda-ae33-a5cd1f9959aa/191-0
+00:15:43.341 --> 00:15:47.661
+<v Ryan Kang>I did GitHub engineering.
+What are like the options that you have</v>
+
+02eca936-25fd-4fda-ae33-a5cd1f9959aa/191-1
+00:15:47.661 --> 00:15:48.381
+<v Ryan Kang>for GitHub?</v>
+
+02eca936-25fd-4fda-ae33-a5cd1f9959aa/192-0
+00:15:48.061 --> 00:15:53.406
+<v Leland Nguyen>I see GitHub Automation IT,
+GitHub Copilot, GitHub Engineering, CTF,</v>
+
+02eca936-25fd-4fda-ae33-a5cd1f9959aa/193-0
+00:15:53.341 --> 00:15:58.701
+<v Ryan Kang>I did get I did get up engineering,
+but I I think I also did get up CTO.</v>
+
+02eca936-25fd-4fda-ae33-a5cd1f9959aa/192-1
+00:15:53.406 --> 00:15:54.181
+<v Leland Nguyen>GitHub IT.</v>
+
+02eca936-25fd-4fda-ae33-a5cd1f9959aa/194-0
+00:16:00.421 --> 00:16:00.941
+<v Ryan Kang>Hold up.</v>
+
+02eca936-25fd-4fda-ae33-a5cd1f9959aa/195-0
+00:16:00.861 --> 00:16:01.581
+<v Leland Nguyen>Okay.</v>
+
+02eca936-25fd-4fda-ae33-a5cd1f9959aa/196-0
+00:16:04.141 --> 00:16:06.301
+<v Leland Nguyen>Let's, I might.</v>
+
+02eca936-25fd-4fda-ae33-a5cd1f9959aa/197-0
+00:16:05.501 --> 00:16:06.861
+<v Ryan Kang>Yeah, this is how confusing.</v>
+
+02eca936-25fd-4fda-ae33-a5cd1f9959aa/198-0
+00:16:09.741 --> 00:16:10.861
+<v Leland Nguyen>Repository for.</v>
+
+02eca936-25fd-4fda-ae33-a5cd1f9959aa/199-0
+00:16:12.301 --> 00:16:13.741
+<v Leland Nguyen>Wonder which one I need.</v>
+
+02eca936-25fd-4fda-ae33-a5cd1f9959aa/200-0
+00:16:17.461 --> 00:16:19.981
+<v Leland Nguyen>Maybe automation sounds about right.</v>
+
+02eca936-25fd-4fda-ae33-a5cd1f9959aa/201-0
+00:16:21.821 --> 00:16:23.821
+<v Leland Nguyen>I miss Gwen, thank you, that's.</v>
+
+02eca936-25fd-4fda-ae33-a5cd1f9959aa/202-0
+00:16:25.021 --> 00:16:26.301
+<v Leland Nguyen>I probably a W tool.</v>
+
+02eca936-25fd-4fda-ae33-a5cd1f9959aa/204-0
+00:16:30.621 --> 00:16:33.493
+<v Leland Nguyen>Yeah, we could, uh, Ryan,
+we could open me another time just to see,</v>
+
+02eca936-25fd-4fda-ae33-a5cd1f9959aa/204-1
+00:16:33.493 --> 00:16:34.701
+<v Leland Nguyen>like, how we can tackle this.</v>
+
+02eca936-25fd-4fda-ae33-a5cd1f9959aa/203-0
+00:16:34.941 --> 00:16:35.581
+<v Ryan Kang>Yeah.</v>
+
+02eca936-25fd-4fda-ae33-a5cd1f9959aa/205-0
+00:16:36.101 --> 00:16:39.181
+<v Leland Nguyen>But it's similar to like what we were
+creating.</v>
+
+02eca936-25fd-4fda-ae33-a5cd1f9959aa/207-0
+00:16:40.541 --> 00:16:42.451
+<v Ryan Kang>Yeah,
+I think it's like a extension of like</v>
+
+02eca936-25fd-4fda-ae33-a5cd1f9959aa/206-0
+00:16:40.701 --> 00:16:41.101
+<v Leland Nguyen>Um...</v>
+
+02eca936-25fd-4fda-ae33-a5cd1f9959aa/207-1
+00:16:42.451 --> 00:16:43.581
+<v Ryan Kang>what we were doing, right?</v>
+
+02eca936-25fd-4fda-ae33-a5cd1f9959aa/209-0
+00:16:53.461 --> 00:16:55.261
+<v Ryan Kang>For GitHub.</v>
+
+02eca936-25fd-4fda-ae33-a5cd1f9959aa/210-0
+00:16:56.421 --> 00:16:58.941
+<v Ryan Kang>Well,
+I think Anil told me like what to do here.</v>
+
+02eca936-25fd-4fda-ae33-a5cd1f9959aa/211-0
+00:17:02.141 --> 00:17:06.796
+<v Leland Nguyen>I might just get the one you have,
+but I'm confused because it says</v>
+
+02eca936-25fd-4fda-ae33-a5cd1f9959aa/211-1
+00:17:06.796 --> 00:17:09.261
+<v Leland Nguyen>engineering. Engineering users only.</v>
+
+02eca936-25fd-4fda-ae33-a5cd1f9959aa/212-0
+00:17:14.381 --> 00:17:18.461
+<v Ryan Kang>Did you click on get up IT request or get
+up automation suite?</v>
+
+02eca936-25fd-4fda-ae33-a5cd1f9959aa/213-0
+00:17:21.821 --> 00:17:24.061
+<v Leland Nguyen>Uh, I haven't clicked on any yet.</v>
+
+02eca936-25fd-4fda-ae33-a5cd1f9959aa/214-0
+00:17:29.581 --> 00:17:30.061
+<v Leland Nguyen>Flowered.</v>
+
+02eca936-25fd-4fda-ae33-a5cd1f9959aa/216-0
+00:17:35.261 --> 00:17:37.821
+<v Ryan Kang>OK, for honesty automation, and...</v>
+
+02eca936-25fd-4fda-ae33-a5cd1f9959aa/217-0
+00:17:43.741 --> 00:17:47.661
+<v Ryan Kang>Yeah, to access like the company GitHub,
+I think I did the CTO thing.</v>
+
+02eca936-25fd-4fda-ae33-a5cd1f9959aa/219-0
+00:17:48.541 --> 00:17:52.400
+<v Leland Nguyen>OK, I'm gonna just do that.
+I think Hepsi can probably just give it</v>
+
+02eca936-25fd-4fda-ae33-a5cd1f9959aa/219-1
+00:17:52.400 --> 00:17:52.741
+<v Leland Nguyen>to me.</v>
+
+02eca936-25fd-4fda-ae33-a5cd1f9959aa/218-0
+00:17:53.061 --> 00:17:53.341
+<v Ryan Kang>Yeah.</v>
+
+02eca936-25fd-4fda-ae33-a5cd1f9959aa/220-0
+00:17:57.141 --> 00:17:58.461
+<v Leland Nguyen>functional area.</v>
+
+02eca936-25fd-4fda-ae33-a5cd1f9959aa/227-0
+00:18:19.101 --> 00:18:21.341
+<v Leland Nguyen>The key to give me all these.</v>
+
+02eca936-25fd-4fda-ae33-a5cd1f9959aa/229-0
+00:18:35.101 --> 00:18:35.901
+<v Leland Nguyen>So, this...</v>
+
+02eca936-25fd-4fda-ae33-a5cd1f9959aa/230-0
+00:18:37.741 --> 00:18:37.781
+<v Leland Nguyen>I.</v>
+
+02eca936-25fd-4fda-ae33-a5cd1f9959aa/247-0
+00:19:29.501 --> 00:19:30.021
+<v Leland Nguyen>Hello.</v>
+
+02eca936-25fd-4fda-ae33-a5cd1f9959aa/252-0
+00:19:49.021 --> 00:19:50.301
+<v Leland Nguyen>Yeah, I submit the ticket.</v>
+
+02eca936-25fd-4fda-ae33-a5cd1f9959aa/253-0
+00:19:53.021 --> 00:19:54.141
+<v Ryan Kang>From GitHub CTO.</v>
+
+02eca936-25fd-4fda-ae33-a5cd1f9959aa/254-0
+00:19:54.701 --> 00:19:55.101
+<v Leland Nguyen>Yeah.</v>
+
+02eca936-25fd-4fda-ae33-a5cd1f9959aa/255-0
+00:19:55.581 --> 00:19:56.301
+<v Ryan Kang>Nice.</v>
+
+02eca936-25fd-4fda-ae33-a5cd1f9959aa/256-0
+00:19:57.101 --> 00:19:58.141
+<v Leland Nguyen>Wait, why is it not working?</v>
+
+02eca936-25fd-4fda-ae33-a5cd1f9959aa/257-0
+00:20:02.221 --> 00:20:05.901
+<v Leland Nguyen>Okay, yeah, that's good. Okay,
+just let me check.</v>
+
+02eca936-25fd-4fda-ae33-a5cd1f9959aa/258-0
+00:20:10.221 --> 00:20:11.661
+<v Leland Nguyen>It should be good, yeah, um...</v>
+
+02eca936-25fd-4fda-ae33-a5cd1f9959aa/259-0
+00:20:13.901 --> 00:20:16.381
+<v Leland Nguyen>Because we can easily create these agents
+on the blog, like...</v>
+
+02eca936-25fd-4fda-ae33-a5cd1f9959aa/263-0
+00:20:17.781 --> 00:20:22.326
+<v Leland Nguyen>He's just like, you use prop to the agent,
+and then you like connect it to some</v>
+
+02eca936-25fd-4fda-ae33-a5cd1f9959aa/261-0
+00:20:20.301 --> 00:20:20.861
+<v Ryan Kang>Yeah.</v>
+
+02eca936-25fd-4fda-ae33-a5cd1f9959aa/263-1
+00:20:22.326 --> 00:20:22.781
+<v Leland Nguyen>folders.</v>
+
+02eca936-25fd-4fda-ae33-a5cd1f9959aa/262-0
+00:20:23.221 --> 00:20:23.421
+<v Ryan Kang>Mm.</v>
+
+02eca936-25fd-4fda-ae33-a5cd1f9959aa/264-0
+00:20:23.981 --> 00:20:26.781
+<v Leland Nguyen>We can probably research how to make a
+good one, but...</v>
+
+02eca936-25fd-4fda-ae33-a5cd1f9959aa/266-0
+00:20:26.061 --> 00:20:29.581
+<v Ryan Kang>We don't have the command center access
+yet, right?</v>
+
+02eca936-25fd-4fda-ae33-a5cd1f9959aa/267-0
+00:20:30.141 --> 00:20:31.901
+<v Leland Nguyen>No, I think she wants us to...</v>
+
+02eca936-25fd-4fda-ae33-a5cd1f9959aa/268-0
+00:20:35.981 --> 00:20:38.381
+<v Leland Nguyen>I guess we're just prototyping our own
+agents.</v>
+
+02eca936-25fd-4fda-ae33-a5cd1f9959aa/269-0
+00:20:38.541 --> 00:20:38.861
+<v Ryan Kang>Uh-huh.</v>
+
+02eca936-25fd-4fda-ae33-a5cd1f9959aa/270-0
+00:20:40.541 --> 00:20:41.261
+<v Leland Nguyen>And then...</v>
+
+02eca936-25fd-4fda-ae33-a5cd1f9959aa/271-0
+00:20:42.141 --> 00:20:43.661
+<v Leland Nguyen>Well, wait, let me go back to...</v>
+
+02eca936-25fd-4fda-ae33-a5cd1f9959aa/272-0
+00:20:45.421 --> 00:20:49.413
+<v Leland Nguyen>I wonder if we can make a mock-up of the
+command center, like the meeting notes,</v>
+
+02eca936-25fd-4fda-ae33-a5cd1f9959aa/272-1
+00:20:49.413 --> 00:20:50.301
+<v Leland Nguyen>like what she had.</v>
+
+02eca936-25fd-4fda-ae33-a5cd1f9959aa/273-0
+00:20:50.861 --> 00:20:51.341
+<v Ryan Kang>Mmh.</v>
+
+02eca936-25fd-4fda-ae33-a5cd1f9959aa/274-0
+00:20:51.581 --> 00:20:52.581
+<v Leland Nguyen>See if I can find it.</v>
+
+02eca936-25fd-4fda-ae33-a5cd1f9959aa/275-0
+00:20:52.541 --> 00:20:54.461
+<v Ryan Kang>Like our, as in like our own prototype.</v>
+
+02eca936-25fd-4fda-ae33-a5cd1f9959aa/278-0
+00:20:55.581 --> 00:20:58.061
+<v Leland Nguyen>Yeah, here, let me share my screen. Like,
+what if we...</v>
+
+02eca936-25fd-4fda-ae33-a5cd1f9959aa/281-0
+00:21:01.781 --> 00:21:04.643
+<v Leland Nguyen>Because, like,
+this is like what she wants, right?</v>
+
+02eca936-25fd-4fda-ae33-a5cd1f9959aa/281-1
+00:21:04.643 --> 00:21:05.261
+<v Leland Nguyen>And then...</v>
+
+02eca936-25fd-4fda-ae33-a5cd1f9959aa/284-0
+00:21:06.461 --> 00:21:10.092
+<v Leland Nguyen>When you imported transcripts,
+you import the transcript and then it</v>
+
+02eca936-25fd-4fda-ae33-a5cd1f9959aa/284-1
+00:21:10.092 --> 00:21:10.461
+<v Leland Nguyen>will...</v>
+
+02eca936-25fd-4fda-ae33-a5cd1f9959aa/294-0
+00:21:15.821 --> 00:21:20.130
+<v Leland Nguyen>Or, wait, Hepsi wants to automate this,
+right? Instead of mainly importing it,</v>
+
+02eca936-25fd-4fda-ae33-a5cd1f9959aa/289-0
+00:21:19.261 --> 00:21:19.741
+<v Ryan Kang>Yeah.</v>
+
+02eca936-25fd-4fda-ae33-a5cd1f9959aa/294-1
+00:21:20.130 --> 00:21:24.111
+<v Leland Nguyen>as soon as the meeting is done,
+then it will like send out action items.</v>
+
+02eca936-25fd-4fda-ae33-a5cd1f9959aa/294-2
+00:21:24.111 --> 00:21:25.421
+<v Leland Nguyen>Is that what she wanted?</v>
+
+02eca936-25fd-4fda-ae33-a5cd1f9959aa/292-0
+00:21:24.421 --> 00:21:24.941
+<v Ryan Kang>Mmh.</v>
+
+02eca936-25fd-4fda-ae33-a5cd1f9959aa/293-0
+00:21:26.021 --> 00:21:26.461
+<v Ryan Kang>Yeah.</v>
+
+02eca936-25fd-4fda-ae33-a5cd1f9959aa/295-0
+00:21:27.181 --> 00:21:27.741
+<v Leland Nguyen>Okay.</v>
+
+02eca936-25fd-4fda-ae33-a5cd1f9959aa/302-0
+00:21:30.901 --> 00:21:34.201
+<v Ryan Kang>But for that,
+like we need like direct cloud access,</v>
+
+02eca936-25fd-4fda-ae33-a5cd1f9959aa/296-0
+00:21:31.261 --> 00:21:31.901
+<v Leland Nguyen>Hello.</v>
+
+02eca936-25fd-4fda-ae33-a5cd1f9959aa/302-1
+00:21:34.201 --> 00:21:38.435
+<v Ryan Kang>like from cloud to Teams, but I don't,
+that's not set yet. So yeah,</v>
+
+02eca936-25fd-4fda-ae33-a5cd1f9959aa/299-0
+00:21:37.341 --> 00:21:39.021
+<v Leland Nguyen>We don't have that, I think.</v>
+
+02eca936-25fd-4fda-ae33-a5cd1f9959aa/302-2
+00:21:38.435 --> 00:21:42.171
+<v Ryan Kang>I think like we're just making the back
+end stuff like the,</v>
+
+02eca936-25fd-4fda-ae33-a5cd1f9959aa/302-3
+00:21:42.171 --> 00:21:46.779
+<v Ryan Kang>like how the engine would work and once
+the connection is stable and set,</v>
+
+02eca936-25fd-4fda-ae33-a5cd1f9959aa/302-4
+00:21:46.779 --> 00:21:49.581
+<v Ryan Kang>I think that's when we kind of implement
+it.</v>
+
+02eca936-25fd-4fda-ae33-a5cd1f9959aa/305-0
+00:21:50.621 --> 00:21:53.400
+<v Leland Nguyen>Yeah,
+so I think right now we'll just do</v>
+
+02eca936-25fd-4fda-ae33-a5cd1f9959aa/305-1
+00:21:53.400 --> 00:21:54.621
+<v Leland Nguyen>regular importing.</v>
+
+02eca936-25fd-4fda-ae33-a5cd1f9959aa/306-0
+00:21:55.021 --> 00:21:55.501
+<v Ryan Kang>Mhm.</v>
+
+02eca936-25fd-4fda-ae33-a5cd1f9959aa/307-0
+00:21:56.981 --> 00:21:58.381
+<v Leland Nguyen>Okay, let me find...</v>
+
+02eca936-25fd-4fda-ae33-a5cd1f9959aa/310-0
+00:22:01.661 --> 00:22:03.501
+<v Leland Nguyen>See if I can download one of these.</v>
+
+02eca936-25fd-4fda-ae33-a5cd1f9959aa/313-0
+00:22:05.101 --> 00:22:06.061
+<v Leland Nguyen>For an example.</v>
+
+02eca936-25fd-4fda-ae33-a5cd1f9959aa/316-0
+00:22:08.381 --> 00:22:10.621
+<v Leland Nguyen>I think that.</v>
+
+02eca936-25fd-4fda-ae33-a5cd1f9959aa/321-0
+00:22:19.181 --> 00:22:21.221
+<v Leland Nguyen>I download this transcript.</v>
+
+02eca936-25fd-4fda-ae33-a5cd1f9959aa/322-0
+00:22:26.141 --> 00:22:26.501
+<v Leland Nguyen>Okay.</v>
+
+02eca936-25fd-4fda-ae33-a5cd1f9959aa/325-0
+00:22:27.341 --> 00:22:29.581
+<v Leland Nguyen>How are you liking school, though,
+like a cow?</v>
+
+02eca936-25fd-4fda-ae33-a5cd1f9959aa/334-0
+00:22:29.901 --> 00:22:35.161
+<v Ryan Kang>School are like the first people syllabus
+week, so it's like been kind of chill,</v>
+
+02eca936-25fd-4fda-ae33-a5cd1f9959aa/334-1
+00:22:35.161 --> 00:22:39.057
+<v Ryan Kang>but like there's like a class that's like
+hella scaring me.</v>
+
+02eca936-25fd-4fda-ae33-a5cd1f9959aa/326-0
+00:22:38.061 --> 00:22:38.621
+<v Leland Nguyen>Lekhan.</v>
+
+02eca936-25fd-4fda-ae33-a5cd1f9959aa/334-2
+00:22:39.057 --> 00:22:43.538
+<v Ryan Kang>Professors like you need you need to know
+like all of these prereqs,</v>
+
+02eca936-25fd-4fda-ae33-a5cd1f9959aa/329-0
+00:22:39.901 --> 00:22:40.381
+<v Leland Nguyen>Oh yeah.</v>
+
+02eca936-25fd-4fda-ae33-a5cd1f9959aa/330-0
+00:22:42.861 --> 00:22:43.501
+<v Leland Nguyen>Yeah.</v>
+
+02eca936-25fd-4fda-ae33-a5cd1f9959aa/334-3
+00:22:43.538 --> 00:22:46.461
+<v Ryan Kang>which I obviously don't know about.
+So yeah.</v>
+
+02eca936-25fd-4fda-ae33-a5cd1f9959aa/333-0
+00:22:45.901 --> 00:22:46.421
+<v Leland Nguyen>Yeah.</v>
+
+02eca936-25fd-4fda-ae33-a5cd1f9959aa/337-0
+00:22:48.381 --> 00:22:49.821
+<v Leland Nguyen>It always happens.</v>
+
+02eca936-25fd-4fda-ae33-a5cd1f9959aa/340-0
+00:22:53.341 --> 00:22:56.621
+<v Ryan Kang>Wait, Leland, you have one one year left,
+right? Two semesters.</v>
+
+02eca936-25fd-4fda-ae33-a5cd1f9959aa/341-0
+00:22:56.781 --> 00:22:57.261
+<v Leland Nguyen>Yeah.</v>
+
+02eca936-25fd-4fda-ae33-a5cd1f9959aa/342-0
+00:22:58.061 --> 00:22:58.621
+<v Ryan Kang>I...</v>
+
+02eca936-25fd-4fda-ae33-a5cd1f9959aa/345-0
+00:22:58.461 --> 00:23:02.621
+<v Leland Nguyen>A bit, a bit scary. It can,
+can I please download this?</v>
+
+02eca936-25fd-4fda-ae33-a5cd1f9959aa/348-0
+00:23:04.141 --> 00:23:04.621
+<v Leland Nguyen>And.</v>
+
+02eca936-25fd-4fda-ae33-a5cd1f9959aa/351-0
+00:23:08.141 --> 00:23:10.221
+<v Leland Nguyen>Yes, yes, I ran it. Let me find that.</v>
+
+02eca936-25fd-4fda-ae33-a5cd1f9959aa/354-0
+00:23:11.981 --> 00:23:16.541
+<v Leland Nguyen>Maybe a gain site?
+I never recorded those over here.</v>
+
+02eca936-25fd-4fda-ae33-a5cd1f9959aa/355-0
+00:23:17.861 --> 00:23:19.101
+<v Leland Nguyen>After I don't have access.</v>
+
+02eca936-25fd-4fda-ae33-a5cd1f9959aa/358-0
+00:23:20.861 --> 00:23:22.061
+<v Leland Nguyen>Bro, I'm not going to shut up.</v>
+
+02eca936-25fd-4fda-ae33-a5cd1f9959aa/361-0
+00:23:23.741 --> 00:23:25.421
+<v Leland Nguyen>I need to start recording my meetings.</v>
+
+02eca936-25fd-4fda-ae33-a5cd1f9959aa/365-0
+00:23:31.341 --> 00:23:33.398
+<v Ryan Kang>Wait,
+you're just downloading the transcripts,</v>
+
+02eca936-25fd-4fda-ae33-a5cd1f9959aa/365-1
+00:23:33.398 --> 00:23:33.661
+<v Ryan Kang>right?</v>
+
+02eca936-25fd-4fda-ae33-a5cd1f9959aa/369-0
+00:23:34.221 --> 00:23:37.261
+<v Leland Nguyen>I'm trying to see,
+but I have no access to any of these.</v>
+
+02eca936-25fd-4fda-ae33-a5cd1f9959aa/368-0
+00:23:36.701 --> 00:23:37.501
+<v Ryan Kang>I will.</v>
+
+02eca936-25fd-4fda-ae33-a5cd1f9959aa/372-0
+00:23:41.101 --> 00:23:41.421
+<v Leland Nguyen>Yes, sir.</v>
+
+02eca936-25fd-4fda-ae33-a5cd1f9959aa/375-0
+00:23:42.061 --> 00:23:47.101
+<v Ryan Kang>I'll send you one of my transcripts.
+I do this all the time, so...</v>
+
+02eca936-25fd-4fda-ae33-a5cd1f9959aa/376-0
+00:23:48.061 --> 00:23:52.861
+<v Leland Nguyen>Yeah, perfect. Yeah, sure.</v>
+
+02eca936-25fd-4fda-ae33-a5cd1f9959aa/379-0
+00:23:55.221 --> 00:23:56.841
+<v Leland Nguyen>Try the same way.
+I actually downloaded one.</v>
+
+02eca936-25fd-4fda-ae33-a5cd1f9959aa/379-1
+00:23:56.841 --> 00:23:57.741
+<v Leland Nguyen>Let me see if this works.</v>
+
+02eca936-25fd-4fda-ae33-a5cd1f9959aa/384-0
+00:24:03.261 --> 00:24:06.541
+<v Leland Nguyen>For a minute,
+worth this small amount of data.</v>
+
+02eca936-25fd-4fda-ae33-a5cd1f9959aa/387-0
+00:24:11.501 --> 00:24:13.181
+<v Leland Nguyen>I think we can help answer that.</v>
+
+02eca936-25fd-4fda-ae33-a5cd1f9959aa/390-0
+00:24:16.141 --> 00:24:16.541
+<v Leland Nguyen>The word?</v>
+
+02eca936-25fd-4fda-ae33-a5cd1f9959aa/391-0
+00:24:21.021 --> 00:24:21.581
+<v Leland Nguyen>Agent.</v>
+
+02eca936-25fd-4fda-ae33-a5cd1f9959aa/394-0
+00:24:23.181 --> 00:24:28.141
+<v Leland Nguyen>Hello, have an error reading the file.</v>
+
+02eca936-25fd-4fda-ae33-a5cd1f9959aa/397-0
+00:24:30.581 --> 00:24:31.661
+<v Leland Nguyen>Little freestyle.</v>
+
+02eca936-25fd-4fda-ae33-a5cd1f9959aa/400-0
+00:24:36.901 --> 00:24:39.221
+<v Leland Nguyen>Brian, can you try? I'm having errors.</v>
+
+02eca936-25fd-4fda-ae33-a5cd1f9959aa/401-0
+00:24:40.181 --> 00:24:43.981
+<v Leland Nguyen>Or is it, or is it analyzing, Ryan? Yeah.</v>
+
+02eca936-25fd-4fda-ae33-a5cd1f9959aa/402-0
+00:24:41.181 --> 00:24:44.861
+<v Ryan Kang>Should I try it on my the H channel on my
+computer?</v>
+
+02eca936-25fd-4fda-ae33-a5cd1f9959aa/404-0
+00:24:45.221 --> 00:24:47.901
+<v Leland Nguyen>Yeah, yeah,
+try importing it on your command center.</v>
+
+02eca936-25fd-4fda-ae33-a5cd1f9959aa/403-0
+00:24:45.941 --> 00:24:46.221
+<v Ryan Kang>Hi.</v>
+
+02eca936-25fd-4fda-ae33-a5cd1f9959aa/407-0
+00:24:51.621 --> 00:24:52.701
+<v Leland Nguyen>Because it's analyzing.</v>
+
+02eca936-25fd-4fda-ae33-a5cd1f9959aa/408-0
+00:24:56.301 --> 00:24:57.421
+<v Ryan Kang>Analyzing.</v>
+
+02eca936-25fd-4fda-ae33-a5cd1f9959aa/420-0
+00:25:30.061 --> 00:25:33.581
+<v Leland Nguyen>Yeah, I'm having cares right now.</v>
+
+02eca936-25fd-4fda-ae33-a5cd1f9959aa/421-0
+00:25:35.981 --> 00:25:37.021
+<v Ryan Kang>I still analyzing.</v>
+
+02eca936-25fd-4fda-ae33-a5cd1f9959aa/434-0
+00:26:08.741 --> 00:26:09.021
+<v Leland Nguyen>Three.</v>
+
+02eca936-25fd-4fda-ae33-a5cd1f9959aa/435-0
+00:26:17.101 --> 00:26:17.581
+<v Leland Nguyen>You.</v>
+
+02eca936-25fd-4fda-ae33-a5cd1f9959aa/438-0
+00:26:19.741 --> 00:26:19.981
+<v Leland Nguyen>Sure.</v>
+
+02eca936-25fd-4fda-ae33-a5cd1f9959aa/441-0
+00:26:24.381 --> 00:26:25.661
+<v Leland Nguyen>So, Katie.</v>
+
+02eca936-25fd-4fda-ae33-a5cd1f9959aa/444-0
+00:26:27.541 --> 00:26:27.901
+<v Leland Nguyen>Hello.</v>
+
+02eca936-25fd-4fda-ae33-a5cd1f9959aa/445-0
+00:26:31.301 --> 00:26:32.861
+<v Leland Nguyen>Water requested for too much.</v>
+
+02eca936-25fd-4fda-ae33-a5cd1f9959aa/477-0
+00:27:20.141 --> 00:27:22.461
+<v Ryan Kang>Oh wait, Faraz, it's still analyzing.</v>
+
+02eca936-25fd-4fda-ae33-a5cd1f9959aa/480-0
+00:27:23.981 --> 00:27:26.861
+<v Leland Nguyen>Wait, try again.
+It might be in the air because...</v>
+
+02eca936-25fd-4fda-ae33-a5cd1f9959aa/483-0
+00:27:30.421 --> 00:27:32.101
+<v Leland Nguyen>Yeah, it should, it should take that long.</v>
+
+02eca936-25fd-4fda-ae33-a5cd1f9959aa/484-0
+00:27:35.221 --> 00:27:36.181
+<v Leland Nguyen>What's my text file?</v>
+
+02eca936-25fd-4fda-ae33-a5cd1f9959aa/485-0
+00:27:35.901 --> 00:27:38.541
+<v Ryan Kang>This is kind of short, so...</v>
+
+02eca936-25fd-4fda-ae33-a5cd1f9959aa/493-0
+00:27:49.341 --> 00:27:51.661
+<v Ryan Kang>Yeah, it keeps us error reading final.</v>
+
+02eca936-25fd-4fda-ae33-a5cd1f9959aa/496-0
+00:27:52.301 --> 00:27:54.621
+<v Leland Nguyen>Yeah, I'm doing a text file right now.</v>
+
+02eca936-25fd-4fda-ae33-a5cd1f9959aa/497-0
+00:27:56.621 --> 00:27:57.421
+<v Leland Nguyen>See the search.</v>
+
+02eca936-25fd-4fda-ae33-a5cd1f9959aa/500-0
+00:28:00.981 --> 00:28:01.821
+<v Leland Nguyen>Where is?</v>
+
+02eca936-25fd-4fda-ae33-a5cd1f9959aa/501-0
+00:28:02.981 --> 00:28:03.981
+<v Leland Nguyen>That's not key.</v>
