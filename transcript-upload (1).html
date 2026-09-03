@@ -1,0 +1,359 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Import Transcript — Meeting Notes Manager</title>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mammoth/1.6.0/mammoth.browser.min.js" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js" crossorigin="anonymous"></script>
+<style>
+  :root {
+    --bg: #f4f6f8;
+    --surface: #ffffff;
+    --ink: #16202b;
+    --ink-soft: #5b6b7a;
+    --line: #dce3ea;
+    --line-strong: #c2cdd8;
+    --accent: #0f766e;
+    --accent-soft: #e3f0ee;
+    --accent-ink: #0a544e;
+    --danger: #b42318;
+    --radius: 10px;
+    --mono: ui-monospace, SFMono-Regular, "SF Mono", Menlo, Consolas, monospace;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    background: var(--bg); color: var(--ink); line-height: 1.55;
+    -webkit-font-smoothing: antialiased; padding: 40px 20px;
+  }
+  .wrap { max-width: 720px; margin: 0 auto; }
+
+  .lead { margin-bottom: 24px; }
+  .lead h1 { font-size: 1.35rem; font-weight: 680; letter-spacing: -0.01em; }
+  .lead p { color: var(--ink-soft); font-size: 0.92rem; margin-top: 4px; }
+
+  .card {
+    background: var(--surface); border: 1px solid var(--line);
+    border-radius: var(--radius); padding: 22px 24px; margin-bottom: 18px;
+  }
+
+  /* Dual input: drop a file OR paste text */
+  .sourced { border-color: var(--accent); }
+  .dropzone {
+    border: 1.5px dashed var(--line-strong); border-radius: var(--radius);
+    padding: 28px 20px; text-align: center; cursor: pointer;
+    transition: border-color .15s, background .15s;
+  }
+  .dropzone:hover { border-color: var(--accent); background: #fafcfc; }
+  .dropzone.dragging { border-color: var(--accent); background: var(--accent-soft); }
+  .dropzone .big { font-size: 0.98rem; font-weight: 600; }
+  .dropzone .small { font-size: 0.82rem; color: var(--ink-soft); margin-top: 4px; }
+  .dropzone input[type=file] { display: none; }
+
+  .filechip {
+    display: none; align-items: center; gap: 10px; justify-content: space-between;
+    margin-top: 14px; padding: 10px 14px; background: var(--accent-soft);
+    border: 1px solid #cfe4e0; border-radius: 8px; font-size: 0.88rem;
+  }
+  .filechip .meta { display: flex; align-items: center; gap: 10px; min-width: 0; }
+  .filechip .name { font-weight: 600; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+  .filechip .fmt {
+    font-family: var(--mono); font-size: 0.72rem; padding: 2px 7px;
+    background: #fff; border: 1px solid #cfe4e0; border-radius: 5px; color: var(--accent-ink);
+  }
+  .filechip button { background: none; border: none; color: var(--ink-soft); cursor: pointer; font-size: 0.85rem; }
+  .filechip button:hover { color: var(--danger); }
+
+  .or { display: flex; align-items: center; gap: 12px; color: var(--ink-soft); font-size: 0.78rem; margin: 16px 0; }
+  .or::before, .or::after { content: ""; height: 1px; background: var(--line); flex: 1; }
+
+  textarea {
+    width: 100%; min-height: 150px; resize: vertical; padding: 12px 14px;
+    border: 1.5px solid var(--line); border-radius: 8px; font-size: 0.88rem;
+    font-family: var(--mono); line-height: 1.6; color: var(--ink); background: var(--surface);
+  }
+  textarea:focus { outline: none; border-color: var(--accent); box-shadow: 0 0 0 3px var(--accent-soft); }
+
+  .fields { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+  .field.full { grid-column: 1 / -1; }
+  label { display: block; font-size: 0.8rem; font-weight: 600; color: var(--ink-soft); margin-bottom: 5px; }
+  label .opt { font-weight: 400; text-transform: none; }
+  input[type=text], input[type=date] {
+    width: 100%; padding: 9px 12px; border: 1.5px solid var(--line);
+    border-radius: 8px; font-size: 0.9rem; color: var(--ink); background: var(--surface);
+    font-family: inherit;
+  }
+  input:focus { outline: none; border-color: var(--accent); box-shadow: 0 0 0 3px var(--accent-soft); }
+  .hint { font-size: 0.78rem; color: var(--ink-soft); margin-top: 14px; }
+
+  .actions { display: flex; gap: 10px; align-items: center; margin-top: 4px; }
+  .btn {
+    padding: 10px 18px; border-radius: 8px; font-size: 0.9rem; font-weight: 600;
+    cursor: pointer; border: 1.5px solid transparent; font-family: inherit;
+  }
+  .btn-primary { background: var(--accent); color: #fff; }
+  .btn-primary:hover { background: var(--accent-ink); }
+  .btn-primary:disabled { background: #a9bcc4; cursor: not-allowed; }
+  .btn-ghost { background: transparent; border-color: var(--line-strong); color: var(--ink); }
+  .btn-ghost:hover { border-color: var(--ink-soft); }
+
+  /* Handoff preview — shows exactly what gets passed to the extraction agent */
+  .handoff { display: none; }
+  .handoff h2 { font-size: 0.92rem; font-weight: 680; }
+  .handoff .sub { font-size: 0.82rem; color: var(--ink-soft); margin: 2px 0 12px; }
+  pre {
+    background: #0f1720; color: #d7e2ea; border-radius: 8px; padding: 16px;
+    font-family: var(--mono); font-size: 0.8rem; line-height: 1.6; overflow-x: auto;
+  }
+  .k { color: #8fd0c6; }
+  .s { color: #e0b87a; }
+  .n { color: #9aa7b2; }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="lead">
+    <h1>Import transcript</h1>
+    <p>Drop or paste a meeting transcript. Extraction pulls the action items from it.</p>
+  </div>
+
+  <div class="card" id="sourceCard">
+    <div class="dropzone" id="dropzone" tabindex="0" role="button" aria-label="Choose a transcript file">
+      <div class="big">Drop a transcript here, or click to choose</div>
+      <div class="small">.txt, .vtt, .docx or .pdf</div>
+      <input type="file" id="fileInput" accept=".txt,.vtt,.docx,.pdf,text/plain,text/vtt,application/pdf,application/vnd.openxmlformats-officedocument.wordprocessingml.document">
+    </div>
+
+    <div class="filechip" id="fileChip">
+      <div class="meta">
+        <span class="fmt" id="fileFmt">TXT</span>
+        <span class="name" id="fileName"></span>
+      </div>
+      <button type="button" id="clearFile">Remove</button>
+    </div>
+
+    <div class="or">or paste text</div>
+
+    <textarea id="pasteArea" placeholder="Paste the transcript text here..."></textarea>
+  </div>
+
+  <div class="card">
+    <div class="fields">
+      <div class="field full">
+        <label for="mTitle">Meeting title <span class="opt">(optional)</span></label>
+        <input type="text" id="mTitle" placeholder="Leave blank to let extraction infer it">
+      </div>
+      <div class="field">
+        <label for="mDate">Meeting date <span class="opt">(optional)</span></label>
+        <input type="date" id="mDate">
+      </div>
+      <div class="field">
+        <label for="mOrganizer">Organizer <span class="opt">(optional)</span></label>
+        <input type="text" id="mOrganizer" placeholder="Used later as the email 'from'">
+      </div>
+    </div>
+    <p class="hint">Anything left blank, the extraction agent tries to infer from the transcript. It never invents an owner or due date.</p>
+  </div>
+
+  <div class="actions">
+    <button class="btn btn-primary" id="submitBtn" disabled>Extract and save</button>
+    <button class="btn btn-ghost" id="resetBtn">Clear</button>
+  </div>
+
+  <div class="card handoff" id="handoff" style="margin-top:18px">
+    <h2>Ready for extraction</h2>
+    <p class="sub">This is the exact payload the form hands to the extraction agent. Wire <code>runExtraction()</code> to Leland's <code>agent.py</code> here.</p>
+    <pre id="payloadOut"></pre>
+  </div>
+</div>
+
+<script>
+  // ---- State: the transcript comes from a file OR the paste box, never both ----
+  let fileData = null; // { name, format, text }
+
+  const dropzone   = document.getElementById('dropzone');
+  const fileInput  = document.getElementById('fileInput');
+  const fileChip   = document.getElementById('fileChip');
+  const fileName   = document.getElementById('fileName');
+  const fileFmt    = document.getElementById('fileFmt');
+  const pasteArea  = document.getElementById('pasteArea');
+  const sourceCard = document.getElementById('sourceCard');
+  const submitBtn  = document.getElementById('submitBtn');
+
+  // pdf.js worker
+  if (window.pdfjsLib) {
+    pdfjsLib.GlobalWorkerOptions.workerSrc =
+      'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js';
+  }
+
+  function detectFormat(name) {
+    const n = name.toLowerCase();
+    if (n.endsWith('.vtt'))  return 'vtt';
+    if (n.endsWith('.docx')) return 'docx';
+    if (n.endsWith('.pdf'))  return 'pdf';
+    return 'txt';
+  }
+
+  // Read plain-text formats directly
+  function readAsText(file) {
+    return new Promise((res, rej) => {
+      const r = new FileReader();
+      r.onload = e => res(e.target.result);
+      r.onerror = () => rej(new Error('Could not read that file.'));
+      r.readAsText(file);
+    });
+  }
+  function readAsBuffer(file) {
+    return new Promise((res, rej) => {
+      const r = new FileReader();
+      r.onload = e => res(e.target.result);
+      r.onerror = () => rej(new Error('Could not read that file.'));
+      r.readAsArrayBuffer(file);
+    });
+  }
+
+  // Word: extract raw text via mammoth
+  async function extractDocx(file) {
+    if (!window.mammoth) throw new Error('Word support did not load. Check your connection and retry.');
+    const arrayBuffer = await readAsBuffer(file);
+    const result = await mammoth.extractRawText({ arrayBuffer });
+    return result.value;
+  }
+
+  // PDF: pull text layer page by page via pdf.js
+  async function extractPdf(file) {
+    if (!window.pdfjsLib) throw new Error('PDF support did not load. Check your connection and retry.');
+    const arrayBuffer = await readAsBuffer(file);
+    const pdf = await pdfjsLib.getDocument({ data: arrayBuffer }).promise;
+    let out = '';
+    for (let i = 1; i <= pdf.numPages; i++) {
+      const page = await pdf.getPage(i);
+      const content = await page.getTextContent();
+      out += content.items.map(it => it.str).join(' ') + '\n';
+    }
+    return out.trim();
+  }
+
+  async function readFile(file) {
+    const format = detectFormat(file.name);
+    if (!/\.(txt|vtt|docx|pdf)$/i.test(file.name)) {
+      alert('Supported formats: .txt, .vtt, .docx, .pdf');
+      return;
+    }
+    setBusy(file.name, format);
+    try {
+      let text;
+      if (format === 'docx')      text = await extractDocx(file);
+      else if (format === 'pdf')  text = await extractPdf(file);
+      else                        text = await readAsText(file);
+
+      if (!text || !text.trim()) {
+        // A PDF with no text layer is almost always a scan — say so plainly.
+        throw new Error(format === 'pdf'
+          ? 'No text found. This PDF looks scanned or image-only, so there is nothing to extract.'
+          : 'That file appears to be empty.');
+      }
+
+      fileData = { name: file.name, format, text };
+      fileName.textContent = file.name;
+      fileFmt.textContent = format.toUpperCase();
+      fileChip.style.display = 'flex';
+      pasteArea.value = '';
+      pasteArea.disabled = true;
+    } catch (err) {
+      clearFile();
+      alert(err.message || 'Could not read that file.');
+    } finally {
+      clearBusy();
+      refresh();
+    }
+  }
+
+  function setBusy(name, format) {
+    fileName.textContent = 'Reading ' + name + '…';
+    fileFmt.textContent = format.toUpperCase();
+    fileChip.style.display = 'flex';
+  }
+  function clearBusy() { /* chip is updated or hidden by caller */ }
+
+  function clearFile() {
+    fileData = null;
+    fileInput.value = '';
+    fileChip.style.display = 'none';
+    pasteArea.disabled = false;
+    refresh();
+  }
+
+  // Enable submit only when there's a transcript from one source
+  function hasTranscript() {
+    return !!(fileData && fileData.text.trim()) || pasteArea.value.trim().length > 0;
+  }
+  function refresh() {
+    const has = hasTranscript();
+    submitBtn.disabled = !has;
+    sourceCard.classList.toggle('sourced', has);
+  }
+
+  // ---- File events ----
+  dropzone.addEventListener('click', () => fileInput.click());
+  dropzone.addEventListener('keydown', e => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); fileInput.click(); } });
+  fileInput.addEventListener('change', e => { if (e.target.files[0]) readFile(e.target.files[0]); });
+  document.getElementById('clearFile').addEventListener('click', clearFile);
+
+  ['dragenter','dragover'].forEach(ev =>
+    dropzone.addEventListener(ev, e => { e.preventDefault(); dropzone.classList.add('dragging'); }));
+  ['dragleave','drop'].forEach(ev =>
+    dropzone.addEventListener(ev, e => { e.preventDefault(); dropzone.classList.remove('dragging'); }));
+  dropzone.addEventListener('drop', e => { if (e.dataTransfer.files[0]) readFile(e.dataTransfer.files[0]); });
+
+  pasteArea.addEventListener('input', refresh);
+
+  // ---- Build the payload the extraction agent expects ----
+  function buildPayload() {
+    const usingFile = !!(fileData && fileData.text.trim());
+    return {
+      transcript:    usingFile ? fileData.text : pasteArea.value,
+      source_name:   usingFile ? fileData.name : 'pasted-text',
+      source_format: usingFile ? fileData.format : 'paste',
+      meeting_title: document.getElementById('mTitle').value.trim() || null,
+      meeting_date:  document.getElementById('mDate').value || null,
+      organizer:     document.getElementById('mOrganizer').value.trim() || null
+    };
+  }
+
+  // ---- HANDOFF POINT ----
+  // Replace this stub with the call into Leland's extraction agent.
+  // It should return the structured action_items JSON defined in requirements.md.
+  function runExtraction(payload) {
+    // TODO(Leland): POST payload to the extraction agent, receive action_items.
+    showPayload(payload); // temporary: show what would be sent
+  }
+
+  document.getElementById('submitBtn').addEventListener('click', () => {
+    if (!hasTranscript()) return;
+    runExtraction(buildPayload());
+  });
+
+  document.getElementById('resetBtn').addEventListener('click', () => {
+    clearFile();
+    pasteArea.value = '';
+    ['mTitle','mDate','mOrganizer'].forEach(id => document.getElementById(id).value = '');
+    document.getElementById('handoff').style.display = 'none';
+    refresh();
+  });
+
+  // Pretty-print the payload so the transcript length is visible but not overwhelming
+  function showPayload(p) {
+    const preview = { ...p, transcript: `[${p.transcript.length} chars]` };
+    const json = JSON.stringify(preview, null, 2)
+      .replace(/"([^"]+)":/g, '"<span class="k">$1</span>":')
+      .replace(/: "([^"]*)"/g, ': "<span class="s">$1</span>"')
+      .replace(/: (null|\d+)/g, ': <span class="n">$1</span>');
+    document.getElementById('payloadOut').innerHTML = json;
+    document.getElementById('handoff').style.display = 'block';
+    document.getElementById('handoff').scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+  }
+</script>
+</body>
+</html>
