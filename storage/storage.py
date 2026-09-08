@@ -11,6 +11,7 @@ save_extraction_result() to persist a meeting and all its action items.
 
 from __future__ import annotations
 
+import json
 import sqlite3
 from datetime import datetime, timezone
 from pathlib import Path
@@ -25,6 +26,9 @@ CREATE TABLE IF NOT EXISTS meetings (
   title TEXT NOT NULL,
   date TEXT NOT NULL,
   organizer TEXT,
+  summary TEXT,
+  agenda TEXT,
+  attendees TEXT,
   created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 
@@ -41,16 +45,31 @@ CREATE TABLE IF NOT EXISTS action_items (
 );
 """
 
+_MIGRATIONS = [
+    "ALTER TABLE meetings ADD COLUMN summary TEXT",
+    "ALTER TABLE meetings ADD COLUMN agenda TEXT",
+    "ALTER TABLE meetings ADD COLUMN attendees TEXT",
+]
+
 
 class Storage:
     """Thin wrapper around one SQLite connection."""
 
     def __init__(self, db_path: str | Path = DEFAULT_DB_PATH):
         self.db_path = str(db_path)
-        self._conn = sqlite3.connect(self.db_path)
+        self._conn = sqlite3.connect(self.db_path, check_same_thread=False)
         self._conn.row_factory = sqlite3.Row
         self._conn.executescript(SCHEMA)
         self._conn.commit()
+        self._run_migrations()
+
+    def _run_migrations(self) -> None:
+        for sql in _MIGRATIONS:
+            try:
+                self._conn.execute(sql)
+                self._conn.commit()
+            except sqlite3.OperationalError:
+                pass  # column already exists
 
     def close(self) -> None:
         self._conn.close()
@@ -65,8 +84,17 @@ class Storage:
 
     def create_meeting(self, meeting: Meeting) -> str:
         self._conn.execute(
-            "INSERT INTO meetings (id, title, date, organizer, created_at) VALUES (?, ?, ?, ?, ?)",
-            (meeting.id, meeting.title, meeting.date, meeting.organizer, meeting.created_at),
+            "INSERT INTO meetings (id, title, date, organizer, summary, agenda, attendees, created_at) VALUES (?, ?, ?, ?, ?, ?, ?, ?)",
+            (
+                meeting.id,
+                meeting.title,
+                meeting.date,
+                meeting.organizer,
+                meeting.summary,
+                json.dumps(meeting.agenda if isinstance(meeting.agenda, list) else []),
+                json.dumps(meeting.attendees if isinstance(meeting.attendees, list) else []),
+                meeting.created_at,
+            ),
         )
         self._conn.commit()
         return meeting.id
@@ -100,6 +128,9 @@ class Storage:
             title=extraction["meeting_title"] or "Untitled meeting",
             date=extraction["meeting_date"] or "",
             organizer=organizer,
+            summary=extraction.get("summary"),
+            agenda=extraction.get("agenda") or [],
+            attendees=extraction.get("attendees") or [],
         )
         self.create_meeting(meeting)
 
@@ -117,9 +148,37 @@ class Storage:
 
     # ---- Read ----
 
+    def _row_to_meeting(self, row: sqlite3.Row) -> Meeting:
+        d = dict(row)
+        d["agenda"] = json.loads(d.get("agenda") or "[]")
+        d["attendees"] = json.loads(d.get("attendees") or "[]")
+        return Meeting(**d)
+
     def get_meetings(self) -> list[Meeting]:
-        rows = self._conn.execute("SELECT * FROM meetings ORDER BY date DESC").fetchall()
-        return [Meeting(**dict(row)) for row in rows]
+        rows = self._conn.execute("SELECT * FROM meetings ORDER BY date DESC, created_at DESC").fetchall()
+        return [self._row_to_meeting(r) for r in rows]
+
+    def get_meeting_with_items(self, meeting_id: str) -> dict | None:
+        row = self._conn.execute("SELECT * FROM meetings WHERE id = ?", (meeting_id,)).fetchone()
+        if row is None:
+            return None
+        meeting = self._row_to_meeting(row)
+        result = meeting.to_dict()
+        items = self._conn.execute(
+            "SELECT * FROM action_items WHERE meeting_id = ? ORDER BY created_at ASC", (meeting_id,)
+        ).fetchall()
+        result["action_items"] = [
+            {
+                "id": r["id"],
+                "description": r["description"],
+                "owner": r["owner"],
+                "due_date": r["due_date"],
+                "status": r["status"],
+                "notes_addendum": r["notes_addendum"] or "",
+            }
+            for r in items
+        ]
+        return result
 
     def get_action_items(self, meeting_id: str, include_completed: bool = False) -> list[ActionItem]:
         query = "SELECT * FROM action_items WHERE meeting_id = ?"

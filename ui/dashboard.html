@@ -1,0 +1,589 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Meeting Dashboard</title>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mammoth/1.6.0/mammoth.browser.min.js" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js" crossorigin="anonymous"></script>
+<style>
+  :root {
+    --light-gray: #e2e8f0; --green: #059669;
+    --border: rgba(0,0,0,.08);
+    --surface: #f8f9fa; --bg: #fafbfc;
+    --text-primary: #111111; --text-secondary: #334155;
+    --radius-lg: 12px; --radius-md: 8px; --radius-sm: 6px;
+    --shadow: 0 2px 8px rgba(0,0,0,0.06);
+    --shadow-md: 0 4px 16px rgba(0,0,0,0.4);
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif; background: var(--bg); color: var(--text-primary); line-height: 1.6; -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale; text-rendering: optimizeLegibility; }
+
+  .atlas-banner{position:sticky;top:0;z-index:500;background:linear-gradient(135deg,#1e40af 0%,#4f46e5 40%,#7c3aed 100%);padding:0 32px;height:56px;display:flex;align-items:center;justify-content:space-between;box-shadow:0 2px 12px rgba(30,64,175,.25)}
+  .atlas-banner-left{display:flex;align-items:center;gap:14px}
+  .atlas-banner-logo{width:32px;height:32px;background:rgba(255,255,255,.2);border-radius:10px;display:flex;align-items:center;justify-content:center;font-weight:800;font-size:13px;color:#fff;backdrop-filter:blur(8px)}
+  .atlas-banner-title{font-size:16px;font-weight:700;color:#fff;letter-spacing:-.3px}
+  .atlas-banner-title span{display:block;font-size:10px;font-weight:500;color:rgba(255,255,255,.7);letter-spacing:.3px;margin-top:1px}
+
+  .header { background: linear-gradient(135deg, #f8f9fa, #eef2f7); color: #111111; padding: 24px 32px; display: flex; justify-content: space-between; align-items: center; box-shadow: var(--shadow-md); border-bottom: 1px solid rgba(0,0,0,.08); flex-wrap: wrap; gap: 12px; }
+  .header h1 { font-size: 1.5rem; font-weight: 700; letter-spacing: -0.02em; }
+  .header-actions { display: flex; gap: 10px; align-items: center; flex-wrap: wrap; }
+
+  .container { max-width: 1100px; margin: 0 auto; padding: 28px 20px; }
+
+  .meeting-info { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius-lg); padding: 20px 24px; margin-bottom: 20px; box-shadow: var(--shadow); display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 16px; }
+  .meeting-info label { font-size: 0.8rem; font-weight: 600; color: var(--text-secondary); text-transform: uppercase; letter-spacing: 0.05em; display: block; margin-bottom: 4px; }
+  .meeting-info .value { font-size: 0.95rem; color: var(--text-primary); padding: 8px 0; font-weight: 500; }
+  .meeting-info .value.muted { color: var(--text-secondary); font-weight: 400; }
+
+  .tiles { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+  .tile { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius-lg); box-shadow: var(--shadow); overflow: hidden; transition: box-shadow 0.2s, border-color 0.2s; }
+  .tile:hover { box-shadow: var(--shadow-md); border-color: rgba(0, 212, 255, 0.3); }
+  .tile-full { grid-column: 1 / -1; }
+  .tile-header { display: flex; justify-content: space-between; align-items: center; padding: 14px 20px; border-bottom: 1px solid var(--border); background: var(--bg); }
+  .tile-header h2 { font-size: 0.95rem; font-weight: 700; color: var(--text-primary); display: flex; align-items: center; gap: 8px; }
+  .tile-header h2 .icon { width: 28px; height: 28px; border-radius: var(--radius-sm); display: flex; align-items: center; justify-content: center; font-size: 0.85rem; }
+  .icon-agenda { background: rgba(0, 212, 255, 0.15); color: #2563eb; }
+  .icon-notes { background: rgba(255, 193, 7, 0.15); color: #d97706; }
+  .icon-actions { background: rgba(40, 167, 69, 0.15); color: #059669; }
+  .tile-body { padding: 16px 20px; }
+  .tile-count { font-size: 0.78rem; font-weight: 400; color: var(--text-secondary); margin-left: 6px; }
+
+  .summary-text { font-size: 0.9rem; color: var(--text-primary); line-height: 1.7; }
+
+  .agenda-list { list-style: none; }
+  .agenda-item { display: flex; align-items: center; gap: 10px; padding: 10px 12px; border-radius: var(--radius-sm); margin-bottom: 6px; background: var(--bg); border: 1px solid transparent; }
+  .agenda-item .num { width: 24px; height: 24px; border-radius: 50%; background: #60a5fa; color: #ffffff; font-size: 0.72rem; font-weight: 700; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+  .agenda-item .text { flex: 1; font-size: 0.9rem; color: var(--text-primary); }
+
+  .action-table { width: 100%; border-collapse: separate; border-spacing: 0; }
+  .action-table th { text-align: left; padding: 10px 12px; font-size: 0.75rem; font-weight: 700; color: var(--text-secondary); text-transform: uppercase; letter-spacing: 0.05em; border-bottom: 2px solid var(--border); background: var(--surface); }
+  .action-table td { padding: 12px; border-bottom: 1px solid var(--border); font-size: 0.88rem; vertical-align: middle; background: var(--surface); }
+  .action-table tr:hover td { background: var(--bg); }
+  .action-table tr.done td { opacity: 0.6; }
+  .action-table tr.done .desc-cell { text-decoration: line-through; text-decoration-color: var(--light-gray); }
+  .desc-cell { font-weight: 560; color: var(--text-primary); }
+  .owner-unassigned { color: var(--text-secondary); font-style: italic; }
+  .due-blank { color: var(--text-secondary); }
+
+  .status-badge { display: inline-block; padding: 3px 10px; border-radius: 20px; font-size: 0.75rem; font-weight: 600; white-space: nowrap; }
+  .status-in_progress { background: rgba(96, 165, 250, 0.15); color: #2563eb; }
+  .status-needs_follow_up { background: rgba(255, 193, 7, 0.15); color: #b45309; }
+  .status-completed { background: rgba(40, 167, 69, 0.12); color: #059669; }
+
+  .btn { padding: 8px 16px; border: none; border-radius: var(--radius-sm); font-size: 0.85rem; font-weight: 600; cursor: pointer; display: inline-flex; align-items: center; gap: 6px; transition: all 0.15s; }
+  .btn-primary { background: #60a5fa; color: #fff; }
+  .btn-primary:hover { background: #3b82f6; }
+  .btn-primary:disabled { background: #a9bcc4; cursor: not-allowed; }
+  .btn-sm { padding: 4px 10px; font-size: 0.78rem; }
+  .btn-complete { background: var(--surface); color: var(--text-primary); border: 1.5px solid var(--border); }
+  .btn-complete:hover { border-color: #059669; color: #059669; background: rgba(40,167,69,0.05); }
+  .btn-ghost { background: transparent; border: 1.5px solid var(--border); color: var(--text-primary); }
+  .btn-ghost:hover { border-color: #94a3b8; }
+  .link-btn { background: none; border: none; padding: 0; font: inherit; font-size: 0.82rem; color: #2563eb; cursor: pointer; font-weight: 600; }
+  .link-btn:hover { text-decoration: underline; }
+  .link-btn:disabled { color: #94a3b8; cursor: not-allowed; }
+  .row-actions { display: flex; gap: 12px; align-items: center; justify-content: flex-end; white-space: nowrap; }
+
+  .toggle { display: inline-flex; align-items: center; gap: 8px; font-size: 0.82rem; color: var(--text-secondary); cursor: pointer; user-select: none; font-weight: 600; }
+  .toggle input { accent-color: #059669; width: 15px; height: 15px; }
+
+  .meeting-selector select { padding: 7px 12px; border: 1.5px solid rgba(0,0,0,.08); border-radius: var(--radius-sm); background: #ffffff; color: #111111; font-size: 0.88rem; min-width: 240px; transition: all 0.15s; }
+  .meeting-selector select:hover { background: #eef2f7; border-color: #adb5bd; }
+
+  .empty-state { text-align: center; padding: 30px; color: var(--text-secondary); font-size: 0.88rem; }
+  .empty-state .big { font-weight: 600; color: var(--text-primary); display: block; margin-bottom: 2px; }
+
+  /* Modals */
+  .overlay { position: fixed; inset: 0; background: rgba(15,23,42,.45); display: none; align-items: flex-start; justify-content: center; z-index: 900; padding: 40px 16px; overflow-y: auto; }
+  .overlay.open { display: flex; }
+  .modal { background: #fff; border-radius: var(--radius-lg); width: 100%; max-width: 620px; box-shadow: 0 20px 60px rgba(0,0,0,.3); }
+  .modal-head { display: flex; justify-content: space-between; align-items: center; padding: 18px 22px; border-bottom: 1px solid var(--border); }
+  .modal-head h2 { font-size: 1.05rem; font-weight: 700; }
+  .modal-head .x { background: none; border: none; font-size: 1.3rem; color: var(--text-secondary); cursor: pointer; line-height: 1; }
+  .modal-body { padding: 22px; }
+
+  .dropzone { border: 1.5px dashed #c2cdd8; border-radius: var(--radius-md); padding: 26px 20px; text-align: center; cursor: pointer; transition: border-color .15s, background .15s; }
+  .dropzone:hover { border-color: #60a5fa; background: #fafcff; }
+  .dropzone.dragging { border-color: #60a5fa; background: rgba(96,165,250,.08); }
+  .dropzone .big { font-size: 0.95rem; font-weight: 600; }
+  .dropzone .small { font-size: 0.8rem; color: var(--text-secondary); margin-top: 4px; }
+  .dropzone input[type=file] { display: none; }
+  .filechip { display: none; align-items: center; gap: 10px; justify-content: space-between; margin-top: 12px; padding: 10px 14px; background: rgba(96,165,250,.1); border: 1px solid rgba(96,165,250,.3); border-radius: 8px; font-size: 0.86rem; }
+  .filechip .name { font-weight: 600; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+  .filechip .fmt { font-family: ui-monospace, Menlo, Consolas, monospace; font-size: 0.7rem; padding: 2px 7px; background: #fff; border: 1px solid rgba(96,165,250,.35); border-radius: 5px; color: #2563eb; }
+  .filechip button { background: none; border: none; color: var(--text-secondary); cursor: pointer; }
+
+  .or { display: flex; align-items: center; gap: 12px; color: var(--text-secondary); font-size: 0.76rem; margin: 14px 0; }
+  .or::before, .or::after { content: ""; height: 1px; background: var(--border); flex: 1; }
+  textarea { width: 100%; min-height: 120px; resize: vertical; padding: 12px 14px; border: 1.5px solid var(--border); border-radius: 8px; font-size: 0.86rem; font-family: ui-monospace, Menlo, Consolas, monospace; line-height: 1.6; }
+  textarea:focus { outline: none; border-color: #60a5fa; box-shadow: 0 0 0 3px rgba(96,165,250,.15); }
+
+  .opt-fields { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-top: 16px; }
+  .opt-fields .full { grid-column: 1 / -1; }
+  .opt-fields label { font-size: 0.76rem; font-weight: 600; color: var(--text-secondary); display: block; margin-bottom: 4px; }
+  .opt-fields input { width: 100%; padding: 8px 11px; border: 1.5px solid var(--border); border-radius: 7px; font-size: 0.88rem; font-family: inherit; }
+  .opt-fields input:focus { outline: none; border-color: #60a5fa; box-shadow: 0 0 0 3px rgba(96,165,250,.15); }
+
+  .modal-foot { display: flex; justify-content: space-between; align-items: center; padding: 16px 22px; border-top: 1px solid var(--border); gap: 12px; }
+  .status-line { font-size: 0.82rem; color: var(--text-secondary); }
+  .status-line.err { color: #dc2626; }
+  .spinner { width: 15px; height: 15px; border: 2px solid rgba(96,165,250,.3); border-top-color: #60a5fa; border-radius: 50%; display: inline-block; animation: spin .7s linear infinite; vertical-align: -2px; margin-right: 6px; }
+  @keyframes spin { to { transform: rotate(360deg); } }
+
+  /* Email draft modal extras */
+  .email-field { margin-bottom: 16px; }
+  .email-field label { font-size: 0.76rem; font-weight: 700; color: var(--text-secondary); text-transform: uppercase; letter-spacing: 0.05em; display: block; margin-bottom: 6px; }
+  .email-subject { font-size: 0.95rem; font-weight: 600; color: var(--text-primary); padding: 10px 14px; background: var(--bg); border: 1px solid var(--border); border-radius: var(--radius-sm); }
+  .email-body { font-size: 0.88rem; color: var(--text-primary); line-height: 1.7; padding: 12px 14px; background: var(--bg); border: 1px solid var(--border); border-radius: var(--radius-sm); white-space: pre-wrap; max-height: 340px; overflow-y: auto; }
+  .email-type-row { display: flex; gap: 10px; margin-bottom: 16px; }
+  .email-type-btn { flex: 1; padding: 8px; border: 1.5px solid var(--border); border-radius: var(--radius-sm); background: var(--surface); font-size: 0.82rem; font-weight: 600; cursor: pointer; text-align: center; }
+  .email-type-btn.active { border-color: #60a5fa; background: rgba(96,165,250,.1); color: #2563eb; }
+  .copy-btn { font-size: 0.78rem; }
+
+  ::selection{background:rgba(37,99,235,.15);color:#111}
+  ::-webkit-scrollbar{width:6px;height:6px}
+  ::-webkit-scrollbar-thumb{background:#cbd5e1;border-radius:8px}
+  select:focus{outline:none;border-color:#2563eb !important;box-shadow:0 0 0 3px rgba(59,130,246,.12) !important}
+  button:active{transform:scale(.97)}
+
+  @media (max-width: 768px) {
+    .tiles { grid-template-columns: 1fr; }
+    .meeting-info { grid-template-columns: 1fr; }
+    .opt-fields { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+<div class="atlas-banner">
+  <div class="atlas-banner-left">
+    <div class="atlas-banner-logo">IB</div>
+    <div class="atlas-banner-title">Meeting Notes<span>Dashboard</span></div>
+  </div>
+</div>
+
+<div class="header">
+  <h1>&#128203; Meeting Dashboard</h1>
+  <div class="header-actions">
+    <div class="meeting-selector">
+      <select id="meetingSelect"></select>
+    </div>
+    <button class="btn btn-primary" id="importBtn">&#43; Import transcript</button>
+  </div>
+</div>
+
+<div class="container">
+  <div id="dashboard"></div>
+</div>
+
+<!-- Import modal -->
+<div class="overlay" id="overlay">
+  <div class="modal">
+    <div class="modal-head">
+      <h2>Import transcript</h2>
+      <button class="x" id="closeModal">&times;</button>
+    </div>
+    <div class="modal-body">
+      <div class="dropzone" id="dropzone" tabindex="0" role="button">
+        <div class="big">Drop a transcript here, or click to choose</div>
+        <div class="small">.txt, .vtt, .docx or .pdf</div>
+        <input type="file" id="fileInput" accept=".txt,.vtt,.docx,.pdf,text/plain,text/vtt,application/pdf,application/vnd.openxmlformats-officedocument.wordprocessingml.document">
+      </div>
+      <div class="filechip" id="fileChip">
+        <span><span class="fmt" id="fileFmt">TXT</span> <span class="name" id="fileName"></span></span>
+        <button type="button" id="clearFile">Remove</button>
+      </div>
+
+      <div class="or">or paste text</div>
+      <textarea id="pasteArea" placeholder="Paste the transcript text here..."></textarea>
+
+      <div class="opt-fields">
+        <div class="full">
+          <label>Meeting title (optional)</label>
+          <input type="text" id="mTitle" placeholder="Leave blank to let extraction infer it">
+        </div>
+        <div>
+          <label>Meeting date (optional)</label>
+          <input type="date" id="mDate">
+        </div>
+        <div>
+          <label>Organizer (optional)</label>
+          <input type="text" id="mOrganizer" placeholder="Used as the email 'from' later">
+        </div>
+      </div>
+    </div>
+    <div class="modal-foot">
+      <span class="status-line" id="statusLine"></span>
+      <div style="display:flex;gap:10px">
+        <button class="btn btn-ghost" id="cancelBtn">Cancel</button>
+        <button class="btn btn-primary" id="extractBtn" disabled>Extract</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Email draft modal -->
+<div class="overlay" id="emailOverlay">
+  <div class="modal" style="max-width:680px">
+    <div class="modal-head">
+      <h2>&#9993; Draft email</h2>
+      <button class="x" id="closeEmailModal">&times;</button>
+    </div>
+    <div class="modal-body">
+      <div class="email-type-row">
+        <button class="email-type-btn active" id="typeAssignment" data-type="assignment">Assignment</button>
+        <button class="email-type-btn" id="typeFollowup" data-type="followup">Follow-up</button>
+      </div>
+      <div id="emailLoading" style="display:none;text-align:center;padding:30px;color:var(--text-secondary)"><span class="spinner"></span> Drafting email…</div>
+      <div id="emailError" style="display:none;color:#dc2626;font-size:0.88rem;padding:10px 0"></div>
+      <div id="emailContent" style="display:none">
+        <div class="email-field">
+          <label>Subject</label>
+          <div class="email-subject" id="emailSubject"></div>
+        </div>
+        <div class="email-field">
+          <label>Body</label>
+          <div class="email-body" id="emailBody"></div>
+        </div>
+      </div>
+    </div>
+    <div class="modal-foot">
+      <span style="font-size:0.78rem;color:var(--text-secondary)">Draft only — copy and send manually</span>
+      <div style="display:flex;gap:10px">
+        <button class="btn btn-ghost copy-btn" id="copyEmailBtn" style="display:none">Copy body</button>
+        <button class="btn btn-ghost" id="cancelEmailBtn">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+  const API = '';  // empty = same origin (Flask serves this file)
+  const STATUS_LABEL = { in_progress: "In progress", needs_follow_up: "Needs follow-up", completed: "Completed" };
+  const VALID_STATUS = ["in_progress", "needs_follow_up", "completed"];
+  let MEETINGS = [];
+  let currentId = null;
+  let fileData = null;
+
+  // ── current meeting from in-memory list ───────────────────────────────────
+  function currentMeeting(){ return MEETINGS.find(m => m.id === currentId); }
+
+  // ── file reading ──────────────────────────────────────────────────────────
+  if (window.pdfjsLib) {
+    pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js';
+  }
+  function detectFormat(name){ const n=name.toLowerCase(); if(n.endsWith('.vtt'))return 'vtt'; if(n.endsWith('.docx'))return 'docx'; if(n.endsWith('.pdf'))return 'pdf'; return 'txt'; }
+  function readText(file){ return new Promise((res,rej)=>{ const r=new FileReader(); r.onload=e=>res(e.target.result); r.onerror=()=>rej(new Error('Could not read that file.')); r.readAsText(file); }); }
+  function readBuffer(file){ return new Promise((res,rej)=>{ const r=new FileReader(); r.onload=e=>res(e.target.result); r.onerror=()=>rej(new Error('Could not read that file.')); r.readAsArrayBuffer(file); }); }
+  async function extractDocx(file){ if(!window.mammoth) throw new Error('Word support did not load.'); const ab=await readBuffer(file); const r=await mammoth.extractRawText({arrayBuffer:ab}); return r.value; }
+  async function extractPdf(file){ if(!window.pdfjsLib) throw new Error('PDF support did not load.'); const ab=await readBuffer(file); const pdf=await pdfjsLib.getDocument({data:ab}).promise; let out=''; for(let i=1;i<=pdf.numPages;i++){ const p=await pdf.getPage(i); const c=await p.getTextContent(); out+=c.items.map(it=>it.str).join(' ')+'\n'; } return out.trim(); }
+
+  async function handleFile(file){
+    const format = detectFormat(file.name);
+    if(!/\.(txt|vtt|docx|pdf)$/i.test(file.name)){ setStatus('Supported formats: .txt, .vtt, .docx, .pdf', true); return; }
+    setStatus('Reading ' + file.name + '...');
+    try {
+      let text;
+      if(format==='docx') text = await extractDocx(file);
+      else if(format==='pdf') text = await extractPdf(file);
+      else text = await readText(file);
+      if(!text || !text.trim()) throw new Error(format==='pdf' ? 'No text found — PDF may be scanned/image-only.' : 'That file appears to be empty.');
+      fileData = { name:file.name, format, text };
+      document.getElementById('fileName').textContent = file.name;
+      document.getElementById('fileFmt').textContent = format.toUpperCase();
+      document.getElementById('fileChip').style.display = 'flex';
+      const pa=document.getElementById('pasteArea'); pa.value=''; pa.disabled=true;
+      setStatus('');
+      refreshExtractBtn();
+    } catch(err){ clearFile(); setStatus(err.message || 'Could not read that file.', true); }
+  }
+  function clearFile(){ fileData=null; document.getElementById('fileInput').value=''; document.getElementById('fileChip').style.display='none'; const pa=document.getElementById('pasteArea'); pa.disabled=false; refreshExtractBtn(); }
+
+  // ── API helpers ───────────────────────────────────────────────────────────
+  async function apiPost(path, body){
+    const res = await fetch(API + path, { method:'POST', headers:{'Content-Type':'application/json'}, body:JSON.stringify(body) });
+    const data = await res.json();
+    if(!res.ok) throw new Error(data.error || `Request failed (${res.status})`);
+    return data;
+  }
+  async function apiPatch(path, body){
+    const res = await fetch(API + path, { method:'PATCH', headers:{'Content-Type':'application/json'}, body:JSON.stringify(body) });
+    const data = await res.json();
+    if(!res.ok) throw new Error(data.error || `Request failed (${res.status})`);
+    return data;
+  }
+
+  // ── Extraction ────────────────────────────────────────────────────────────
+  async function runExtraction(payload){
+    return apiPost('/api/extract', payload);
+  }
+
+  // ── Rendering ─────────────────────────────────────────────────────────────
+  function fmtDate(iso){ if(!iso) return ''; const d=new Date(iso+'T00:00:00'); if(isNaN(d)) return iso; return d.toLocaleDateString(undefined,{month:'short',day:'numeric',year:'numeric'}); }
+  function esc(s){ return String(s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c])); }
+
+  function refreshSelector(){
+    const sel=document.getElementById('meetingSelect');
+    sel.innerHTML='';
+    if(!MEETINGS.length){
+      const o=document.createElement('option'); o.value=''; o.textContent='No meetings yet'; sel.appendChild(o);
+      return;
+    }
+    MEETINGS.forEach(m=>{ const o=document.createElement('option'); o.value=m.id; o.textContent=`${m.meeting_title} · ${fmtDate(m.meeting_date)||'no date'}`; sel.appendChild(o); });
+    sel.value=currentId;
+  }
+
+  function render(){
+    const wrap=document.getElementById('dashboard');
+    if(!MEETINGS.length){
+      wrap.innerHTML=`<div class="empty-state" style="background:var(--surface);border:1px solid var(--border);border-radius:var(--radius-lg);padding:60px 30px"><span class="big">No meetings yet</span>Import a transcript to generate the summary, agenda, and action items.</div>`;
+      return;
+    }
+    const m=currentMeeting();
+    if(!m) return;
+    const people=[]; if(m.organizer) people.push(m.organizer+' (organizer)');
+    (m.attendees||[]).filter(a=>a!==m.organizer).forEach(a=>people.push(a));
+
+    wrap.innerHTML = `
+      <div class="meeting-info">
+        <div><label>Meeting Title</label><div class="value">${esc(m.meeting_title)}</div></div>
+        <div><label>Date</label><div class="value">${fmtDate(m.meeting_date)||'<span class="due-blank">Not specified</span>'}</div></div>
+        <div><label>Organizer &amp; Attendees</label><div class="value muted">${people.length?esc(people.join(', ')):'&mdash;'}</div></div>
+      </div>
+      <div class="tiles">
+        <div class="tile">
+          <div class="tile-header"><h2><span class="icon icon-notes">&#128221;</span> Summary</h2></div>
+          <div class="tile-body"><div class="summary-text">${m.summary?esc(m.summary):'No summary extracted.'}</div></div>
+        </div>
+        <div class="tile">
+          <div class="tile-header"><h2><span class="icon icon-agenda">&#128204;</span> Agenda</h2></div>
+          <div class="tile-body"><ul class="agenda-list" id="agendaBody"></ul></div>
+        </div>
+        <div class="tile tile-full">
+          <div class="tile-header">
+            <h2><span class="icon icon-actions">&#9989;</span> Action Items <span class="tile-count" id="aiCount"></span></h2>
+            <label class="toggle"><input type="checkbox" id="showCompleted"> Show completed</label>
+          </div>
+          <div class="tile-body" style="overflow-x:auto">
+            <table class="action-table">
+              <thead><tr><th style="width:4%">#</th><th style="width:42%">Description</th><th style="width:16%">Owner</th><th style="width:12%">Due</th><th style="width:12%">Status</th><th style="width:14%"></th></tr></thead>
+              <tbody id="actionBody"></tbody>
+            </table>
+          </div>
+        </div>
+      </div>`;
+
+    const agenda=document.getElementById('agendaBody');
+    agenda.innerHTML=(m.agenda&&m.agenda.length)
+      ? m.agenda.map((a,i)=>`<li class="agenda-item"><span class="num">${i+1}</span><span class="text">${esc(a)}</span></li>`).join('')
+      : `<li class="empty-state" style="padding:14px">No agenda extracted.</li>`;
+
+    document.getElementById('showCompleted').addEventListener('change', renderItems);
+    renderItems();
+  }
+
+  function renderItems(){
+    const m=currentMeeting();
+    if(!m) return;
+    const showCompleted=document.getElementById('showCompleted')?.checked || false;
+    const active=m.action_items.filter(a=>a.status!=='completed');
+    const completed=m.action_items.filter(a=>a.status==='completed');
+    document.getElementById('aiCount').textContent=`${active.length} active`+(completed.length?`, ${completed.length} completed`:'');
+    const shown=showCompleted?[...active,...completed]:active;
+    const body=document.getElementById('actionBody');
+    if(!shown.length){ body.innerHTML=`<tr><td colspan="6"><div class="empty-state"><span class="big">Nothing active</span>${completed.length?'All action items for this meeting are complete.':'No action items were extracted.'}</div></td></tr>`; return; }
+    body.innerHTML=shown.map((a,i)=>rowHtml(a,i)).join('');
+    body.querySelectorAll('[data-complete]').forEach(b=>b.addEventListener('click',()=>markComplete(b.getAttribute('data-complete'))));
+    body.querySelectorAll('[data-email]').forEach(b=>b.addEventListener('click',()=>viewDraftEmail(b.getAttribute('data-email'))));
+  }
+
+  function rowHtml(a,i){
+    const done=a.status==='completed';
+    const owner=a.owner?esc(a.owner):`<span class="owner-unassigned">Unassigned</span>`;
+    const due=a.due_date?fmtDate(a.due_date):`<span class="due-blank">&mdash;</span>`;
+    const emailBtn = a.owner
+      ? `<button class="link-btn" data-email="${a.id}">Draft email</button>`
+      : `<button class="link-btn" disabled title="No owner — cannot draft email">Draft email</button>`;
+    const actions=done
+      ? emailBtn
+      : `${emailBtn}<button class="btn btn-complete btn-sm" data-complete="${a.id}">Complete</button>`;
+    return `<tr class="${done?'done':''}"><td>${i+1}</td><td class="desc-cell">${esc(a.description)}</td><td>${owner}</td><td>${due}</td><td><span class="status-badge status-${a.status}">${STATUS_LABEL[a.status]}</span></td><td><div class="row-actions">${actions}</div></td></tr>`;
+  }
+
+  async function markComplete(itemId){
+    const m = currentMeeting();
+    if(!m) return;
+    const item = m.action_items.find(a => a.id === itemId);
+    if(!item) return;
+    item.status = 'completed';  // optimistic update
+    renderItems();
+    try {
+      await apiPatch(`/api/action-items/${itemId}`, { status: 'completed' });
+    } catch(err) {
+      item.status = 'in_progress';  // revert on failure
+      renderItems();
+      alert('Could not update status: ' + err.message);
+    }
+  }
+
+  // ── Email draft modal ─────────────────────────────────────────────────────
+  let _emailMeetingId = null;
+  let _emailItemId = null;
+  let _emailType = 'assignment';
+
+  async function viewDraftEmail(itemId){
+    const m = currentMeeting();
+    if(!m) return;
+    const it = m.action_items.find(a => a.id === itemId);
+    if(!it) return;
+    if(!it.owner){ alert("No owner assigned — cannot draft an email without a recipient."); return; }
+
+    _emailMeetingId = m.id;
+    _emailItemId = itemId;
+    _emailType = 'assignment';
+
+    document.querySelectorAll('.email-type-btn').forEach(b => b.classList.toggle('active', b.dataset.type === _emailType));
+    showEmailModal();
+    await loadEmailDraft();
+  }
+
+  function showEmailModal(){
+    document.getElementById('emailOverlay').classList.add('open');
+  }
+  function closeEmailModalFn(){
+    document.getElementById('emailOverlay').classList.remove('open');
+    _emailMeetingId = null; _emailItemId = null;
+  }
+
+  async function loadEmailDraft(){
+    document.getElementById('emailLoading').style.display = 'block';
+    document.getElementById('emailContent').style.display = 'none';
+    document.getElementById('emailError').style.display = 'none';
+    document.getElementById('copyEmailBtn').style.display = 'none';
+    try {
+      const draft = await apiPost('/api/draft-email', {
+        meeting_id: _emailMeetingId,
+        action_item_id: _emailItemId,
+        email_type: _emailType,
+      });
+      document.getElementById('emailSubject').textContent = draft.subject;
+      document.getElementById('emailBody').textContent = draft.body;
+      document.getElementById('emailContent').style.display = 'block';
+      document.getElementById('copyEmailBtn').style.display = 'inline-flex';
+    } catch(err){
+      document.getElementById('emailError').textContent = err.message;
+      document.getElementById('emailError').style.display = 'block';
+    } finally {
+      document.getElementById('emailLoading').style.display = 'none';
+    }
+  }
+
+  document.getElementById('closeEmailModal').addEventListener('click', closeEmailModalFn);
+  document.getElementById('cancelEmailBtn').addEventListener('click', closeEmailModalFn);
+  document.getElementById('emailOverlay').addEventListener('click', e=>{ if(e.target===document.getElementById('emailOverlay')) closeEmailModalFn(); });
+
+  document.querySelectorAll('.email-type-btn').forEach(btn => {
+    btn.addEventListener('click', async () => {
+      _emailType = btn.dataset.type;
+      document.querySelectorAll('.email-type-btn').forEach(b => b.classList.toggle('active', b.dataset.type === _emailType));
+      await loadEmailDraft();
+    });
+  });
+
+  document.getElementById('copyEmailBtn').addEventListener('click', () => {
+    const body = document.getElementById('emailBody').textContent;
+    navigator.clipboard.writeText(body).then(() => {
+      const btn = document.getElementById('copyEmailBtn');
+      const orig = btn.textContent;
+      btn.textContent = 'Copied!';
+      setTimeout(() => btn.textContent = orig, 1500);
+    });
+  });
+
+  // ── Import modal wiring ───────────────────────────────────────────────────
+  const overlay=document.getElementById('overlay');
+  function openModal(){ overlay.classList.add('open'); }
+  function closeModal(){ overlay.classList.remove('open'); resetModal(); }
+  function resetModal(){ clearFile(); document.getElementById('pasteArea').value=''; ['mTitle','mDate','mOrganizer'].forEach(id=>document.getElementById(id).value=''); setStatus(''); refreshExtractBtn(); }
+  function setStatus(msg,isErr){ const el=document.getElementById('statusLine'); el.innerHTML=msg; el.className='status-line'+(isErr?' err':''); }
+  function hasTranscript(){ return !!(fileData&&fileData.text.trim()) || document.getElementById('pasteArea').value.trim().length>0; }
+  function refreshExtractBtn(){ document.getElementById('extractBtn').disabled=!hasTranscript(); }
+
+  document.getElementById('importBtn').addEventListener('click', openModal);
+  document.getElementById('closeModal').addEventListener('click', closeModal);
+  document.getElementById('cancelBtn').addEventListener('click', closeModal);
+  overlay.addEventListener('click', e=>{ if(e.target===overlay) closeModal(); });
+
+  const dz=document.getElementById('dropzone'), fi=document.getElementById('fileInput');
+  dz.addEventListener('click',()=>fi.click());
+  dz.addEventListener('keydown',e=>{ if(e.key==='Enter'||e.key===' '){e.preventDefault();fi.click();} });
+  fi.addEventListener('change',e=>{ if(e.target.files[0]) handleFile(e.target.files[0]); });
+  document.getElementById('clearFile').addEventListener('click',clearFile);
+  ['dragenter','dragover'].forEach(ev=>dz.addEventListener(ev,e=>{e.preventDefault();dz.classList.add('dragging');}));
+  ['dragleave','drop'].forEach(ev=>dz.addEventListener(ev,e=>{e.preventDefault();dz.classList.remove('dragging');}));
+  dz.addEventListener('drop',e=>{ if(e.dataTransfer.files[0]) handleFile(e.dataTransfer.files[0]); });
+  document.getElementById('pasteArea').addEventListener('input',refreshExtractBtn);
+
+  document.getElementById('extractBtn').addEventListener('click', async ()=>{
+    if(!hasTranscript()) return;
+    const btn=document.getElementById('extractBtn');
+    const usingFile=!!(fileData&&fileData.text.trim());
+    const payload={
+      transcript: usingFile?fileData.text:document.getElementById('pasteArea').value,
+      meeting_title: document.getElementById('mTitle').value.trim()||null,
+      meeting_date: document.getElementById('mDate').value||null,
+      organizer: document.getElementById('mOrganizer').value.trim()||null
+    };
+    btn.disabled=true;
+    setStatus('<span class="spinner"></span>Extracting — this may take 15–30 seconds…');
+    try {
+      const meeting = await runExtraction(payload);
+      MEETINGS.unshift(meeting);
+      currentId = meeting.id;
+      refreshSelector();
+      render();
+      closeModal();
+    } catch(err){
+      setStatus(err.message||'Extraction failed.', true);
+      btn.disabled=false;
+    }
+  });
+
+  document.getElementById('meetingSelect').addEventListener('change', async e => {
+    currentId = e.target.value;
+    // Reload full meeting data (with action items) from server
+    if(currentId){
+      try {
+        const res = await fetch(API + '/api/meetings/' + currentId);
+        if(res.ok){
+          const fresh = await res.json();
+          const idx = MEETINGS.findIndex(m => m.id === currentId);
+          if(idx !== -1) MEETINGS[idx] = fresh;
+        }
+      } catch(_){}
+    }
+    render();
+  });
+
+  // ── Init: load meetings from backend ─────────────────────────────────────
+  async function init(){
+    try {
+      const res = await fetch(API + '/api/meetings');
+      if(res.ok){
+        const list = await res.json();
+        // For each meeting in list, fetch full data with action_items
+        const full = await Promise.all(
+          list.map(m => fetch(API + '/api/meetings/' + m.id).then(r => r.json()).catch(() => m))
+        );
+        MEETINGS = full;
+        if(MEETINGS.length) currentId = MEETINGS[0].id;
+      }
+    } catch(_){}
+    refreshSelector();
+    render();
+  }
+
+  init();
+</script>
+</body>
+</html>

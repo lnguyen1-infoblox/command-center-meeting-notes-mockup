@@ -89,12 +89,33 @@ transcript import", "owner": null, "due_date": null, "status":
 Status is needs_follow_up because the transcript describes a known blocker,
 not routine in-progress work.)
 
+## Summary, agenda, and attendees
+
+Also extract the following three fields:
+
+- summary: A 2–4 sentence narrative paragraph (past tense) summarizing what
+  the meeting covered, what was decided, and any important context. Do NOT
+  list action items here — those go in action_items. If the transcript is
+  mostly logistics with no substantive discussion, a single sentence is fine.
+
+- agenda: A list of the main topics discussed, in the order they came up.
+  Each entry is a short noun phrase (e.g. "Q3 roadmap planning", "Vendor
+  proposal review"). Infer from the conversation flow if no explicit agenda
+  was stated. Empty list [] if nothing is identifiable.
+
+- attendees: A list of the names of every distinct person who spoke or was
+  clearly referenced as present. Extract speaker names from <v …> VTT tags
+  or from how participants address each other. Empty list [] if unclear.
+
 ## Output format
 Return ONLY a JSON object (no prose, no markdown fences) matching this shape:
 
 {
   "meeting_title": "string or null if not provided/derivable",
   "meeting_date": "ISO 8601 date string or null if not provided/derivable",
+  "summary": "string or null",
+  "agenda": ["topic 1", "topic 2"],
+  "attendees": ["Name 1", "Name 2"],
   "action_items": [
     {
       "description": "string, required",

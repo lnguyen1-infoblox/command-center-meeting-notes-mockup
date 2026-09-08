@@ -27,8 +27,23 @@ class Meeting:
     title: str
     date: str
     organizer: str | None = None
+    summary: str | None = None
+    agenda: list = field(default_factory=list)
+    attendees: list = field(default_factory=list)
     id: str = field(default_factory=_new_id)
     created_at: str = field(default_factory=_now)
+
+    def to_dict(self) -> dict:
+        return {
+            "id": self.id,
+            "meeting_title": self.title,
+            "meeting_date": self.date or None,
+            "organizer": self.organizer,
+            "summary": self.summary,
+            "agenda": self.agenda if isinstance(self.agenda, list) else [],
+            "attendees": self.attendees if isinstance(self.attendees, list) else [],
+            "created_at": self.created_at,
+        }
 
 
 @dataclass

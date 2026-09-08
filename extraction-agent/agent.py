@@ -55,6 +55,11 @@ def _validate_extraction(data: dict) -> dict:
         if key not in data:
             raise ValueError(f"Missing required top-level field: {key}")
 
+    # Coerce optional list fields to lists if missing or wrong type
+    for key in ("agenda", "attendees"):
+        if not isinstance(data.get(key), list):
+            data[key] = []
+
     if not isinstance(data["action_items"], list):
         raise ValueError("action_items must be a list")
 
