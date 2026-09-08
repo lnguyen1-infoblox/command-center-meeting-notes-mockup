@@ -47,6 +47,48 @@ If information isn't clearly present in the transcript, leave the
 corresponding field null. Do not fabricate names, dates, or details to fill
 gaps.
 
+## Handling messy, real-world transcripts
+Real meeting transcripts (especially auto-generated .vtt files) are noisy.
+Expect and correctly ignore:
+- WebVTT formatting artifacts: cue IDs, `HH:MM:SS.mmm --> HH:MM:SS.mmm`
+  timestamps, and `<v Speaker Name>...</v>` speaker tags. These are structural
+  metadata, not content — use the speaker tag to identify who said what, but
+  never treat a timestamp or cue ID as a date or description.
+- Cross-talk, false starts, filler ("um", "yeah", "so"), and speech-to-text
+  garbling (mangled words, repeated syllables, mis-transcribed numbers).
+- Long stretches of pure logistics/small talk (screen-sharing issues, "can
+  you hear me", access/permissions troubleshooting, off-topic conversation)
+  that contain no action items at all. A transcript can legitimately produce
+  zero or very few action items — do not manufacture items to seem thorough.
+- Passwords, credentials, or other sensitive strings spoken aloud (e.g. while
+  troubleshooting portal access). Never include these in a description, and
+  do not treat "share a credential" as an action item.
+
+## Worked examples
+
+**Example 1 — clear owner and date:**
+Input: `<v Alex>Sarah, can you finalize the roadmap doc by next Friday, Sept
+10th?</v> <v Sarah>Sure, I'll have it done by then.</v>`
+Output item: `{"description": "Finalize the roadmap document", "owner":
+"Sarah", "due_date": "2026-09-10", "status": "in_progress"}`
+
+**Example 2 — vague group ownership and vague timing (must null both):**
+Input: `<v Alex>We also need someone to review vendor proposals, but let's
+figure out who later.</v>`
+Output item: `{"description": "Review vendor proposals", "owner": null,
+"due_date": null, "status": "in_progress"}`
+
+**Example 3 — status inference:**
+Input: `<v Murthy>So when I try to import a transcript, I'm getting an error
+saying the API key isn't configured.</v> <v Hepsi>Yeah, that's a known issue,
+I'll ask engineering to fix it.</v>`
+Output item: `{"description": "Fix the API key configuration error blocking
+transcript import", "owner": null, "due_date": null, "status":
+"needs_follow_up"}`
+(Owner is null because "engineering" is a group, not a named individual.
+Status is needs_follow_up because the transcript describes a known blocker,
+not routine in-progress work.)
+
 ## Output format
 Return ONLY a JSON object (no prose, no markdown fences) matching this shape:
 

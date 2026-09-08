@@ -1,0 +1,39 @@
+[NOTE: This is a synthetic sample transcript, written for testing purposes.
+It is not a real meeting. Its purpose is to validate the extraction agent's
+*positive* path — clear owners, clear dates, mixed statuses — since the other
+sample transcript (infoblox_command_center_sync.vtt) is a real meeting where
+almost nothing had a clear owner or date, which is good for testing restraint
+but doesn't prove the agent correctly fills fields in when they ARE present.]
+
+Meeting: Q3 Planning Sync
+Date: September 3, 2026
+Attendees: Alex Chen (organizer), Sarah Patel, Marcus Webb, Dana Iyer
+
+Alex: Let's get through the Q3 planning items. Sarah, where are we on the
+roadmap doc?
+
+Sarah: I finished it yesterday, it's done. I posted it in the shared drive.
+
+Alex: Perfect, thanks. Marcus, can you review the vendor proposals for the
+infrastructure upgrade? I don't have a hard deadline for you but let's say
+sometime in the next couple weeks, nothing specific pinned down yet.
+
+Marcus: Sure, I'll get started on it.
+
+Alex: Dana, the customer escalation from last week — is that still open?
+
+Dana: Yeah, it's still open. I'm waiting on a response from their IT team,
+so I'd call it stuck for now until they get back to me.
+
+Alex: Understood. Can you send them a follow-up by this Friday, September 4th?
+
+Dana: Yep, I'll follow up with them Friday.
+
+Alex: One more thing — we talked about redesigning the onboarding flow, but
+let's not commit to anything there yet, it's still just an idea we're kicking
+around.
+
+Alex: Last thing, someone from design needs to look at the new dashboard
+mockups before we ship, but I don't think it matters who exactly.
+
+Alex: Great, thanks everyone. Let's regroup next week.

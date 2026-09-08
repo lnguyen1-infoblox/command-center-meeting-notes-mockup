@@ -1,0 +1,19 @@
+{
+  "_note": "Manually simulated (no API access yet) — same approach used for the extraction agent's sample transcript. Validates the prompt/rules by hand until a real API run is possible.",
+  "input": {
+    "email_type": "followup",
+    "meeting_title": "Q3 Planning Sync",
+    "meeting_date": "2026-09-03",
+    "organizer": "Alex Chen",
+    "action_item": {
+      "description": "Follow up with the customer's IT team on the open escalation",
+      "owner": "Dana Iyer",
+      "due_date": "2026-09-04",
+      "status": "needs_follow_up"
+    }
+  },
+  "expected_email": {
+    "subject": "Checking in: customer escalation from Q3 Planning Sync",
+    "body": "Hi Dana,\n\nWanted to check in on the customer IT escalation from our Q3 Planning Sync — did the follow-up on the 4th go out, and have you heard back from their team yet?\n\nLet me know where things stand.\n\nThanks,\nAlex"
+  }
+}

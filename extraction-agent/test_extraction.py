@@ -8,7 +8,9 @@ import json
 from types import SimpleNamespace
 from unittest.mock import MagicMock
 
-from agent import extract_action_items, load_system_prompt
+import pytest
+
+from agent import _validate_extraction, extract_action_items, load_system_prompt
 
 SAMPLE_TRANSCRIPT = """
 [10:00] Alex: Let's kick off Q3 planning.
@@ -99,7 +101,67 @@ def test_extract_action_items_does_not_invent_owner_or_due_date():
     assert unassigned_item["due_date"] is None
 
 
-if __name__ == "__main__":
-    import pytest
+def test_validate_extraction_accepts_well_formed_data():
+    assert _validate_extraction(EXPECTED_RESPONSE) == EXPECTED_RESPONSE
 
+
+def test_validate_extraction_rejects_missing_top_level_field():
+    bad = {"meeting_title": "X", "action_items": []}  # missing meeting_date
+    with pytest.raises(ValueError, match="meeting_date"):
+        _validate_extraction(bad)
+
+
+def test_validate_extraction_rejects_invalid_status():
+    bad = {
+        "meeting_title": "X",
+        "meeting_date": None,
+        "action_items": [
+            {"description": "Do the thing", "owner": None, "due_date": None, "status": "done"}
+        ],
+    }
+    with pytest.raises(ValueError, match="status"):
+        _validate_extraction(bad)
+
+
+def test_validate_extraction_rejects_empty_description():
+    bad = {
+        "meeting_title": "X",
+        "meeting_date": None,
+        "action_items": [
+            {"description": "", "owner": None, "due_date": None, "status": "in_progress"}
+        ],
+    }
+    with pytest.raises(ValueError, match="description"):
+        _validate_extraction(bad)
+
+
+def test_validate_extraction_rejects_non_string_owner():
+    bad = {
+        "meeting_title": "X",
+        "meeting_date": None,
+        "action_items": [
+            {"description": "Do the thing", "owner": 123, "due_date": None, "status": "in_progress"}
+        ],
+    }
+    with pytest.raises(ValueError, match="owner"):
+        _validate_extraction(bad)
+
+
+def test_extract_action_items_raises_on_schema_violation_from_model():
+    malformed = json.dumps(
+        {
+            "meeting_title": "Q3 Planning Session",
+            "meeting_date": "2026-09-01",
+            "action_items": [
+                {"description": "Do something", "owner": None, "due_date": None, "status": "done"}
+            ],
+        }
+    )
+    mock_client = _make_mock_client(malformed)
+
+    with pytest.raises(ValueError, match="status"):
+        extract_action_items(SAMPLE_TRANSCRIPT, client=mock_client)
+
+
+if __name__ == "__main__":
     raise SystemExit(pytest.main([__file__, "-v"]))

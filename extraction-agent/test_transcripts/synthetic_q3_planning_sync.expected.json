@@ -1,0 +1,30 @@
+{
+  "meeting_title": "Q3 Planning Sync",
+  "meeting_date": "2026-09-03",
+  "action_items": [
+    {
+      "description": "Finalize the Q3 roadmap document",
+      "owner": "Sarah Patel",
+      "due_date": null,
+      "status": "completed"
+    },
+    {
+      "description": "Review vendor proposals for the infrastructure upgrade",
+      "owner": "Marcus Webb",
+      "due_date": null,
+      "status": "in_progress"
+    },
+    {
+      "description": "Follow up with the customer's IT team on the open escalation",
+      "owner": "Dana Iyer",
+      "due_date": "2026-09-04",
+      "status": "needs_follow_up"
+    },
+    {
+      "description": "Review the new dashboard mockups before shipping",
+      "owner": null,
+      "due_date": null,
+      "status": "in_progress"
+    }
+  ]
+}

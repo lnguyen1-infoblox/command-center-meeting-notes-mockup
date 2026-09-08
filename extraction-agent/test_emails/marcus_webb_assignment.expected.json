@@ -1,0 +1,19 @@
+{
+  "_note": "Manually simulated (no API access yet) — same approach used for the extraction agent's sample transcript. Validates the prompt/rules by hand until a real API run is possible.",
+  "input": {
+    "email_type": "assignment",
+    "meeting_title": "Q3 Planning Sync",
+    "meeting_date": "2026-09-03",
+    "organizer": "Alex Chen",
+    "action_item": {
+      "description": "Review vendor proposals for the infrastructure upgrade",
+      "owner": "Marcus Webb",
+      "due_date": null,
+      "status": "in_progress"
+    }
+  },
+  "expected_email": {
+    "subject": "Action item from Q3 Planning Sync",
+    "body": "Hi Marcus,\n\nFrom today's Q3 Planning Sync, you're set to review the vendor proposals for the infrastructure upgrade — no firm deadline yet, just whenever you can get to it in the next couple weeks.\n\nLet me know if you need anything from the team to get started.\n\nThanks,\nAlex"
+  }
+}

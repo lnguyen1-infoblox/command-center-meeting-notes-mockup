@@ -38,6 +38,48 @@ def _parse_json_response(text: str) -> dict:
     return json.loads(text)
 
 
+VALID_STATUSES = {"in_progress", "completed", "needs_follow_up"}
+
+
+def _validate_extraction(data: dict) -> dict:
+    """Enforce the schema from requirements.md before this reaches storage.
+
+    A model that violates the schema (wrong type, invented status value,
+    missing required field) should fail loudly here rather than silently
+    corrupt the storage layer downstream.
+    """
+    if not isinstance(data, dict):
+        raise ValueError(f"Expected a JSON object, got {type(data).__name__}")
+
+    for key in ("meeting_title", "meeting_date", "action_items"):
+        if key not in data:
+            raise ValueError(f"Missing required top-level field: {key}")
+
+    if not isinstance(data["action_items"], list):
+        raise ValueError("action_items must be a list")
+
+    for i, item in enumerate(data["action_items"]):
+        if not isinstance(item, dict):
+            raise ValueError(f"action_items[{i}] must be an object")
+
+        description = item.get("description")
+        if not isinstance(description, str) or not description.strip():
+            raise ValueError(f"action_items[{i}].description must be a non-empty string")
+
+        for field in ("owner", "due_date"):
+            value = item.get(field)
+            if value is not None and not isinstance(value, str):
+                raise ValueError(f"action_items[{i}].{field} must be a string or null")
+
+        status = item.get("status")
+        if status not in VALID_STATUSES:
+            raise ValueError(
+                f"action_items[{i}].status must be one of {sorted(VALID_STATUSES)}, got {status!r}"
+            )
+
+    return data
+
+
 def extract_action_items(
     transcript: str,
     meeting_title: str | None = None,
@@ -84,7 +126,7 @@ def extract_action_items(
     response_text = "".join(
         block.text for block in response.content if block.type == "text"
     )
-    return _parse_json_response(response_text)
+    return _validate_extraction(_parse_json_response(response_text))
 
 
 if __name__ == "__main__":
