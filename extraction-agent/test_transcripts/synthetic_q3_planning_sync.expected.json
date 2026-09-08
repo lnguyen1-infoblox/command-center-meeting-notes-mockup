@@ -1,6 +1,9 @@
 {
   "meeting_title": "Q3 Planning Sync",
   "meeting_date": "2026-09-03",
+  "summary": "The team reviewed Q3 planning items: Sarah completed the roadmap doc, Marcus took on vendor proposal review with no fixed deadline, and Dana committed to following up with a customer's IT team on an open escalation by Friday. The onboarding flow redesign was tabled as just an idea, and design still needs to review the new dashboard mockups before shipping.",
+  "agenda": ["Q3 roadmap status", "Vendor proposal review", "Customer escalation follow-up", "Dashboard mockup review"],
+  "attendees": ["Alex Chen", "Sarah Patel", "Marcus Webb", "Dana Iyer"],
   "action_items": [
     {
       "description": "Finalize the Q3 roadmap document",

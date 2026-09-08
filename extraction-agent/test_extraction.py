@@ -22,6 +22,9 @@ SAMPLE_TRANSCRIPT = """
 EXPECTED_RESPONSE = {
     "meeting_title": "Q3 Planning Session",
     "meeting_date": "2026-09-01",
+    "summary": "The team kicked off Q3 planning, assigning the roadmap doc to Sarah and flagging vendor proposals for review.",
+    "agenda": ["Q3 planning kickoff"],
+    "attendees": ["Alex", "Sarah"],
     "action_items": [
         {
             "description": "Finalize the Q3 roadmap document",

@@ -1,6 +1,9 @@
 {
   "meeting_title": "Infoblox Command Center Sync",
   "meeting_date": null,
+  "summary": "Hepsi walked Ryan and Leland through the meeting notes manager module she wants prototyped: an agent that extracts action items from a transcript, stores them, and drafts follow-up emails in the organizer's voice. She explained this is a standalone mockup (not a PRD) to hand off to engineering, noted that Outlook integration isn't confirmed yet, and that transcript import on her own build is currently broken because of a half-configured Anthropic API key. The team also worked through GitHub access requests needed to collaborate on the repo.",
+  "agenda": ["Meeting notes manager module walkthrough", "Project assignment and team roles", "GitHub access setup", "Anthropic API key blocker"],
+  "attendees": ["Hepsi Premkumar", "Ryan Kang", "Murthy Rayaprolu", "Leland Nguyen"],
   "action_items": [
     {
       "description": "Submit a GitHub access request ticket to enable pushing code to a shared repository",
