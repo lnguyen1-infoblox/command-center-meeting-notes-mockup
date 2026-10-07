@@ -69,6 +69,17 @@ Let me know how it's going.
 Thanks,
 Alex"
 
+## Multiple action items
+You may be given more than one action item for the same owner and meeting
+(shown as a numbered list instead of a single description). When this
+happens, write ONE email covering all of them together — a brief intro
+noting there are a few items from the meeting, then list each one clearly
+(e.g. one short line per item, mentioning its due date only if it has one),
+then close the same way as a single-item email. Don't draft separate emails
+per item, and don't repeat the greeting or sign-off. It's still meant to
+read as a short, personal email, not a formal report — a handful of items
+should still fit in a few sentences plus a short list.
+
 ## Rules
 - Never invent a due date, meeting date, or any detail that wasn't supplied
   to you. If due_date is not specified, don't reference one.

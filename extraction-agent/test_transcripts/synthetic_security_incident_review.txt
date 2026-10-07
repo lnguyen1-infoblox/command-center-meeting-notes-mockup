@@ -1,0 +1,46 @@
+[NOTE: Synthetic sample transcript for testing. Not a real meeting.
+Exercises: an absolute due date (not a relative "Friday"), an
+already-completed item, a blocked/needs_follow_up item with no date,
+a vague/no-owner item, an explicitly-deferred discussion point, and a
+genuinely ambiguous two-person item that should resolve to owner=null.]
+
+Meeting: Weekly Security Incident Review
+Date: September 24, 2026
+Attendees: Priya Nair (organizer), Tom Reyes, Jamie Wu, Chris Alvarez
+
+Priya: Let's go through this week's incidents. Tom, where are we on the
+phishing campaign investigation?
+
+Tom: We've identified the source domain and blocked it. I still need to
+write up the incident report for compliance, I'll have that done by
+October 1st.
+
+Priya: Great. Jamie, what about the firewall rule audit?
+
+Jamie: That's actually done, I finished it Tuesday and posted the results
+in the shared doc.
+
+Priya: Perfect. Chris, any update on the access review for the terminated
+contractor accounts?
+
+Chris: Still working through it. It's slow going since I'm cross-referencing
+against HR's offboarding list, and they haven't gotten back to me yet, so
+I'd call this blocked for now.
+
+Priya: Can you ping HR again and let us know at our next check-in?
+
+Chris: Will do.
+
+Priya: One more thing, we talked about migrating to the new SIEM platform,
+but that's a much bigger initiative and we're not committing to a timeline
+today, just flagging it to revisit next quarter.
+
+Priya: Also, someone from the network team needs to review the new
+segmentation rules before we roll them out, but I don't have a specific
+person in mind yet.
+
+Priya: Last item, Tom and Jamie both worked on the vendor risk assessment
+together, so I'm not sure who should own the final sign-off, we'll figure
+that out separately.
+
+Priya: Thanks everyone, that's all for today.

@@ -1,0 +1,165 @@
+WEBVTT
+
+f4a1c2e9-3b7d-4f2a-9c1e-8a2d5e6f7b3c/1-0
+00:00:02.410 --> 00:00:07.220
+<v Maria Torres>Okay, I think we're all here, let's get started.
+Let's go through the launch checklist.</v>
+
+f4a1c2e9-3b7d-4f2a-9c1e-8a2d5e6f7b3c/1-1
+00:00:07.220 --> 00:00:11.890
+<v Maria Torres>Ben, can you give us a status on the backend
+load testing?</v>
+
+f4a1c2e9-3b7d-4f2a-9c1e-8a2d5e6f7b3c/2-0
+00:00:12.340 --> 00:00:17.005
+<v Ben Okafor>Yeah, so that's actually done. We ran it against
+twice our expected peak traffic</v>
+
+f4a1c2e9-3b7d-4f2a-9c1e-8a2d5e6f7b3c/2-1
+00:00:17.005 --> 00:00:20.870
+<v Ben Okafor>and it held up fine. I posted the full results
+in the shared doc this morning.</v>
+
+f4a1c2e9-3b7d-4f2a-9c1e-8a2d5e6f7b3c/3-0
+00:00:21.410 --> 00:00:22.960
+<v Maria Torres>Awesome, thank you.</v>
+
+f4a1c2e9-3b7d-4f2a-9c1e-8a2d5e6f7b3c/4-0
+00:00:23.500 --> 00:00:28.115
+<v Maria Torres>Priya, where are we on the app store submission,
+the screenshots and copy?</v>
+
+f4a1c2e9-3b7d-4f2a-9c1e-8a2d5e6f7b3c/5-0
+00:00:28.900 --> 00:00:33.220
+<v Priya Sharma>Almost there. I'm redoing the final set of
+screenshots for the new onboarding flow,</v>
+
+f4a1c2e9-3b7d-4f2a-9c1e-8a2d5e6f7b3c/5-1
+00:00:33.220 --> 00:00:36.480
+<v Priya Sharma>I can have those finished by Thursday.</v>
+
+f4a1c2e9-3b7d-4f2a-9c1e-8a2d5e6f7b3c/6-0
+00:00:36.900 --> 00:00:37.610
+<v Maria Torres>Perfect.</v>
+
+f4a1c2e9-3b7d-4f2a-9c1e-8a2d5e6f7b3c/7-0
+00:00:38.210 --> 00:00:42.330
+<v Maria Torres>Jordan, how's regression testing looking on
+your end?</v>
+
+f4a1c2e9-3b7d-4f2a-9c1e-8a2d5e6f7b3c/8-0
+00:00:43.010 --> 00:00:47.740
+<v Jordan Lee>Honestly, kind of stuck. The staging environment
+keeps flaking out mid-run,</v>
+
+f4a1c2e9-3b7d-4f2a-9c1e-8a2d5e6f7b3c/8-1
+00:00:47.740 --> 00:00:52.615
+<v Jordan Lee>and I filed a ticket with IT to look at the VM but
+haven't heard back yet. So it's blocked for now.</v>
+
+f4a1c2e9-3b7d-4f2a-9c1e-8a2d5e6f7b3c/9-0
+00:00:53.210 --> 00:00:56.870
+<v Maria Torres>Okay, can you follow up with IT again and let us
+know at the next sync?</v>
+
+f4a1c2e9-3b7d-4f2a-9c1e-8a2d5e6f7b3c/10-0
+00:00:57.310 --> 00:00:58.020
+<v Jordan Lee>Yep, will do.</v>
+
+f4a1c2e9-3b7d-4f2a-9c1e-8a2d5e6f7b3c/11-0
+00:00:58.900 --> 00:01:03.560
+<v Maria Torres>Next thing, we need someone from marketing to
+confirm the embargo date,</v>
+
+f4a1c2e9-3b7d-4f2a-9c1e-8a2d5e6f7b3c/11-1
+00:01:03.560 --> 00:01:06.210
+<v Maria Torres>but I don't think anyone from that team is on
+this call.</v>
+
+f4a1c2e9-3b7d-4f2a-9c1e-8a2d5e6f7b3c/12-0
+00:01:06.740 --> 00:01:07.310
+<v Ben Okafor>Yeah, no.</v>
+
+f4a1c2e9-3b7d-4f2a-9c1e-8a2d5e6f7b3c/13-0
+00:01:08.010 --> 00:01:12.665
+<v Maria Torres>We'll have to circle back on that separately.
+Okay, so, one more thing,</v>
+
+f4a1c2e9-3b7d-4f2a-9c1e-8a2d5e6f7b3c/13-1
+00:01:12.665 --> 00:01:18.420
+<v Maria Torres>someone floated doing a soft launch in Canada
+first before the full rollout,</v>
+
+f4a1c2e9-3b7d-4f2a-9c1e-8a2d5e6f7b3c/13-2
+00:01:18.420 --> 00:01:22.110
+<v Maria Torres>but we are not deciding that today, just
+noting it as an idea.</v>
+
+f4a1c2e9-3b7d-4f2a-9c1e-8a2d5e6f7b3c/14-0
+00:01:22.740 --> 00:01:23.410
+<v Priya Sharma>Sure.</v>
+
+f4a1c2e9-3b7d-4f2a-9c1e-8a2d5e6f7b3c/15-0
+00:01:24.110 --> 00:01:28.970
+<v Maria Torres>Ben, Priya, I know you two have been working
+together on the release notes doc,</v>
+
+f4a1c2e9-3b7d-4f2a-9c1e-8a2d5e6f7b3c/15-1
+00:01:28.970 --> 00:01:32.315
+<v Maria Torres>who's actually driving that one to done?</v>
+
+f4a1c2e9-3b7d-4f2a-9c1e-8a2d5e6f7b3c/16-0
+00:01:32.900 --> 00:01:34.210
+<v Ben Okafor>Uh, good question.</v>
+
+f4a1c2e9-3b7d-4f2a-9c1e-8a2d5e6f7b3c/17-0
+00:01:34.610 --> 00:01:38.720
+<v Priya Sharma>Yeah, we've both just been adding to it, we
+haven't really split it up.</v>
+
+f4a1c2e9-3b7d-4f2a-9c1e-8a2d5e6f7b3c/18-0
+00:01:39.310 --> 00:01:42.870
+<v Maria Torres>Okay, let's sort that out after this and I'll
+follow up.</v>
+
+f4a1c2e9-3b7d-4f2a-9c1e-8a2d5e6f7b3c/19-0
+00:01:43.510 --> 00:01:48.320
+<v Maria Torres>Last thing, the pricing page copy, can someone
+send me the final draft</v>
+
+f4a1c2e9-3b7d-4f2a-9c1e-8a2d5e6f7b3c/19-1
+00:01:48.320 --> 00:01:49.910
+<v Maria Torres>by October 5th?</v>
+
+f4a1c2e9-3b7d-4f2a-9c1e-8a2d5e6f7b3c/20-0
+00:01:50.410 --> 00:01:52.660
+<v Ben Okafor>I can take that, yeah, October 5th works.</v>
+
+f4a1c2e9-3b7d-4f2a-9c1e-8a2d5e6f7b3c/21-0
+00:01:53.210 --> 00:01:53.910
+<v Maria Torres>Great, thank you.</v>
+
+f4a1c2e9-3b7d-4f2a-9c1e-8a2d5e6f7b3c/22-0
+00:01:54.410 --> 00:01:55.010
+<v Jordan Lee>Sorry, you're frozen.</v>
+
+f4a1c2e9-3b7d-4f2a-9c1e-8a2d5e6f7b3c/23-0
+00:01:55.610 --> 00:01:56.310
+<v Maria Torres>Can you hear me now?</v>
+
+f4a1c2e9-3b7d-4f2a-9c1e-8a2d5e6f7b3c/24-0
+00:01:56.710 --> 00:01:57.210
+<v Ben Okafor>Yep.</v>
+
+f4a1c2e9-3b7d-4f2a-9c1e-8a2d5e6f7b3c/25-0
+00:01:57.810 --> 00:02:01.420
+<v Maria Torres>Okay, great, I think that covers everything.
+Thanks everyone, talk soon.</v>
+
+f4a1c2e9-3b7d-4f2a-9c1e-8a2d5e6f7b3c/26-0
+00:02:01.910 --> 00:02:02.410
+<v Priya Sharma>Bye.</v>
+
+f4a1c2e9-3b7d-4f2a-9c1e-8a2d5e6f7b3c/27-0
+00:02:02.510 --> 00:02:02.960
+<v Jordan Lee>Bye.</v>

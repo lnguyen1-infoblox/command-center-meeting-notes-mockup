@@ -23,7 +23,7 @@ from flask import Flask, jsonify, request, send_from_directory
 from flask_cors import CORS
 
 from agent import extract_action_items
-from email_agent import draft_email
+from email_agent import draft_email_batch
 from storage import Storage
 
 app = Flask(__name__, static_folder=str(Path(__file__).parent), static_url_path="")
@@ -95,10 +95,13 @@ def api_update_action_item(item_id: str):
     body = request.get_json(force=True)
     status = body.get("status")
     note = body.get("note") or None
-    if not status:
-        return jsonify({"error": "status is required"}), 400
+    edit_fields = {k: body[k] for k in ("description", "owner", "due_date") if k in body}
+
     try:
-        _storage.update_status(item_id, status, note=note)
+        if edit_fields:
+            _storage.update_action_item(item_id, edit_fields)
+        if status:
+            _storage.update_status(item_id, status, note=note)
     except ValueError as exc:
         return jsonify({"error": str(exc)}), 400
     return jsonify({"ok": True})
@@ -110,37 +113,77 @@ def api_update_action_item(item_id: str):
 def api_draft_email():
     body = request.get_json(force=True)
     meeting_id = body.get("meeting_id")
-    action_item_id = body.get("action_item_id")
+    action_item_ids = body.get("action_item_ids") or []
     email_type = body.get("email_type", "assignment")
 
-    if not meeting_id or not action_item_id:
-        return jsonify({"error": "meeting_id and action_item_id are required"}), 400
+    if not meeting_id or not action_item_ids:
+        return jsonify({"error": "meeting_id and action_item_ids are required"}), 400
 
     meeting = _storage.get_meeting_with_items(meeting_id)
     if meeting is None:
         return jsonify({"error": "Meeting not found"}), 404
 
-    action_item = next(
-        (a for a in meeting["action_items"] if a["id"] == action_item_id), None
-    )
-    if action_item is None:
-        return jsonify({"error": "Action item not found"}), 404
+    items = [a for a in meeting["action_items"] if a["id"] in action_item_ids]
+    if len(items) != len(set(action_item_ids)):
+        return jsonify({"error": "One or more action items not found"}), 404
 
-    if not action_item.get("owner"):
-        return jsonify({"error": "This action item has no owner — cannot draft an email without a recipient."}), 422
+    owners = {a.get("owner") for a in items}
+    if not all(owners):
+        return jsonify({"error": "One or more selected action items has no owner — cannot draft an email without a recipient."}), 422
+    if len(owners) > 1:
+        return jsonify({"error": "All selected action items must belong to the same owner for a single draft."}), 422
 
     try:
-        draft = draft_email(
+        draft = draft_email_batch(
             email_type=email_type,
             meeting_title=meeting["meeting_title"],
             meeting_date=meeting.get("meeting_date"),
             organizer=meeting.get("organizer") or "the meeting organizer",
-            action_item=action_item,
+            owner=items[0]["owner"],
+            action_items=items,
         )
     except Exception as exc:
         return jsonify({"error": f"Email draft failed: {exc}"}), 500
 
     return jsonify(draft)
+
+
+# ── Email queue (M365 send-testing bridge) ──────────────────────────────────
+# Queuing a draft here does NOT send it. This app has no Graph/M365
+# credentials of its own — nothing in this process can reach a mailbox.
+# A queued row just sits as 'pending' until a human operator, working
+# through their own connected M365 account, reviews it and sends it,
+# then calls the /sent route below to mark it done.
+
+@app.route("/api/email-queue", methods=["POST"])
+def api_queue_email():
+    body = request.get_json(force=True)
+    meeting_id = body.get("meeting_id")
+    action_item_ids = body.get("action_item_ids") or []
+    recipient = (body.get("recipient") or "").strip()
+    subject = body.get("subject")
+    email_body = body.get("body")
+
+    if not all([meeting_id, action_item_ids, recipient, subject, email_body]):
+        return jsonify({"error": "meeting_id, action_item_ids, recipient, subject, and body are required"}), 400
+
+    queue_id = _storage.queue_email(meeting_id, action_item_ids, recipient, subject, email_body)
+    return jsonify({"id": queue_id, "status": "pending"}), 201
+
+
+@app.route("/api/email-queue", methods=["GET"])
+def api_list_email_queue():
+    status = request.args.get("status")
+    return jsonify(_storage.get_email_queue(status=status))
+
+
+@app.route("/api/email-queue/<queue_id>/sent", methods=["POST"])
+def api_mark_email_sent(queue_id: str):
+    try:
+        _storage.mark_email_sent(queue_id)
+    except ValueError as exc:
+        return jsonify({"error": str(exc)}), 404
+    return jsonify({"ok": True})
 
 
 if __name__ == "__main__":

@@ -10,7 +10,7 @@ from unittest.mock import MagicMock
 
 import pytest
 
-from email_agent import _validate_email, draft_email, load_email_system_prompt
+from email_agent import _validate_email, draft_email, draft_email_batch, load_email_system_prompt
 
 MEETING_TITLE = "Q3 Planning Sync"
 MEETING_DATE = "2026-09-03"
@@ -100,6 +100,43 @@ def test_draft_email_passes_context_to_model():
     assert ORGANIZER in user_message
     assert "Marcus Webb" in user_message
     assert ASSIGNED_ITEM["description"] in user_message
+
+
+def test_draft_email_batch_rejects_missing_owner():
+    mock_client = _make_mock_client(json.dumps(EXPECTED_EMAIL))
+    with pytest.raises(ValueError, match="no owner"):
+        draft_email_batch("assignment", MEETING_TITLE, MEETING_DATE, ORGANIZER, None, [ASSIGNED_ITEM], client=mock_client)
+    mock_client.messages.create.assert_not_called()
+
+
+def test_draft_email_batch_rejects_empty_items():
+    mock_client = _make_mock_client(json.dumps(EXPECTED_EMAIL))
+    with pytest.raises(ValueError, match="non-empty list"):
+        draft_email_batch("assignment", MEETING_TITLE, MEETING_DATE, ORGANIZER, "Marcus Webb", [], client=mock_client)
+    mock_client.messages.create.assert_not_called()
+
+
+def test_draft_email_batch_combines_multiple_items():
+    mock_client = _make_mock_client(json.dumps(EXPECTED_EMAIL))
+    second_item = {
+        "description": "Schedule the vendor kickoff call",
+        "owner": "Marcus Webb",
+        "due_date": "2026-09-15",
+        "status": "in_progress",
+    }
+
+    result = draft_email_batch(
+        "assignment", MEETING_TITLE, MEETING_DATE, ORGANIZER, "Marcus Webb",
+        [ASSIGNED_ITEM, second_item], client=mock_client,
+    )
+
+    assert result == EXPECTED_EMAIL
+    _, kwargs = mock_client.messages.create.call_args
+    user_message = kwargs["messages"][0]["content"]
+    assert "Action items (2)" in user_message
+    assert ASSIGNED_ITEM["description"] in user_message
+    assert second_item["description"] in user_message
+    assert "Marcus Webb" in user_message
 
 
 def test_validate_email_rejects_empty_subject():

@@ -74,20 +74,67 @@ def draft_email(
     address the email to for an unassigned action item, and this function
     will not guess a recipient.
 
+    Thin wrapper around draft_email_batch for a single-item list.
+
+    Returns {"subject": str, "body": str}. Does not send anything.
+    """
+    owner = action_item.get("owner")
+    return draft_email_batch(
+        email_type, meeting_title, meeting_date, organizer, owner, [action_item],
+        client=client, model=model,
+    )
+
+
+def draft_email_batch(
+    email_type: EmailType,
+    meeting_title: str,
+    meeting_date: str | None,
+    organizer: str,
+    owner: str | None,
+    action_items: list[dict],
+    client: anthropic.Anthropic | None = None,
+    model: str = MODEL,
+) -> dict:
+    """Draft one organizer-voiced email covering one or more action items
+    for a single owner.
+
+    Each item in action_items must match agent.py's output schema
+    (description, owner, due_date, status). owner must not be None/empty —
+    there is no one to address the email to, and this function will not
+    guess a recipient. Callers are responsible for grouping items by owner
+    before calling this — it does not check that every item's own "owner"
+    field matches the owner argument.
+
     Returns {"subject": str, "body": str}. Does not send anything.
     """
     if email_type not in VALID_EMAIL_TYPES:
         raise ValueError(f"email_type must be one of {sorted(VALID_EMAIL_TYPES)}, got {email_type!r}")
 
-    owner = action_item.get("owner")
     if not owner:
         raise ValueError("Cannot draft an email for an action item with no owner")
 
-    description = action_item.get("description")
-    if not description:
-        raise ValueError("action_item.description is required")
+    if not action_items:
+        raise ValueError("action_items must be a non-empty list")
+
+    for item in action_items:
+        if not item.get("description"):
+            raise ValueError("action_item.description is required")
 
     client = client or anthropic.Anthropic()
+
+    if len(action_items) == 1:
+        item = action_items[0]
+        items_text = (
+            f"Action item description: {item['description']}\n"
+            f"Due date: {item.get('due_date') or 'not specified'}\n"
+            f"Status: {item.get('status', 'in_progress')}"
+        )
+    else:
+        items_text = f"Action items ({len(action_items)}):\n" + "\n".join(
+            f"{i}. {item['description']} (due: {item.get('due_date') or 'not specified'}, "
+            f"status: {item.get('status', 'in_progress')})"
+            for i, item in enumerate(action_items, start=1)
+        )
 
     user_message = (
         f"Email type: {email_type}\n"
@@ -95,9 +142,7 @@ def draft_email(
         f"Meeting date: {meeting_date or 'not specified'}\n"
         f"Organizer: {organizer}\n"
         f"Owner: {owner}\n"
-        f"Action item description: {description}\n"
-        f"Due date: {action_item.get('due_date') or 'not specified'}\n"
-        f"Status: {action_item.get('status', 'in_progress')}\n"
+        f"{items_text}\n"
     )
 
     response = client.messages.create(

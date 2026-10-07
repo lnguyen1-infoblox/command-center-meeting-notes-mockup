@@ -123,5 +123,62 @@ def test_update_status_rejects_invalid_status(store):
         store.update_status(item.id, "done")
 
 
+def test_update_action_item_edits_only_given_fields(store):
+    meeting_id = store.save_extraction_result(EXTRACTION_RESULT)
+    item = [i for i in store.get_action_items(meeting_id, include_completed=True) if i.owner == "Sarah Patel"][0]
+
+    store.update_action_item(item.id, {"description": "Finalize and circulate the Q3 roadmap"})
+
+    updated = [i for i in store.get_action_items(meeting_id, include_completed=True) if i.id == item.id][0]
+    assert updated.description == "Finalize and circulate the Q3 roadmap"
+    assert updated.owner == "Sarah Patel"  # untouched
+
+
+def test_update_action_item_can_clear_owner_and_due_date(store):
+    meeting_id = store.save_extraction_result(EXTRACTION_RESULT)
+    item = [i for i in store.get_action_items(meeting_id) if i.owner == "Marcus Webb"][0]
+
+    store.update_action_item(item.id, {"owner": None, "due_date": None})
+
+    updated = [i for i in store.get_action_items(meeting_id) if i.id == item.id][0]
+    assert updated.owner is None
+    assert updated.due_date is None
+
+
+def test_update_action_item_rejects_empty_description(store):
+    meeting_id = store.save_extraction_result(EXTRACTION_RESULT)
+    item = store.get_action_items(meeting_id)[0]
+
+    with pytest.raises(ValueError, match="description"):
+        store.update_action_item(item.id, {"description": "   "})
+
+
+def test_queue_email_and_get_pending(store):
+    meeting_id = store.save_extraction_result(EXTRACTION_RESULT)
+    items = store.get_action_items(meeting_id)
+    ids = [items[0].id, items[1].id]
+
+    queue_id = store.queue_email(meeting_id, ids, "person@infoblox.com", "Subject", "Body")
+
+    pending = store.get_email_queue(status="pending")
+    assert len(pending) == 1
+    assert pending[0]["id"] == queue_id
+    assert pending[0]["action_item_ids"] == ids
+    assert pending[0]["recipient"] == "person@infoblox.com"
+
+
+def test_mark_email_sent(store):
+    meeting_id = store.save_extraction_result(EXTRACTION_RESULT)
+    item = store.get_action_items(meeting_id)[0]
+    queue_id = store.queue_email(meeting_id, [item.id], "person@infoblox.com", "Subject", "Body")
+
+    store.mark_email_sent(queue_id)
+
+    assert store.get_email_queue(status="pending") == []
+    sent = store.get_email_queue(status="sent")
+    assert len(sent) == 1
+    assert sent[0]["id"] == queue_id
+
+
 if __name__ == "__main__":
     raise SystemExit(pytest.main([__file__, "-v"]))
