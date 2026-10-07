@@ -66,6 +66,10 @@
   .owner-unassigned { color: var(--text-secondary); font-style: italic; }
   .due-blank { color: var(--text-secondary); }
 
+  .owner-group-row td { background: #eef2f7; font-weight: 700; padding: 9px 12px; border-bottom: 1px solid var(--border); }
+  .owner-group-name { margin-right: 8px; color: var(--text-primary); }
+  .owner-group-count { font-size: 0.75rem; font-weight: 500; color: var(--text-secondary); text-transform: none; letter-spacing: normal; }
+
   .status-badge { display: inline-block; padding: 3px 10px; border-radius: 20px; font-size: 0.75rem; font-weight: 600; white-space: nowrap; }
   .status-in_progress { background: rgba(96, 165, 250, 0.15); color: #2563eb; }
   .status-needs_follow_up { background: rgba(255, 193, 7, 0.15); color: #b45309; }
@@ -80,6 +84,7 @@
   .btn-complete:hover { border-color: #059669; color: #059669; background: rgba(40,167,69,0.05); }
   .btn-ghost { background: transparent; border: 1.5px solid var(--border); color: var(--text-primary); }
   .btn-ghost:hover { border-color: #94a3b8; }
+  .btn-ghost:disabled { opacity: 0.5; cursor: not-allowed; }
   .link-btn { background: none; border: none; padding: 0; font: inherit; font-size: 0.82rem; color: #2563eb; cursor: pointer; font-weight: 600; }
   .link-btn:hover { text-decoration: underline; }
   .link-btn:disabled { color: #94a3b8; cursor: not-allowed; }
@@ -93,6 +98,19 @@
 
   .empty-state { text-align: center; padding: 30px; color: var(--text-secondary); font-size: 0.88rem; }
   .empty-state .big { font-weight: 600; color: var(--text-primary); display: block; margin-bottom: 2px; }
+
+  .selection-bar { display: flex; align-items: center; gap: 14px; padding-top: 14px; }
+  .selection-count { font-size: 0.85rem; color: var(--text-secondary); font-weight: 600; }
+
+  /* Inline edit form */
+  .edit-row td { background: #fbfdff; }
+  .edit-form { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 12px; padding: 6px 2px; }
+  .edit-field { display: flex; flex-direction: column; gap: 4px; }
+  .edit-field.full { grid-column: 1 / -1; }
+  .edit-field label { font-size: 0.72rem; font-weight: 700; color: var(--text-secondary); text-transform: uppercase; letter-spacing: 0.05em; }
+  .edit-field input, .edit-field select, .edit-field textarea { padding: 7px 10px; border: 1.5px solid var(--border); border-radius: 6px; font-size: 0.86rem; font-family: inherit; resize: vertical; }
+  .edit-field input:focus, .edit-field select:focus, .edit-field textarea:focus { outline: none; border-color: #60a5fa; box-shadow: 0 0 0 3px rgba(96,165,250,.15); }
+  .edit-actions { grid-column: 1 / -1; display: flex; gap: 10px; justify-content: flex-end; }
 
   /* Modals */
   .overlay { position: fixed; inset: 0; background: rgba(15,23,42,.45); display: none; align-items: flex-start; justify-content: center; z-index: 900; padding: 40px 16px; overflow-y: auto; }
@@ -132,6 +150,9 @@
   @keyframes spin { to { transform: rotate(360deg); } }
 
   /* Email draft modal extras */
+  .draft-progress-row { display: flex; justify-content: space-between; align-items: center; margin-bottom: 14px; gap: 12px; }
+  .draft-progress { font-size: 0.82rem; font-weight: 700; color: var(--text-primary); }
+  .draft-nav { display: flex; gap: 8px; flex-shrink: 0; }
   .email-field { margin-bottom: 16px; }
   .email-field label { font-size: 0.76rem; font-weight: 700; color: var(--text-secondary); text-transform: uppercase; letter-spacing: 0.05em; display: block; margin-bottom: 6px; }
   .email-subject { font-size: 0.95rem; font-weight: 600; color: var(--text-primary); padding: 10px 14px; background: var(--bg); border: 1px solid var(--border); border-radius: var(--radius-sm); }
@@ -151,6 +172,7 @@
     .tiles { grid-template-columns: 1fr; }
     .meeting-info { grid-template-columns: 1fr; }
     .opt-fields { grid-template-columns: 1fr; }
+    .edit-form { grid-template-columns: 1fr; }
   }
 </style>
 </head>
@@ -230,6 +252,13 @@
       <button class="x" id="closeEmailModal">&times;</button>
     </div>
     <div class="modal-body">
+      <div class="draft-progress-row">
+        <span id="emailProgress" class="draft-progress"></span>
+        <div class="draft-nav">
+          <button class="btn btn-ghost btn-sm" id="prevDraftBtn" style="display:none">&larr; Prev</button>
+          <button class="btn btn-ghost btn-sm" id="nextDraftBtn" style="display:none">Next &rarr;</button>
+        </div>
+      </div>
       <div class="email-type-row">
         <button class="email-type-btn active" id="typeAssignment" data-type="assignment">Assignment</button>
         <button class="email-type-btn" id="typeFollowup" data-type="followup">Follow-up</button>
@@ -245,12 +274,18 @@
           <label>Body</label>
           <div class="email-body" id="emailBody"></div>
         </div>
+        <div class="email-field">
+          <label>Recipient email (not auto-filled — we never guess an address)</label>
+          <input type="email" id="emailRecipient" placeholder="name@infoblox.com" style="width:100%;padding:8px 10px;border:1px solid var(--border);border-radius:6px;font-size:0.88rem">
+        </div>
+        <div id="queueStatus" style="display:none;font-size:0.85rem;margin-top:12px;padding:12px 14px;border-radius:8px;font-weight:500"></div>
       </div>
     </div>
     <div class="modal-foot">
-      <span style="font-size:0.78rem;color:var(--text-secondary)">Draft only — copy and send manually</span>
+      <span style="font-size:0.78rem;color:var(--text-secondary)">Draft only — nothing sends automatically</span>
       <div style="display:flex;gap:10px">
         <button class="btn btn-ghost copy-btn" id="copyEmailBtn" style="display:none">Copy body</button>
+        <button class="btn btn-primary" id="queueEmailBtn" style="display:none">Queue for M365 send</button>
         <button class="btn btn-ghost" id="cancelEmailBtn">Close</button>
       </div>
     </div>
@@ -264,6 +299,15 @@
   let MEETINGS = [];
   let currentId = null;
   let fileData = null;
+
+  // Selection / edit / undo state for the current meeting's action items.
+  // Reset whenever render() rebuilds the whole dashboard (meeting switch).
+  let selectedItemIds = new Set();
+  let editingItemId = null;
+  // itemId -> status it had right before being marked complete, so Undo can
+  // restore it. Only populated for completes that happen in this page
+  // session; undoComplete() falls back to 'in_progress' otherwise.
+  let previousStatusMap = {};
 
   // ── current meeting from in-memory list ───────────────────────────────────
   function currentMeeting(){ return MEETINGS.find(m => m.id === currentId); }
@@ -334,6 +378,10 @@
   }
 
   function render(){
+    // Fresh meeting view — drop any selection/edit state from the last one.
+    selectedItemIds = new Set();
+    editingItemId = null;
+
     const wrap=document.getElementById('dashboard');
     if(!MEETINGS.length){
       wrap.innerHTML=`<div class="empty-state" style="background:var(--surface);border:1px solid var(--border);border-radius:var(--radius-lg);padding:60px 30px"><span class="big">No meetings yet</span>Import a transcript to generate the summary, agenda, and action items.</div>`;
@@ -366,9 +414,13 @@
           </div>
           <div class="tile-body" style="overflow-x:auto">
             <table class="action-table">
-              <thead><tr><th style="width:4%">#</th><th style="width:42%">Description</th><th style="width:16%">Owner</th><th style="width:12%">Due</th><th style="width:12%">Status</th><th style="width:14%"></th></tr></thead>
+              <thead><tr><th style="width:4%"></th><th style="width:46%">Description</th><th style="width:14%">Due</th><th style="width:14%">Status</th><th style="width:22%"></th></tr></thead>
               <tbody id="actionBody"></tbody>
             </table>
+            <div class="selection-bar">
+              <span class="selection-count" id="selectionCount">Select action items to draft emails</span>
+              <button class="btn btn-primary" id="draftSelectedBtn" disabled>Draft email</button>
+            </div>
           </div>
         </div>
       </div>`;
@@ -379,6 +431,7 @@
       : `<li class="empty-state" style="padding:14px">No agenda extracted.</li>`;
 
     document.getElementById('showCompleted').addEventListener('change', renderItems);
+    document.getElementById('draftSelectedBtn').addEventListener('click', () => startBatchDraft([...selectedItemIds]));
     renderItems();
   }
 
@@ -391,23 +444,121 @@
     document.getElementById('aiCount').textContent=`${active.length} active`+(completed.length?`, ${completed.length} completed`:'');
     const shown=showCompleted?[...active,...completed]:active;
     const body=document.getElementById('actionBody');
-    if(!shown.length){ body.innerHTML=`<tr><td colspan="6"><div class="empty-state"><span class="big">Nothing active</span>${completed.length?'All action items for this meeting are complete.':'No action items were extracted.'}</div></td></tr>`; return; }
-    body.innerHTML=shown.map((a,i)=>rowHtml(a,i)).join('');
+    if(!shown.length){
+      body.innerHTML=`<tr><td colspan="5"><div class="empty-state"><span class="big">Nothing active</span>${completed.length?'All action items for this meeting are complete.':'No action items were extracted.'}</div></td></tr>`;
+      updateSelectionBar();
+      return;
+    }
+
+    // Group rows by owner (in appearance order), with unassigned items last.
+    const groups = new Map();
+    shown.forEach(a=>{
+      const key = a.owner || '__unassigned__';
+      if(!groups.has(key)) groups.set(key, []);
+      groups.get(key).push(a);
+    });
+    const ownerKeys = [...groups.keys()].filter(k=>k!=='__unassigned__').sort((a,b)=>a.localeCompare(b));
+    if(groups.has('__unassigned__')) ownerKeys.push('__unassigned__');
+
+    body.innerHTML = ownerKeys.map(key=>{
+      const items = groups.get(key);
+      const label = key==='__unassigned__' ? 'Unassigned' : esc(key);
+      const header = `<tr class="owner-group-row"><td colspan="5"><span class="owner-group-name">${label}</span><span class="owner-group-count">${items.length} item${items.length>1?'s':''}</span></td></tr>`;
+      const rows = items.map(a => a.id===editingItemId ? editRowHtml(a) : rowHtml(a)).join('');
+      return header + rows;
+    }).join('');
+
     body.querySelectorAll('[data-complete]').forEach(b=>b.addEventListener('click',()=>markComplete(b.getAttribute('data-complete'))));
-    body.querySelectorAll('[data-email]').forEach(b=>b.addEventListener('click',()=>viewDraftEmail(b.getAttribute('data-email'))));
+    body.querySelectorAll('[data-undo]').forEach(b=>b.addEventListener('click',()=>undoComplete(b.getAttribute('data-undo'))));
+    body.querySelectorAll('[data-edit]').forEach(b=>b.addEventListener('click',()=>{ editingItemId=b.getAttribute('data-edit'); renderItems(); }));
+    body.querySelectorAll('[data-save]').forEach(b=>b.addEventListener('click',()=>saveEdit(b.getAttribute('data-save'))));
+    body.querySelectorAll('[data-cancel-edit]').forEach(b=>b.addEventListener('click',()=>{ editingItemId=null; renderItems(); }));
+    body.querySelectorAll('[data-select]').forEach(cb=>cb.addEventListener('change',()=>{
+      const id=cb.getAttribute('data-select');
+      if(cb.checked) selectedItemIds.add(id); else selectedItemIds.delete(id);
+      updateSelectionBar();
+    }));
+
+    updateSelectionBar();
   }
 
-  function rowHtml(a,i){
+  function updateSelectionBar(){
+    const countEl = document.getElementById('selectionCount');
+    const btn = document.getElementById('draftSelectedBtn');
+    if(!countEl || !btn) return;
+    const n = selectedItemIds.size;
+    countEl.textContent = n ? `${n} selected` : 'Select action items to draft emails';
+    btn.disabled = n===0;
+  }
+
+  function rowHtml(a){
     const done=a.status==='completed';
-    const owner=a.owner?esc(a.owner):`<span class="owner-unassigned">Unassigned</span>`;
     const due=a.due_date?fmtDate(a.due_date):`<span class="due-blank">&mdash;</span>`;
-    const emailBtn = a.owner
-      ? `<button class="link-btn" data-email="${a.id}">Draft email</button>`
-      : `<button class="link-btn" disabled title="No owner — cannot draft email">Draft email</button>`;
-    const actions=done
-      ? emailBtn
-      : `${emailBtn}<button class="btn btn-complete btn-sm" data-complete="${a.id}">Complete</button>`;
-    return `<tr class="${done?'done':''}"><td>${i+1}</td><td class="desc-cell">${esc(a.description)}</td><td>${owner}</td><td>${due}</td><td><span class="status-badge status-${a.status}">${STATUS_LABEL[a.status]}</span></td><td><div class="row-actions">${actions}</div></td></tr>`;
+    const checkbox = a.owner
+      ? `<input type="checkbox" data-select="${a.id}" ${selectedItemIds.has(a.id)?'checked':''}>`
+      : `<input type="checkbox" disabled title="No owner — cannot draft email">`;
+    const editBtn = a.owner
+      ? `<button class="link-btn" data-edit="${a.id}">Edit</button>`
+      : `<button class="btn btn-ghost btn-sm" data-edit="${a.id}">+ Assign owner</button>`;
+    const completeBtn = done
+      ? `<button class="btn btn-ghost btn-sm" data-undo="${a.id}">Undo</button>`
+      : `<button class="btn btn-complete btn-sm" data-complete="${a.id}">Complete</button>`;
+    return `<tr class="${done?'done':''}"><td>${checkbox}</td><td class="desc-cell">${esc(a.description)}</td><td>${due}</td><td><span class="status-badge status-${a.status}">${STATUS_LABEL[a.status]}</span></td><td><div class="row-actions">${editBtn}${completeBtn}</div></td></tr>`;
+  }
+
+  function editRowHtml(a){
+    return `<tr class="edit-row"><td></td><td colspan="4">
+      <div class="edit-form">
+        <div class="edit-field full">
+          <label>Description</label>
+          <textarea data-field="description" rows="2">${esc(a.description)}</textarea>
+        </div>
+        <div class="edit-field">
+          <label>Owner</label>
+          <input type="text" data-field="owner" value="${a.owner?esc(a.owner):''}" placeholder="Unassigned">
+        </div>
+        <div class="edit-field">
+          <label>Due date</label>
+          <input type="date" data-field="due_date" value="${a.due_date||''}">
+        </div>
+        <div class="edit-field">
+          <label>Status</label>
+          <select data-field="status">${VALID_STATUS.map(s=>`<option value="${s}" ${a.status===s?'selected':''}>${STATUS_LABEL[s]}</option>`).join('')}</select>
+        </div>
+        <div class="edit-actions">
+          <button class="btn btn-ghost btn-sm" data-cancel-edit="${a.id}">Cancel</button>
+          <button class="btn btn-primary btn-sm" data-save="${a.id}">Save</button>
+        </div>
+      </div>
+    </td></tr>`;
+  }
+
+  async function saveEdit(itemId){
+    const saveBtn = document.querySelector(`[data-save="${itemId}"]`);
+    const row = saveBtn.closest('tr');
+    const description = row.querySelector('[data-field="description"]').value.trim();
+    const ownerRaw = row.querySelector('[data-field="owner"]').value.trim();
+    const dueRaw = row.querySelector('[data-field="due_date"]').value;
+    const status = row.querySelector('[data-field="status"]').value;
+
+    if(!description){ alert('Description cannot be empty.'); return; }
+
+    const m = currentMeeting();
+    const item = m.action_items.find(a=>a.id===itemId);
+    if(!item) return;
+
+    const priorStatus = item.status;
+    const payload = { description, owner: ownerRaw || null, due_date: dueRaw || null, status };
+
+    try {
+      await apiPatch(`/api/action-items/${itemId}`, payload);
+      if(status==='completed' && priorStatus!=='completed') previousStatusMap[itemId] = priorStatus;
+      Object.assign(item, payload);
+      editingItemId = null;
+      renderItems();
+    } catch(err){
+      alert('Could not save changes: ' + err.message);
+    }
   }
 
   async function markComplete(itemId){
@@ -415,36 +566,72 @@
     if(!m) return;
     const item = m.action_items.find(a => a.id === itemId);
     if(!item) return;
+    const prior = item.status;
     item.status = 'completed';  // optimistic update
     renderItems();
     try {
       await apiPatch(`/api/action-items/${itemId}`, { status: 'completed' });
+      previousStatusMap[itemId] = prior;
     } catch(err) {
-      item.status = 'in_progress';  // revert on failure
+      item.status = prior;  // revert on failure
       renderItems();
       alert('Could not update status: ' + err.message);
     }
   }
 
-  // ── Email draft modal ─────────────────────────────────────────────────────
-  let _emailMeetingId = null;
-  let _emailItemId = null;
-  let _emailType = 'assignment';
-
-  async function viewDraftEmail(itemId){
+  async function undoComplete(itemId){
     const m = currentMeeting();
     if(!m) return;
-    const it = m.action_items.find(a => a.id === itemId);
-    if(!it) return;
-    if(!it.owner){ alert("No owner assigned — cannot draft an email without a recipient."); return; }
+    const item = m.action_items.find(a => a.id === itemId);
+    if(!item) return;
+    const target = previousStatusMap[itemId] || 'in_progress';
+    const prior = item.status;
+    item.status = target;  // optimistic update
+    renderItems();
+    try {
+      await apiPatch(`/api/action-items/${itemId}`, { status: target });
+      delete previousStatusMap[itemId];
+    } catch(err) {
+      item.status = prior;  // revert on failure
+      renderItems();
+      alert('Could not undo: ' + err.message);
+    }
+  }
 
-    _emailMeetingId = m.id;
-    _emailItemId = itemId;
+  // ── Email draft modal (batch, grouped by owner) ───────────────────────────
+  let _draftMeetingId = null;
+  let _draftGroups = [];  // [{ owner, items, subject, body, recipient, queued, _loadedType }]
+  let _draftIndex = 0;
+  let _emailType = 'assignment';
+
+  function startBatchDraft(ids){
+    const m = currentMeeting();
+    if(!m || !ids.length) return;
+    const items = m.action_items.filter(a => ids.includes(a.id));
+    const assigned = items.filter(a => a.owner);
+    const skipped = items.length - assigned.length;
+
+    if(!assigned.length){
+      alert('None of the selected items have an owner — nothing to draft.');
+      return;
+    }
+
+    const groupsMap = new Map();
+    assigned.forEach(a=>{
+      if(!groupsMap.has(a.owner)) groupsMap.set(a.owner, []);
+      groupsMap.get(a.owner).push(a);
+    });
+
+    _draftMeetingId = m.id;
+    _draftGroups = [...groupsMap.entries()].map(([owner, its]) => ({ owner, items: its, subject: null, body: null, recipient: '', queued: false, _loadedType: null }));
+    _draftIndex = 0;
     _emailType = 'assignment';
+
+    if(skipped>0) alert(`${skipped} selected item(s) have no owner and will be skipped.`);
 
     document.querySelectorAll('.email-type-btn').forEach(b => b.classList.toggle('active', b.dataset.type === _emailType));
     showEmailModal();
-    await loadEmailDraft();
+    loadCurrentDraft();
   }
 
   function showEmailModal(){
@@ -452,24 +639,57 @@
   }
   function closeEmailModalFn(){
     document.getElementById('emailOverlay').classList.remove('open');
-    _emailMeetingId = null; _emailItemId = null;
+    _draftMeetingId = null; _draftGroups = []; _draftIndex = 0;
   }
 
-  async function loadEmailDraft(){
+  function captureRecipient(){
+    const group = _draftGroups[_draftIndex];
+    if(group) group.recipient = document.getElementById('emailRecipient').value.trim();
+  }
+
+  function updateQueueButtonUI(group){
+    const btn = document.getElementById('queueEmailBtn');
+    btn.disabled = !!group.queued;
+    btn.textContent = group.queued ? '✓ Queued' : 'Queue for M365 send';
+  }
+
+  async function loadCurrentDraft(){
+    const group = _draftGroups[_draftIndex];
+    if(!group) return;
+
+    document.getElementById('emailProgress').textContent =
+      `Draft ${_draftIndex+1} of ${_draftGroups.length} — ${group.owner} (${group.items.length} item${group.items.length>1?'s':''})`;
+    const showNav = _draftGroups.length>1;
+    document.getElementById('prevDraftBtn').style.display = showNav ? 'inline-flex' : 'none';
+    document.getElementById('nextDraftBtn').style.display = showNav ? 'inline-flex' : 'none';
+    document.getElementById('prevDraftBtn').disabled = _draftIndex===0;
+    document.getElementById('nextDraftBtn').disabled = _draftIndex===_draftGroups.length-1;
+
+    document.getElementById('emailRecipient').value = group.recipient || '';
     document.getElementById('emailLoading').style.display = 'block';
     document.getElementById('emailContent').style.display = 'none';
     document.getElementById('emailError').style.display = 'none';
     document.getElementById('copyEmailBtn').style.display = 'none';
+    document.getElementById('queueEmailBtn').style.display = 'none';
+    document.getElementById('queueStatus').style.display = 'none';
+
     try {
-      const draft = await apiPost('/api/draft-email', {
-        meeting_id: _emailMeetingId,
-        action_item_id: _emailItemId,
-        email_type: _emailType,
-      });
-      document.getElementById('emailSubject').textContent = draft.subject;
-      document.getElementById('emailBody').textContent = draft.body;
+      if(group.subject===null || group._loadedType!==_emailType){
+        const draft = await apiPost('/api/draft-email', {
+          meeting_id: _draftMeetingId,
+          action_item_ids: group.items.map(i=>i.id),
+          email_type: _emailType,
+        });
+        group.subject = draft.subject;
+        group.body = draft.body;
+        group._loadedType = _emailType;
+      }
+      document.getElementById('emailSubject').textContent = group.subject;
+      document.getElementById('emailBody').textContent = group.body;
       document.getElementById('emailContent').style.display = 'block';
       document.getElementById('copyEmailBtn').style.display = 'inline-flex';
+      document.getElementById('queueEmailBtn').style.display = 'inline-flex';
+      updateQueueButtonUI(group);
     } catch(err){
       document.getElementById('emailError').textContent = err.message;
       document.getElementById('emailError').style.display = 'block';
@@ -482,11 +702,18 @@
   document.getElementById('cancelEmailBtn').addEventListener('click', closeEmailModalFn);
   document.getElementById('emailOverlay').addEventListener('click', e=>{ if(e.target===document.getElementById('emailOverlay')) closeEmailModalFn(); });
 
+  document.getElementById('prevDraftBtn').addEventListener('click', () => {
+    if(_draftIndex>0){ captureRecipient(); _draftIndex--; loadCurrentDraft(); }
+  });
+  document.getElementById('nextDraftBtn').addEventListener('click', () => {
+    if(_draftIndex<_draftGroups.length-1){ captureRecipient(); _draftIndex++; loadCurrentDraft(); }
+  });
+
   document.querySelectorAll('.email-type-btn').forEach(btn => {
     btn.addEventListener('click', async () => {
       _emailType = btn.dataset.type;
       document.querySelectorAll('.email-type-btn').forEach(b => b.classList.toggle('active', b.dataset.type === _emailType));
-      await loadEmailDraft();
+      await loadCurrentDraft();
     });
   });
 
@@ -498,6 +725,47 @@
       btn.textContent = 'Copied!';
       setTimeout(() => btn.textContent = orig, 1500);
     });
+  });
+
+  document.getElementById('queueEmailBtn').addEventListener('click', async () => {
+    const group = _draftGroups[_draftIndex];
+    if(!group) return;
+    const recipient = document.getElementById('emailRecipient').value.trim();
+    group.recipient = recipient;
+    const statusEl = document.getElementById('queueStatus');
+    if(!recipient){
+      statusEl.style.display = 'block';
+      statusEl.style.background = 'rgba(220, 38, 38, 0.1)';
+      statusEl.style.color = '#dc2626';
+      statusEl.textContent = 'Enter a recipient email first.';
+      return;
+    }
+    const btn = document.getElementById('queueEmailBtn');
+    btn.disabled = true;
+    btn.textContent = 'Queuing…';
+    try {
+      await apiPost('/api/email-queue', {
+        meeting_id: _draftMeetingId,
+        action_item_ids: group.items.map(i=>i.id),
+        recipient,
+        subject: group.subject,
+        body: group.body,
+      });
+      group.queued = true;
+      updateQueueButtonUI(group);
+      statusEl.style.display = 'block';
+      statusEl.style.background = 'rgba(22, 163, 74, 0.12)';
+      statusEl.style.color = '#15803d';
+      statusEl.textContent = '✓ Queued as pending — nothing has been sent yet. A human still needs to review the queue and send it from their own M365 account.';
+      statusEl.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+    } catch(err){
+      btn.disabled = false;
+      btn.textContent = 'Queue for M365 send';
+      statusEl.style.display = 'block';
+      statusEl.style.background = 'rgba(220, 38, 38, 0.1)';
+      statusEl.style.color = '#dc2626';
+      statusEl.textContent = 'Could not queue: ' + err.message;
+    }
   });
 
   // ── Import modal wiring ───────────────────────────────────────────────────
